@@ -12,6 +12,9 @@ jobs:
   run-linters:
     name: Run linters
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
 
     steps:
       - name: Check out repository
@@ -23,12 +26,9 @@ jobs:
           node-version: 20
       
       - name: Install Node.js dev dependencies
-        run: |
-          cd app
-          npm ci
+        run: npm ci
 
       - name: Run linters
-        run: cd app
         uses: wearerequired/lint-action@v2
         with:
           prettier: true
