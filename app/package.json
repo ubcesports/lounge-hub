@@ -1,0 +1,9 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "UBCEA lounge app backend",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
