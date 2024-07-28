@@ -4,7 +4,9 @@
   "description": "UBCEA lounge app backend",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.19.2",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
     "prettier": "3.3.3"
   }
 }

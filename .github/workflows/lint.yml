@@ -28,6 +28,7 @@ jobs:
           npm ci
 
       - name: Run linters
+        run: cd app
         uses: wearerequired/lint-action@v2
         with:
           prettier: true
