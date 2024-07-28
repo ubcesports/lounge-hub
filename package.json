@@ -1,0 +1,9 @@
+{
+    "name": "app",
+    "version": "1.0.0",
+    "description": "UBCEA lounge app backend",
+    "main": "index.js",
+    "devDependencies": {
+        "prettier": "3.3.3"
+    }
+}
