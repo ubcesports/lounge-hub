@@ -23,6 +23,7 @@ jobs:
           node-version: 20
       
       - name: Install Node.js dev dependencies
+        run: cd app
         run: npm ci
 
       - name: Run linters
