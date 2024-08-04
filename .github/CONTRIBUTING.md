@@ -54,11 +54,13 @@ Every PR for a bug/feature must have a corresponding set of tests. Make sure you
 
 Participate in discussion on an open issue, state that you are going to work on it or assign yourself to the issue. If you received a bug report or FR from slack/discord, feel free to file an issue in place of the original author.
 
+Follow instructions to set up the development environment in project README.
+
 ```Shell
 git checkout -b "branch-name"
 ```
 
-Make your changes, tests.
+Make your changes, add tests.
 Once we have our testing framework set up, make sure to run our complete test suite as well.
 
 ```Shell
