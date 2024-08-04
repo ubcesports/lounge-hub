@@ -1,28 +1,31 @@
-For UBCEA Club Members - Filing issues & bug reports
---------------
+## For UBCEA Club Members - Filing issues & bug reports
+
 - Please thoroughly examine [open issues](https://github.com/ubcesports/lounge-hub/issues) to ensure that your problem/suggestion hasn't already been reported.
 - Limit one issue for one purpose, if you have several suggestions please file multiple follow-up issues.
 - Feel free to react to existing issues or chime into the discussion if something is important to you, popular issues will get more attention from the team.
 - Keep issues technical. For general inquiries or FAQ, please reach out to the dev team on our slack/discord instead.
 
 ### Issue template, file to [issues](https://github.com/ubcesports/lounge-hub/issues)
+
 **Title**: Bug report or feature request, be clear and concise.
-**About**: Describe, to the best of your ability the bug or feature. 
-- For bugs: make sure to include an MRE (Minimally Reproducible Example) if appropriate. The dev team will have a much easier time diagnosing and fixing the issue if you can include the steps that lead to a bug. 
+**About**: Describe, to the best of your ability the bug or feature.
+
+- For bugs: make sure to include an MRE (Minimally Reproducible Example) if appropriate. The dev team will have a much easier time diagnosing and fixing the issue if you can include the steps that lead to a bug.
 - For feature requests: if at all possible, come up with a scenario or user story (ie, As a user, I want to be able to...) for the feature. Well thought-out feature requests usually garner more attention and are prioritized.
 
 Checklist:
+
 - I have searched the NEWS file to check if the feature/bug has been resolved in the development version.
 - Looked through active issues to ensure that my issue isn't a duplicate.
 - (For bugs) Included a MRE to help developers recreate and debug.
 - (For FRs) Included a convincing description of the feature I want.
 
-For Devs - Writing Pull Requests (PRs)
-------------
+## For Devs - Writing Pull Requests (PRs)
+
 This guide assume a basic understanding of GitHub issues and PR reviewing. For more information on this, you can read:
+
 - https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues
 - https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews
-
 
 ### Dev environment
 
@@ -32,13 +35,13 @@ Note that there may be issues with this system and Riot Vanguard/Windows 11, so 
 
 ### AI
 
-You are welcome to use AI if you fully understand the drawbacks and use them as tools. Explaining code, thinking of test cases and pseudo-code/examples for implementing a feature is fine and encouraged. You are responsible as a contributor for the security of the code you write, therefore we **strongly discourage** copy/pasting code from LLMs for which you cannot verify the code license or provide proper citation. You can read more about this topic via this [Hacker News thread](https://news.ycombinator.com/item?id=33240341). 
+You are welcome to use AI if you fully understand the drawbacks and use them as tools. Explaining code, thinking of test cases and pseudo-code/examples for implementing a feature is fine and encouraged. You are responsible as a contributor for the security of the code you write, therefore we **strongly discourage** copy/pasting code from LLMs for which you cannot verify the code license or provide proper citation. You can read more about this topic via this [Hacker News thread](https://news.ycombinator.com/item?id=33240341).
 
 ### Creating PRs - Notes
 
 All changes must be made through PRs. There will be no force-pushing to main tomfoolery here. Members of the ubcea-admin team (for 2024, Jaden and Josh) have the ability to bypass these rules, but should not unless in an emergency.
 
-Our rule-set for this repository is that every PR requires **at least** one approving review before merge, along with passing CI checks. 
+Our rule-set for this repository is that every PR requires **at least** one approving review before merge, along with passing CI checks.
 
 In general, make one PR for one issue. If your PR covers two issues that are closely related but not duplicates, it is fine to close both. Make sure to include a "Closes #(Issue Number)" **for each linked issue** in your PR description so GitHub knows to automatically close the linked issue when your PR is merged.
 
@@ -68,6 +71,7 @@ git add .
 git commit -m "commit message"
 git push --set-upstream origin branch-name
 ```
+
 Create a PR with a clear and concise title, and a good description of changes aided by pictures and examples when appropriate.
 
 Request reviews, run CI tests and make corresponding changes. Jaden and I are always happy to do reviews. Even if you are not specifically requested to make a review, check out the diff and make suggestions if you see any way the code can be improved anyways, this is helpful for everyone!
@@ -75,7 +79,7 @@ Request reviews, run CI tests and make corresponding changes. Jaden and I are al
 ```Shell
 git add .
 git commit -m "review suggestions"
-git push 
+git push
 ```
 
 If your PR is non-trivial, please include a NEWS entry where you concisely describe the changes that you made. This helps keep documentation on changes clear for users.
@@ -89,6 +93,7 @@ Not fully decided yet, but here are a few small things, will update in the futur
 Here's a pretty good guide I found online for JavaScript programming style, we'll see if we need to implement a style check in the future but this is a good start: https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Writing_style_guide/Code_style_guide/JavaScript
 
 Spacing:
+
 - 2-space indentation.
 - No trailing whitespace.
 - If appropriate, use vertical alignment to make reading tests/code easier.
@@ -97,13 +102,15 @@ Spacing:
 - Have an empty new line at the end of each file.
 
 Readability:
+
 - In production, readability/simplicity is almost always preferred over performance and cheeky tricks. For example, `x * 2` is preferred over `x << 1` because it is easier to read, even if it is slightly slower.
-> "Premature optimization is the root of all evil in programming" - Donald Knuth in his book, The Art of Computer Programming.
+  > "Premature optimization is the root of all evil in programming" - Donald Knuth in his book, The Art of Computer Programming.
 - Variable/function names should be clear, not short. Everyone (including future you) would much prefer `startTime = wallClock();` over `t = wallClock()` as the codebase expands.
 - Make sure to scope your code appropriately. Really think about whether you **need** a global flag, or if an internal variable is good enough.
 - Read your code out loud. A trick I like to use is to read code like a sentence. For example, `for (const number of numberList) { ... }` reads: for number of number list, do...
 
 Documentation:
+
 - The goal is to have "self-documenting" code in our codebase. Meaning, our code is so readable that we don't have to explicitly document the behavior of every function.
 - If your code is complex/obscure in its implementation and there's no easy way around it, make sure to add comments.
 - Keep function implementations short. If your implementation goes beyond 25 lines, consider creating helpers.
