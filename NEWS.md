@@ -1,0 +1,6 @@
+### NEWS
+
+Version x.x.x
+
+- Squashed bug ...
+- Added a new option to ...
