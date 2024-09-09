@@ -1,9 +1,15 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+const db = require("./db");
+const port = 5000;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.get("/", async (req, res) => {
+  try {
+    const result = await db.query("SELECT current_database()");
+    res.send(result);
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 app.listen(port, () => {
