@@ -4,7 +4,7 @@
   "description": "UBCEA lounge app backend",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.19.2",
+    "express": "^4.20.0",
     "pg": "^8.12.0"
   }
 }
