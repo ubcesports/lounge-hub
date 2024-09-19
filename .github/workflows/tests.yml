@@ -13,6 +13,11 @@ jobs:
     name: Run tests
     runs-on: ubuntu-latest
 
+    env:
+      NODE_ENV: test
+      DB_PASS: ${{ secrets.DB_PASS }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
