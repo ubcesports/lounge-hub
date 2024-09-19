@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "express": "^4.20.0",
+    "moment-timezone": "^0.5.45",
     "dotenv": "^16.4.5"
   },
   "scripts": {
