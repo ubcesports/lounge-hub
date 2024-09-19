@@ -4,12 +4,17 @@
   "description": "UBCEA lounge app backend",
   "main": "index.js",
   "devDependencies": {
-    "prettier": "3.3.3"
+    "chai": "^5.1.1",
+    "mocha": "^10.7.3",
+    "prettier": "3.3.3",
+    "supertest": "^7.0.0"
   },
   "dependencies": {
-    "body-parser": "^1.20.3"
+    "body-parser": "^1.20.3",
+    "pg": "^8.13.0"
   },
   "scripts": {
-    "format": "prettier --write \"**/*.js\""
+    "format": "prettier --write \"**/*.js\"",
+    "test": "mocha"
   }
 }
