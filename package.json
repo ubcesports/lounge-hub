@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "body-parser": "^1.20.3",
-    "pg": "^8.13.0"
+    "pg": "^8.13.0",
+    "express": "^4.20.0"
   },
   "scripts": {
     "format": "prettier --write \"**/*.js\"",
