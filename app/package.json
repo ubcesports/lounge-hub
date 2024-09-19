@@ -5,6 +5,9 @@
   "main": "index.js",
   "dependencies": {
     "express": "^4.20.0",
-    "pg": "^8.12.0"
+    "moment-timezone": "^0.5.45",
+    "pg": "^8.12.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }

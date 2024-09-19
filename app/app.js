@@ -1,7 +1,9 @@
 const express = require("express");
-const app = express();
 const db = require("./db");
 const bodyParser = require("body-parser");
+const moment = require("moment-timezone");
+
+const app = express();
 const port = 5000;
 
 app.use(bodyParser.json());
@@ -16,6 +18,7 @@ app.get("/gamer/:student_number", async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).send("Student not found");
     }
+    res.json(result.rows[0]);
   } catch (err) {
     console.error(err);
   }
@@ -29,12 +32,13 @@ app.post("/gamer", async (req, res) => {
     membership_tier,
     banned,
     notes,
-    date_created,
   } = req.body;
+  const created_at = moment().tz('America/Los_Angeles').format('YYYY-MM-DD');
+
   try {
     const result = await db.query(
       `INSERT INTO users_test.gamer_profile 
-      (first_name, last_name, student_number, membership_tier, banned, notes, date_created) 
+      (first_name, last_name, student_number, membership_tier, banned, notes, created_at) 
       VALUES ($1, $2, $3, $4, $5, $6, $7) 
       ON CONFLICT (student_number) 
       DO UPDATE SET 
@@ -43,7 +47,7 @@ app.post("/gamer", async (req, res) => {
         membership_tier = EXCLUDED.membership_tier,
         banned = EXCLUDED.banned,
         notes = EXCLUDED.notes,
-        date_created = EXCLUDED.date_created
+        created_at = EXCLUDED.created_at
       RETURNING *`,
       [
         first_name,
@@ -52,7 +56,7 @@ app.post("/gamer", async (req, res) => {
         membership_tier,
         banned,
         notes,
-        date_created,
+        created_at,
       ]
     );
     res.status(201).send(result.rows[0]);
