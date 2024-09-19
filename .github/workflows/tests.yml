@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      CI: true
       NODE_ENV: test
       DB_HOST: ${{ secrets.DB_HOST }}
       DB_USER: ${{ secrets.DB_USER }}
@@ -36,3 +35,6 @@ jobs:
 
       - name: Run tests
         run: npm test
+        env:
+          CI: true
+
