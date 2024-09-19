@@ -12,9 +12,10 @@
   },
   "dependencies": {
     "body-parser": "^1.20.3",
-    "pg": "^8.13.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.20.0",
     "moment-timezone": "^0.5.45",
-    "express": "^4.20.0"
+    "pg": "^8.13.0"
   },
   "scripts": {
     "format": "prettier --write \"**/*.js\"",
