@@ -8,5 +8,8 @@
   },
   "dependencies": {
     "body-parser": "^1.20.3"
+  },
+  "scripts": {
+    "format": "prettier --write \"**/*.js\""
   }
 }
