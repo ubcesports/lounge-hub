@@ -11,6 +11,7 @@
     "supertest": "^7.0.0"
   },
   "dependencies": {
+    "express": "^4.20.0",
     "dotenv": "^16.4.5"
   },
   "scripts": {
