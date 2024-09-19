@@ -16,7 +16,6 @@ jobs:
     env:
       NODE_ENV: test
       DB_HOST: ${{ secrets.DB_HOST }}
-      console.log("DB_HOST: ${{ secrets.DB_HOST }}");
       DB_USER: ${{ secrets.DB_USER }}
       DB_PASS: ${{ secrets.DB_PASS }}
       DB_NAME: ${{ secrets.DB_NAME }}
