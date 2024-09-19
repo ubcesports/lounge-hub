@@ -112,7 +112,7 @@ app.post("/gamer", async (req, res) => {
 
 /**
  * Deletes a gamer profile.
- * 
+ *
  * @route DELETE /gamer/:student_number
  * @param {Object} req - The request object.
  * @param {Object} req.params - The request parameters.
@@ -128,7 +128,7 @@ app.delete("/gamer/:student_number", async (req, res) => {
   try {
     const result = await db.query(
       "DELETE FROM users_test.gamer_profile WHERE student_number = $1 RETURNING *",
-      [student_number]
+      [student_number],
     );
 
     if (result.rows.length === 0) {
