@@ -11,9 +11,11 @@
     "supertest": "^7.0.0"
   },
   "dependencies": {
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.5",
     "express": "^4.20.0",
     "moment-timezone": "^0.5.45",
-    "dotenv": "^16.4.5"
+    "pg": "^8.13.0"
   },
   "scripts": {
     "format": "prettier --write \"**/*.js\"",
