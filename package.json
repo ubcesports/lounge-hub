@@ -19,6 +19,6 @@
   },
   "scripts": {
     "format": "prettier --write \"**/*.js\"",
-    "test": "mocha tests/**/*.js"
+    "test": "mocha tests/**/*.js --exit"
   }
 }
