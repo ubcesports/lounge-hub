@@ -1,7 +1,7 @@
 import request from "supertest";
 import { expect } from "chai";
-import app from "../app/app.js";
-import db from "../app/db.js";
+import app from "../app.js";
+import db from "../db.js";
 
 describe("Gamer API", () => {
   // Clean up the database before each test

@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "UBCEA lounge app backend",
   "main": "index.js",
+  "type": "module",
   "dependencies": {
     "express": "^4.20.0",
     "moment-timezone": "^0.5.45",
     "pg": "^8.12.0"
+  },
+  "scripts": {
+    "test": "mocha tests/**/*.js --exit"
   }
 }
