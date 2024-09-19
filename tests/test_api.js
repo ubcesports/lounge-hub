@@ -1,9 +1,7 @@
 import request from 'supertest';
-import chai from 'chai';
+import { expect } from 'chai';
 import app from '../app/app.js';
 import db from '../app/db.js';
-
-const { expect } = chai;
 
 describe('Gamer API', () => {
   // Clean up the database before each test
@@ -42,7 +40,6 @@ describe('Gamer API', () => {
   });
 
   it('should get a gamer profile', (done) => {
-    // First, add a gamer profile to ensure it exists
     request(app)
       .post('/gamer')
       .send({
@@ -57,7 +54,6 @@ describe('Gamer API', () => {
       .end((err, res) => {
         if (err) return done(err);
 
-        // Then, get the gamer profile
         request(app)
           .get('/gamer/87654321')
           .expect(200)
@@ -86,7 +82,6 @@ describe('Gamer API', () => {
   });
 
   it('should update an existing gamer profile', (done) => {
-    // First, add a gamer profile to ensure it exists
     request(app)
       .post('/gamer')
       .send({
@@ -101,7 +96,6 @@ describe('Gamer API', () => {
       .end((err, res) => {
         if (err) return done(err);
 
-        // Then, update the gamer profile
         request(app)
           .post('/gamer')
           .send({
@@ -123,6 +117,81 @@ describe('Gamer API', () => {
             expect(res.body).to.have.property('notes', 'Updated notes');
             done();
           });
+      });
+  });
+
+  it('should return 400 when data types are invalid', (done) => {
+    request(app)
+      .post('/gamer')
+      .send({
+        first_name: 'John',
+        last_name: 'Doe',
+        student_number: '12345678',
+        membership_tier: 'invalid',
+        banned: 'false',
+        notes: 'Test user'
+      })
+      .expect(500)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.text).to.equal('Error creating gamer');
+        done();
+      });
+  });
+
+  it('should return 500 when student_number is too long', (done) => {
+    request(app)
+      .post('/gamer')
+      .send({
+        first_name: 'John',
+        last_name: 'Doe',
+        student_number: '123456781', // Too long
+        membership_tier: 1,
+        banned: false,
+        notes: 'Test user'
+      })
+      .expect(500)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.text).to.equal('Error creating gamer');
+        done();
+      });
+  });
+
+  it('should delete an existing gamer profile', (done) => {
+    request(app)
+      .post('/gamer')
+      .send({
+        first_name: 'Bob',
+        last_name: 'Brown',
+        student_number: '99887766',
+        membership_tier: 2,
+        banned: false,
+        notes: 'Test user for deletion'
+      })
+      .expect(201)
+      .end((err, res) => {
+        if (err) return done(err);
+
+        request(app)
+          .delete('/gamer/99887766')
+          .expect(200)
+          .end((err, res) => {
+            if (err) return done(err);
+            expect(res.text).to.equal('Gamer profile deleted successfully');
+            done();
+          });
+      });
+  });
+
+  it('should return 404 when trying to delete a non-existent gamer profile', (done) => {
+    request(app)
+      .delete('/gamer/nonexistent')
+      .expect(404)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.text).to.equal('Student not found');
+        done();
       });
   });
 });

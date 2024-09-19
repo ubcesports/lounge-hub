@@ -42,7 +42,7 @@ app.get("/gamer/:student_number", async (req, res) => {
     }
     res.json(result.rows[0]);
   } catch (err) {
-    console.error(err);
+    res.status(500).send("Error finding gamer");
   }
 });
 
@@ -106,8 +106,38 @@ app.post("/gamer", async (req, res) => {
     );
     res.status(201).send(result.rows[0]);
   } catch (err) {
-    console.error(err);
     res.status(500).send("Error creating gamer");
+  }
+});
+
+/**
+ * Deletes a gamer profile.
+ * 
+ * @route DELETE /gamer/:student_number
+ * @param {Object} req - The request object.
+ * @param {Object} req.params - The request parameters.
+ * @param {string} req.params.student_number - The student number to delete.
+ * @param {Object} res - The response object.
+ * @returns {string} 200 - Success message if profile is deleted.
+ * @returns {string} 404 - Error message if profile is not found.
+ * @returns {string} 500 - Error message if there is a server error.
+ */
+app.delete("/gamer/:student_number", async (req, res) => {
+  const { student_number } = req.params;
+
+  try {
+    const result = await db.query(
+      "DELETE FROM users_test.gamer_profile WHERE student_number = $1 RETURNING *",
+      [student_number]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).send("Student not found");
+    }
+
+    res.status(200).send("Gamer profile deleted successfully");
+  } catch (err) {
+    res.status(500).send("Server error");
   }
 });
 

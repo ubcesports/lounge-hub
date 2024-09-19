@@ -2,7 +2,8 @@
   "name": "app",
   "version": "1.0.0",
   "description": "UBCEA lounge app backend",
-  "main": "index.js",
+  "main": "app.js",
+  "type": "module",
   "devDependencies": {
     "chai": "^5.1.1",
     "mocha": "^10.7.3",
@@ -15,6 +16,6 @@
   },
   "scripts": {
     "format": "prettier --write \"**/*.js\"",
-    "test": "mocha"
+    "test": "mocha tests/**/*.js"
   }
 }
