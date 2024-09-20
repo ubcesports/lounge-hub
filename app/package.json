@@ -4,6 +4,12 @@
   "description": "UBCEA lounge app backend",
   "main": "index.js",
   "type": "module",
+  "devDependencies": {
+    "chai": "^5.1.1",
+    "mocha": "^10.7.3",
+    "prettier": "3.3.3",
+    "supertest": "^7.0.0"
+  },
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.20.0",
