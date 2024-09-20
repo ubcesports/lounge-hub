@@ -5,20 +5,9 @@
   "main": "app.js",
   "type": "module",
   "devDependencies": {
-    "chai": "^5.1.1",
-    "mocha": "^10.7.3",
-    "prettier": "3.3.3",
-    "supertest": "^7.0.0"
-  },
-  "dependencies": {
-    "body-parser": "^1.20.3",
-    "dotenv": "^16.4.5",
-    "express": "^4.20.0",
-    "moment-timezone": "^0.5.45",
-    "pg": "^8.13.0"
+    "prettier": "3.3.3"
   },
   "scripts": {
-    "format": "prettier --write \"**/*.js\"",
-    "test": "mocha app/tests/**/*.js --exit"
+    "format": "prettier --write \"**/*.js\""
   }
 }
