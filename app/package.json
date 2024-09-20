@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.20.0",
     "moment-timezone": "^0.5.45",
     "pg": "^8.12.0"
