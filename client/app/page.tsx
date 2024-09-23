@@ -5,19 +5,16 @@ import React, { useState }from "react";
 export default function Page() {
   const [data, setData] = useState(null);
 
-  const fetchData = () => {
-    fetch("https://localhost:5000/gamer/12345678")
-      .then((response) => {
-        console.log("response: ", response);
-        response.json()
-      })
-      .then((data) => {
-        console.log("data: ",data);
-        setData(data)
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/gamer/12345678");
+      console.log("response: ", response);
+      const data = await response.json();
+      console.log("data: ", data);
+      setData(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return <div>
