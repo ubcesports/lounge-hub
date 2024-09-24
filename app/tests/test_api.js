@@ -19,7 +19,7 @@ describe("Gamer API", () => {
 
   it("should add a gamer profile", (done) => {
     request(app)
-      .post("/gamer")
+      .post("/api/gamer")
       .send({
         first_name: "John",
         last_name: "Doe",
@@ -43,7 +43,7 @@ describe("Gamer API", () => {
 
   it("should get a gamer profile", (done) => {
     request(app)
-      .post("/gamer")
+      .post("/api/gamer")
       .send({
         first_name: "Jane",
         last_name: "Doe",
@@ -57,7 +57,7 @@ describe("Gamer API", () => {
         if (err) return done(err);
 
         request(app)
-          .get("/gamer/87654321")
+          .get("/api/gamer/87654321")
           .expect(200)
           .end((err, res) => {
             if (err) return done(err);
@@ -74,7 +74,7 @@ describe("Gamer API", () => {
 
   it("should return 404 for non-existent gamer profile", (done) => {
     request(app)
-      .get("/gamer/nonexistent")
+      .get("/api/gamer/nonexistent")
       .expect(404)
       .end((err, res) => {
         if (err) return done(err);
@@ -85,7 +85,7 @@ describe("Gamer API", () => {
 
   it("should update an existing gamer profile", (done) => {
     request(app)
-      .post("/gamer")
+      .post("/api/gamer")
       .send({
         first_name: "Alice",
         last_name: "Smith",
@@ -99,7 +99,7 @@ describe("Gamer API", () => {
         if (err) return done(err);
 
         request(app)
-          .post("/gamer")
+          .post("/api/gamer")
           .send({
             first_name: "Alice",
             last_name: "Smith",
@@ -124,7 +124,7 @@ describe("Gamer API", () => {
 
   it("should return 400 when data types are invalid", (done) => {
     request(app)
-      .post("/gamer")
+      .post("/api/gamer")
       .send({
         first_name: "John",
         last_name: "Doe",
@@ -143,7 +143,7 @@ describe("Gamer API", () => {
 
   it("should return 500 when student_number is too long", (done) => {
     request(app)
-      .post("/gamer")
+      .post("/api/gamer")
       .send({
         first_name: "John",
         last_name: "Doe",
@@ -162,7 +162,7 @@ describe("Gamer API", () => {
 
   it("should delete an existing gamer profile", (done) => {
     request(app)
-      .post("/gamer")
+      .post("/api/gamer")
       .send({
         first_name: "Bob",
         last_name: "Brown",
@@ -176,7 +176,7 @@ describe("Gamer API", () => {
         if (err) return done(err);
 
         request(app)
-          .delete("/gamer/99887766")
+          .delete("/api/gamer/99887766")
           .expect(200)
           .end((err, res) => {
             if (err) return done(err);
@@ -188,7 +188,7 @@ describe("Gamer API", () => {
 
   it("should return 404 when trying to delete a non-existent gamer profile", (done) => {
     request(app)
-      .delete("/gamer/nonexistent")
+      .delete("/api/gamer/nonexistent")
       .expect(404)
       .end((err, res) => {
         if (err) return done(err);
