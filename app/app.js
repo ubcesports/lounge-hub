@@ -2,11 +2,11 @@ import express from "express";
 import moment from "moment-timezone";
 import bodyParser from "body-parser";
 import db from "./db.js";
-import cors from 'cors'; 
+import cors from 'cors';
 
 const app = express();
 app.use(cors());
-const port = 5000;
+const port = 8000;
 
 app.use(bodyParser.json());
 
@@ -32,7 +32,7 @@ app.use(bodyParser.json());
  * @apiError {String} 404 Student not found.
  * @apiError {String} 500 Server error.
  */
-app.get("/gamer/:student_number", async (req, res) => {
+app.get("/api/gamer/:student_number", async (req, res) => {
   const { student_number } = req.params;
   try {
     const query =
@@ -44,7 +44,7 @@ app.get("/gamer/:student_number", async (req, res) => {
     res.json(result.rows[0]);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Error finding gamer");
+    res.status(500).send(`${err}`);
   }
 });
 
@@ -71,7 +71,7 @@ app.get("/gamer/:student_number", async (req, res) => {
  *
  * @apiError {String} 500 Server error.
  */
-app.post("/gamer", async (req, res) => {
+app.post("/api/gamer", async (req, res) => {
   const {
     first_name,
     last_name,
@@ -107,7 +107,7 @@ app.post("/gamer", async (req, res) => {
     ]);
     res.status(201).send(result.rows[0]);
   } catch (err) {
-    res.status(500).send("Error creating gamer");
+    res.status(500).send(`${err}`);
   }
 });
 
@@ -138,7 +138,7 @@ app.delete("/gamer/:student_number", async (req, res) => {
 
     res.status(200).send("Gamer profile deleted successfully");
   } catch (err) {
-    res.status(500).send("Server error");
+    res.status(500).send(`${err}`);
   }
 });
 
