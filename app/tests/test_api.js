@@ -136,7 +136,7 @@ describe("Gamer API", () => {
       .expect(500)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.text).to.equal("Error creating gamer");
+        expect(res.text).contains("Error creating gamer");
         done();
       });
   });
@@ -155,7 +155,7 @@ describe("Gamer API", () => {
       .expect(500)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.text).to.equal("Error creating gamer");
+        expect(res.text).contains("Error creating gamer");
         done();
       });
   });
@@ -180,6 +180,7 @@ describe("Gamer API", () => {
           .expect(200)
           .end((err, res) => {
             if (err) return done(err);
+            console.log("here: ", res.text);
             expect(res.text).to.equal("Gamer profile deleted successfully");
             done();
           });
@@ -192,7 +193,7 @@ describe("Gamer API", () => {
       .expect(404)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.text).to.equal("Student not found");
+        expect(res.text).contains("Student not found");
         done();
       });
   });

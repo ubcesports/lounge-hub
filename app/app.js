@@ -107,7 +107,7 @@ app.post("/api/gamer", async (req, res) => {
     ]);
     res.status(201).send(result.rows[0]);
   } catch (err) {
-    res.status(500).send(`${err}`);
+    res.status(500).send(`Error creating gamer: ${err}`);
   }
 });
 
@@ -123,7 +123,7 @@ app.post("/api/gamer", async (req, res) => {
  * @returns {string} 404 - Error message if profile is not found.
  * @returns {string} 500 - Error message if there is a server error.
  */
-app.delete("/gamer/:student_number", async (req, res) => {
+app.delete("/api/gamer/:student_number", async (req, res) => {
   const { student_number } = req.params;
 
   try {
@@ -138,7 +138,7 @@ app.delete("/gamer/:student_number", async (req, res) => {
 
     res.status(200).send("Gamer profile deleted successfully");
   } catch (err) {
-    res.status(500).send(`${err}`);
+    res.status(500).send(`Student not found: ${err}`);
   }
 });
 
