@@ -9,5 +9,8 @@
   },
   "scripts": {
     "format": "prettier --write \"**/*.js\""
+  },
+  "dependencies": {
+    "concurrently": "^9.0.1"
   }
 }
