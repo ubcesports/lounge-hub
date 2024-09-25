@@ -3,49 +3,62 @@
 ## Dev Environment
 
 ### Install Node
+
 Install node version `20.4.0`
 
 Verify node installation by running `node -v` and `npm -v`
 
 ### Install Dependencies and Running Services
-The lounge-hub repo is a mono repo separated into two parts: 
+
+The lounge-hub repo is a mono repo separated into two parts:
+
 - app: express api backend
 - client: next.js React frontend
-You'll need to install two separate node modules to get all the dependencies and run two seperate servers for the backend and the frontend. 
+  You'll need to install two separate node modules to get all the dependencies and run two seperate servers for the backend and the frontend.
 
 #### Backend
+
 To install backend dependencies, in the root directory, run
+
 ```
 cd app
 npm install
 ```
+
 To run the backend run
+
 ```
 node app.js
 ```
 
 #### Frontend
+
 To install frontend dependencies, in the root directory, run:
+
 ```
 cd client
 npm install
 ```
+
 To run the frontend in development mode run
+
 ```
 npm run dev
 ```
 
 #### Root
-You'll also need to install node module dependencies in the root directory for develpoment and deployment dependencies. Run `npm install` in the root directory. 
+
+You'll also need to install node module dependencies in the root directory for develpoment and deployment dependencies. Run `npm install` in the root directory.
 
 ### Tests
-The tests are separated by backend, frontend and integration tests. 
+
+The tests are separated by backend, frontend and integration tests.
 
 Run backend tests by running `cd app` and then `npm test`.
 
 ### Linting
-The repo uses the Prettier formatter. Run prettier locally by running `npm run format` in the root directory. 
 
+The repo uses the Prettier formatter. Run prettier locally by running `npm run format` in the root directory.
 
 ## Local Database Setup
 
