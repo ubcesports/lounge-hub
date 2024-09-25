@@ -180,7 +180,6 @@ describe("Gamer API", () => {
           .expect(200)
           .end((err, res) => {
             if (err) return done(err);
-            console.log("here: ", res.text);
             expect(res.text).to.equal("Gamer profile deleted successfully");
             done();
           });

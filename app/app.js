@@ -44,7 +44,7 @@ app.get("/api/gamer/:student_number", async (req, res) => {
     res.json(result.rows[0]);
   } catch (err) {
     console.error(err);
-    res.status(500).send(`${err}`);
+    res.status(500).send(`Error finding gamer: ${err}`);
   }
 });
 
