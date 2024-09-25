@@ -2,7 +2,7 @@ import express from "express";
 import moment from "moment-timezone";
 import bodyParser from "body-parser";
 import db from "./db.js";
-import cors from 'cors';
+import cors from "cors";
 
 const app = express();
 app.use(cors());
