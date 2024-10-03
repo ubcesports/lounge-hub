@@ -84,11 +84,8 @@ export default function Page() {
         <button type="submit">Submit</button>
       </form>
 
-
-      <h3>
-        Add activity
-      </h3>
-      <Activity/>
+      <h3>Add activity</h3>
+      <Activity />
     </div>
   );
 }
