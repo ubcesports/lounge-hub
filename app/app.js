@@ -142,6 +142,63 @@ app.delete("/api/gamer/:student_number", async (req, res) => {
   }
 });
 
+app.get("/api/activity/:student_number", async (req, res) => {
+  const { student_number } = req.params;
+  try {
+    const query =
+      "SELECT * FROM users_test.gamer_activity WHERE student_number = $1";
+    const result = await db.query(query, [student_number]);
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(`Error finding gamer activity: ${err}`);
+  }
+});
+
+app.post("/api/activity", async (req, res) => {
+  const { student_number, pc_number, game } = req.body;
+  const started_at = moment()
+    .tz("America/Los_Angeles")
+    .format("YYYY-MM-DD HH:mm");
+
+  const query = `INSERT INTO users_test.gamer_activity 
+      (student_number, pc_number, game, started_at) 
+      VALUES ($1, $2, $3, $4) 
+      RETURNING *`;
+
+  try {
+    const result = await db.query(query, [
+      student_number,
+      pc_number,
+      game,
+      started_at,
+    ]);
+    res.status(201).send(result.rows[0]);
+  } catch (err) {
+    res.status(500).send(`Error creating activity: ${err}`);
+  }
+});
+
+app.patch("/api/activity/update/:student_number", async (req, res) => {
+  const ended_at = moment()
+    .tz("America/Los_Angeles")
+    .format("YYYY-MM-DD HH:mm");
+  const { student_number } = req.params;
+
+  const query = `UPDATE users_test.gamer_activity
+                 SET ended_at = $1 
+                 WHERE student_number = $2
+                 RETURNING *`;
+
+  try {
+    const result = await db.query(query, [ended_at, student_number]);
+    res.status(200).send(result.rows[0]);
+  } catch (err) {
+    res.status(500).send(`Error updating activity: ${err}`);
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

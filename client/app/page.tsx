@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Activity from "./activity";
 
 export default function Page() {
   const [studentNumber, setStudentNumber] = useState<string>("");
@@ -82,6 +83,12 @@ export default function Page() {
         </label>
         <button type="submit">Submit</button>
       </form>
+
+
+      <h3>
+        Add activity
+      </h3>
+      <Activity/>
     </div>
   );
 }
