@@ -27,7 +27,7 @@ const CheckIn = () => {
     e.preventDefault();
     console.log("Form submitted:", checkInData);
     alert(
-      `Signed in: ${checkInData.studentNumber}, ${checkInData.game}, PC: ${checkInData.pc}`
+      `Signed in: ${checkInData.studentNumber}, ${checkInData.game}, PC: ${checkInData.pc}`,
     );
   };
 
