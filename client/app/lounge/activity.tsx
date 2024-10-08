@@ -7,7 +7,7 @@ export default function Activity() {
     game: "valorant",
     countdown: null,
     intervalId: null,
-    inUse: false
+    inUse: false,
   }));
 
   const [pcs, setPcs] = useState(initialPCs);
@@ -20,7 +20,6 @@ export default function Activity() {
   };
 
   const handleStart = async (index) => {
-
     const selectedPC = pcs[index];
     if (selectedPC.inUse) {
       return;
@@ -45,7 +44,14 @@ export default function Activity() {
       });
     }, 1000);
     const updatedPCs = pcs.map((pc, i) =>
-      i === index ? { ...pc, countdown: timerDuration, intervalId: intervalId, inUse: true} : pc,
+      i === index
+        ? {
+            ...pc,
+            countdown: timerDuration,
+            intervalId: intervalId,
+            inUse: true,
+          }
+        : pc,
     );
     setPcs(updatedPCs);
     let data = {
@@ -71,17 +77,16 @@ export default function Activity() {
             game: "valorant",
             countdown: null,
             intervalId: null,
-            inUse: false
+            inUse: false,
           }
         : pc,
     );
     setPcs(updatedPCs);
   };
 
-  const getStudentActivity = async() => {
-    await getActivityEntry("11223344"); 
-
-  }
+  const getStudentActivity = async () => {
+    await getActivityEntry("11223344");
+  };
 
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
@@ -125,7 +130,6 @@ export default function Activity() {
       </div>
       <div>
         Get Activity
-        
         <button onClick={getStudentActivity}>get activity</button>
       </div>
     </div>
@@ -183,7 +187,6 @@ const stopActivityEntry = async (studentNumber: string) => {
   }
 };
 
-  
 const getActivityEntry = async (studentNumber: string) => {
   const url = `http://localhost:8000/api/activity/${studentNumber}`;
 

@@ -142,7 +142,6 @@ app.delete("/api/gamer/:student_number", async (req, res) => {
   }
 });
 
-
 /**
  * @api {get} /activity/:student_number Get Gamer Activity
  * @apiName GetGamerActivity
@@ -240,8 +239,8 @@ app.patch("/api/activity/update/:student_number", async (req, res) => {
 
   const query = `UPDATE users_test.gamer_activity
                  SET ended_at = $1 
-                WHERE student_number = $2
-                AND started_at = (
+                 WHERE student_number = $2
+                 AND started_at = (
                   SELECT MAX(started_at) 
                   FROM users_test.gamer_activity 
                   WHERE student_number = $2
