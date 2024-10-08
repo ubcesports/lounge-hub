@@ -142,6 +142,23 @@ app.delete("/api/gamer/:student_number", async (req, res) => {
   }
 });
 
+
+/**
+ * @api {get} /activity/:student_number Get Gamer Activity
+ * @apiName GetGamerActivity
+ * @apiGroup Activity
+ *
+ * @apiParam {String} student_number Student's unique number.
+ *
+ * @apiSuccess {Object} gamer_activity Gamer activity object.
+ * @apiSuccess {String} gamer_activity.student_number Student number, 8 digit integer.
+ * @apiSuccess {String} gamer_activity.pc_number PC number.
+ * @apiSuccess {String} gamer_activity.game Game name.
+ * @apiSuccess {String} gamer_activity.started_at Date when the activity started.
+ * @apiSuccess {String} gamer_activity.ended_at Date when the activity ended.
+ *
+ * @apiError {String} 500 Server error.
+ */
 app.get("/api/activity/:student_number", async (req, res) => {
   const { student_number } = req.params;
   try {
@@ -149,13 +166,31 @@ app.get("/api/activity/:student_number", async (req, res) => {
       "SELECT * FROM users_test.gamer_activity WHERE student_number = $1";
     const result = await db.query(query, [student_number]);
 
-    res.json(result.rows[0]);
+    res.json(result.rows);
   } catch (err) {
     console.error(err);
     res.status(500).send(`Error finding gamer activity: ${err}`);
   }
 });
 
+/**
+ * @api {post} /activity Add Gamer Activity
+ * @apiName AddGamerActivity
+ * @apiGroup Activity
+ *
+ * @apiParam {String} student_number Student number, 8 digit integer.
+ * @apiParam {String} pc_number PC number.
+ * @apiParam {String} game Game name.
+ * @apiParam {Number} started_at Date when the activity started.
+ *
+ * @apiSuccess {Object} gamer_activity Gamer profile object.
+ * @apiSuccess {String} gamer_activity.student_number Student number, 8 digit integer.
+ * @apiSuccess {String} gamer_activity.pc_number PC number.
+ * @apiSuccess {String} gamer_activity.game Game name.
+ * @apiSuccess {Number} gamer_activity.started_at Date when the activity started.
+ *
+ * @apiError {String} 500 Server error.
+ */
 app.post("/api/activity", async (req, res) => {
   const { student_number, pc_number, game } = req.body;
   const started_at = moment()
@@ -180,6 +215,23 @@ app.post("/api/activity", async (req, res) => {
   }
 });
 
+/**
+ * @api {patch} /activity/update/:student_number Update Gamer Activity End Time
+ * @apiName UpdateGamerActivity
+ * @apiGroup Activity
+ *
+ * @apiParam {String} student_number Student number, 8 digit integer.
+ *
+ * @apiSuccess {Object} gamer_activity Gamer profile object.
+ * @apiSuccess {String} gamer_activity.student_number Student number, 8 digit integer.
+ * @apiSuccess {String} gamer_activity.pc_number PC number.
+ * @apiSuccess {String} gamer_activity.game Game name.
+ * @apiSuccess {Number} gamer_activity.started_at Date when the activity started.
+ * @apiSuccess {String} gamer_activity.ended_at Date when the activity ended.
+ *
+ * @apiError {String} 500 Internal server error.
+ */
+
 app.patch("/api/activity/update/:student_number", async (req, res) => {
   const ended_at = moment()
     .tz("America/Los_Angeles")
@@ -188,7 +240,12 @@ app.patch("/api/activity/update/:student_number", async (req, res) => {
 
   const query = `UPDATE users_test.gamer_activity
                  SET ended_at = $1 
-                 WHERE student_number = $2
+                WHERE student_number = $2
+                AND started_at = (
+                  SELECT MAX(started_at) 
+                  FROM users_test.gamer_activity 
+                  WHERE student_number = $2
+                )
                  RETURNING *`;
 
   try {
