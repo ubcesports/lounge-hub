@@ -190,7 +190,8 @@ app.get("/api/activity/all/recent", async (req, res) => {
   try {
     const query = `SELECT * FROM users_test.gamer_activity
       ORDER BY started_at 
-      DESC LIMIT 20;`;
+      DESC NULLS LAST 
+      LIMIT 20;`;
     const result = await db.query(query);
 
     res.json(result.rows);
