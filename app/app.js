@@ -212,9 +212,9 @@ app.get("/api/activity/all/recent", async (req, res) => {
  *
  * @apiSuccess {Object} gamer_activity Gamer profile object.
  * @apiSuccess {String} gamer_activity.student_number Student number, 8 digit integer.
- * @apiSuccess {String} gamer_activity.pc_number PC number.
+ * @apiSuccess {Number} gamer_activity.pc_number PC number.
  * @apiSuccess {String} gamer_activity.game Game name.
- * @apiSuccess {Number} gamer_activity.started_at Datetime when the activity started.
+ * @apiSuccess {String} gamer_activity.started_at Datetime when the activity started.
  *
  * @apiError {String} 500 Server error.
  */
@@ -238,9 +238,9 @@ app.post("/api/activity", async (req, res) => {
     ]);
     res.status(201).send(result.rows[0]);
   } catch (err) {
-    if (err.code === '23503') {
+    if (err.code === "23503") {
       res.status(404).send(`Foreign key ${student_number} not found.`);
-    } 
+    }
     res.status(500).send(`Error creating activity: ${err}`);
   }
 });
@@ -254,9 +254,9 @@ app.post("/api/activity", async (req, res) => {
  *
  * @apiSuccess {Object} gamer_activity Gamer profile object.
  * @apiSuccess {String} gamer_activity.student_number Student number, 8 digit integer.
- * @apiSuccess {String} gamer_activity.pc_number PC number.
+ * @apiSuccess {Number} gamer_activity.pc_number PC number.
  * @apiSuccess {String} gamer_activity.game Game name.
- * @apiSuccess {Number} gamer_activity.started_at Datetime when the activity started.
+ * @apiSuccess {String} gamer_activity.started_at Datetime when the activity started.
  * @apiSuccess {String} gamer_activity.ended_at Datetime when the activity ended.
  *
  * @apiError {String} 500 Internal server error.

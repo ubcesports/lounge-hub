@@ -80,16 +80,15 @@ describe("Activity API", () => {
 
   it("should return 404 if student does not have active activity", (done) => {
     request(app)
-    .patch("/api/activity/update/11223344")
-    .expect(404)
-    .end((err, res) => {
+      .patch("/api/activity/update/11223344")
+      .expect(404)
+      .end((err, res) => {
         if (err) return done(err);
         expect(res.text).to.equal("Student not active.");
         done();
       });
   });
 
-  
   it("should get a gamer activities", (done) => {
     request(app)
       .post("/api/activity")
@@ -103,29 +102,28 @@ describe("Activity API", () => {
         if (err) return done(err);
 
         request(app)
-        .post("/api/activity")
-        .send({
-          student_number: "87654321",
-          pc_number: 2,
-          game: "Valorant",
-        })
-        .expect(201)
-        .end((err, res) => {
-          if (err) return done(err);
+          .post("/api/activity")
+          .send({
+            student_number: "87654321",
+            pc_number: 2,
+            game: "Valorant",
+          })
+          .expect(201)
+          .end((err, res) => {
+            if (err) return done(err);
 
             request(app)
-            .get("/api/activity/all/recent")
-            .expect(200)
-            .end((err, res) => {
+              .get("/api/activity/all/recent")
+              .expect(200)
+              .end((err, res) => {
                 if (err) return done(err);
                 expect(res.body.length).to.be.at.most(20);
                 done();
-            });
-        });
-    });
+              });
+          });
+      });
   });
 
-  
   it("should get gamer activities for specific student", (done) => {
     request(app)
       .post("/api/activity")
@@ -139,29 +137,27 @@ describe("Activity API", () => {
         if (err) return done(err);
 
         request(app)
-        .post("/api/activity")
-        .send({
-          student_number: "87654321",
-          pc_number: 2,
-          game: "Valorant",
-        })
-        .expect(201)
-        .end((err, res) => {
-          if (err) return done(err);
+          .post("/api/activity")
+          .send({
+            student_number: "87654321",
+            pc_number: 2,
+            game: "Valorant",
+          })
+          .expect(201)
+          .end((err, res) => {
+            if (err) return done(err);
 
             request(app)
-            .get("/api/activity/87654321")
-            .expect(200)
-            .end((err, res) => {
+              .get("/api/activity/87654321")
+              .expect(200)
+              .end((err, res) => {
                 if (err) return done(err);
                 res.body.forEach((item) => {
-                    expect(item).to.have.property("student_number", "87654321");
+                  expect(item).to.have.property("student_number", "87654321");
                 });
                 done();
-
-            });
-        });
-    });
+              });
+          });
+      });
   });
-
 });
