@@ -20,6 +20,7 @@ jobs:
       DB_PASS: ${{ secrets.DB_PASS }}
       DB_NAME: ${{ secrets.DB_NAME }}
       DB_PORT: ${{ secrets.DB_PORT }}
+      TEST_SCHEMA: ${{ secrets.TEST_SCHEMA }}
 
     steps:
       - name: Check out repository
