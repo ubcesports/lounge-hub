@@ -143,18 +143,18 @@ app.delete("/api/gamer/:student_number", async (req, res) => {
 });
 
 /**
- * @api {get} /activity/:student_number Get Gamer Activity
- * @apiName GetGamerActivity
+ * @api {get} /activity/:student_number Get Gamer Activity for specific student
+ * @apiName GetGamerActivityByStudent
  * @apiGroup Activity
  *
  * @apiParam {String} student_number Student's unique number.
  *
  * @apiSuccess {Object} gamer_activity Gamer activity object.
  * @apiSuccess {String} gamer_activity.student_number Student number, 8 digit integer.
- * @apiSuccess {String} gamer_activity.pc_number PC number.
+ * @apiSuccess {Number} gamer_activity.pc_number PC number.
  * @apiSuccess {String} gamer_activity.game Game name.
- * @apiSuccess {String} gamer_activity.started_at Date when the activity started.
- * @apiSuccess {String} gamer_activity.ended_at Date when the activity ended.
+ * @apiSuccess {String} gamer_activity.started_at Datetime when the activity started.
+ * @apiSuccess {String} gamer_activity.ended_at Datetime when the activity ended.
  *
  * @apiError {String} 500 Server error.
  */
@@ -173,6 +173,34 @@ app.get("/api/activity/:student_number", async (req, res) => {
 });
 
 /**
+ * @api {get} /activity/all/recent Get Gamer Activity
+ * @apiName GetGamerActivity
+ * @apiGroup Activity
+ *
+ * @apiSuccess {Object} gamer_activity Gamer activity object.
+ * @apiSuccess {String} gamer_activity.student_number Student number, 8 digit integer.
+ * @apiSuccess {Number} gamer_activity.pc_number PC number.
+ * @apiSuccess {String} gamer_activity.game Game name.
+ * @apiSuccess {String} gamer_activity.started_at Datetime when the activity started.
+ * @apiSuccess {String} gamer_activity.ended_at Datetime when the activity ended.
+ *
+ * @apiError {String} 500 Server error.
+ */
+app.get("/api/activity/all/recent", async (req, res) => {
+  try {
+    const query = `SELECT * FROM users_test.gamer_activity
+      ORDER BY started_at 
+      DESC LIMIT 20;`;
+    const result = await db.query(query);
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(`Error finding recent activity: ${err}`);
+  }
+});
+
+/**
  * @api {post} /activity Add Gamer Activity
  * @apiName AddGamerActivity
  * @apiGroup Activity
@@ -186,7 +214,7 @@ app.get("/api/activity/:student_number", async (req, res) => {
  * @apiSuccess {String} gamer_activity.student_number Student number, 8 digit integer.
  * @apiSuccess {String} gamer_activity.pc_number PC number.
  * @apiSuccess {String} gamer_activity.game Game name.
- * @apiSuccess {Number} gamer_activity.started_at Date when the activity started.
+ * @apiSuccess {Number} gamer_activity.started_at Datetime when the activity started.
  *
  * @apiError {String} 500 Server error.
  */
@@ -210,6 +238,9 @@ app.post("/api/activity", async (req, res) => {
     ]);
     res.status(201).send(result.rows[0]);
   } catch (err) {
+    if (err.code === '23503') {
+      res.status(404).send(`Foreign key ${student_number} not found.`);
+    } 
     res.status(500).send(`Error creating activity: ${err}`);
   }
 });
@@ -225,8 +256,8 @@ app.post("/api/activity", async (req, res) => {
  * @apiSuccess {String} gamer_activity.student_number Student number, 8 digit integer.
  * @apiSuccess {String} gamer_activity.pc_number PC number.
  * @apiSuccess {String} gamer_activity.game Game name.
- * @apiSuccess {Number} gamer_activity.started_at Date when the activity started.
- * @apiSuccess {String} gamer_activity.ended_at Date when the activity ended.
+ * @apiSuccess {Number} gamer_activity.started_at Datetime when the activity started.
+ * @apiSuccess {String} gamer_activity.ended_at Datetime when the activity ended.
  *
  * @apiError {String} 500 Internal server error.
  */
@@ -240,6 +271,7 @@ app.patch("/api/activity/update/:student_number", async (req, res) => {
   const query = `UPDATE users_test.gamer_activity
                  SET ended_at = $1 
                  WHERE student_number = $2
+                 AND ended_at IS NULL
                  AND started_at = (
                   SELECT MAX(started_at) 
                   FROM users_test.gamer_activity 
@@ -249,7 +281,10 @@ app.patch("/api/activity/update/:student_number", async (req, res) => {
 
   try {
     const result = await db.query(query, [ended_at, student_number]);
-    res.status(200).send(result.rows[0]);
+    if (result.rows.length === 0) {
+      return res.status(404).send("Student not active.");
+    }
+    res.status(201).send(result.rows[0]);
   } catch (err) {
     res.status(500).send(`Error updating activity: ${err}`);
   }
