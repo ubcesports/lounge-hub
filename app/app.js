@@ -13,7 +13,9 @@ const schema =
     ? process.env.TEST_SCHEMA
     : process.env.LIVE_SCHEMA;
 app.use(cors());
+
 const port = 8000;
+const FK_VIOLATION = "23503";
 
 app.use(bodyParser.json());
 
@@ -244,7 +246,7 @@ app.post("/api/activity", async (req, res) => {
     ]);
     res.status(201).send(result.rows[0]);
   } catch (err) {
-    if (err.code === "23503") {
+    if (err.code === FK_VIOLATION) {
       return res.status(404).send(`Foreign key ${student_number} not found.`);
     }
     res.status(500).send(`Error creating activity: ${err}`);
