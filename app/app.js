@@ -3,10 +3,19 @@ import moment from "moment-timezone";
 import bodyParser from "body-parser";
 import db from "./db.js";
 import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
+const schema =
+  process.env.NODE_ENV === "test"
+    ? process.env.TEST_SCHEMA
+    : process.env.LIVE_SCHEMA;
 app.use(cors());
+
 const port = 8000;
+const FK_VIOLATION = "23503";
 
 app.use(bodyParser.json());
 
@@ -49,8 +58,7 @@ app.use(convertCamelToSnake);
 app.get("/api/gamer/:student_number", async (req, res) => {
   const { student_number } = req.params;
   try {
-    const query =
-      "SELECT * FROM users_test.gamer_profile WHERE student_number = $1";
+    const query = `SELECT * FROM ${schema}.gamer_profile WHERE student_number = $1`;
     const result = await db.query(query, [student_number]);
     if (result.rows.length === 0) {
       return res.status(404).send("Student not found");
@@ -96,7 +104,7 @@ app.post("/api/gamer", async (req, res) => {
   } = req.body;
   const created_at = moment().tz("America/Los_Angeles").format("YYYY-MM-DD");
 
-  const query = `INSERT INTO users_test.gamer_profile 
+  const query = `INSERT INTO ${schema}.gamer_profile 
       (first_name, last_name, student_number, membership_tier, banned, notes, created_at) 
       VALUES ($1, $2, $3, $4, $5, $6, $7) 
       ON CONFLICT (student_number) 
@@ -142,7 +150,7 @@ app.delete("/api/gamer/:student_number", async (req, res) => {
 
   try {
     const result = await db.query(
-      "DELETE FROM users_test.gamer_profile WHERE student_number = $1 RETURNING *",
+      `DELETE FROM ${schema}.gamer_profile WHERE student_number = $1 RETURNING *`,
       [student_number],
     );
 
@@ -175,8 +183,7 @@ app.delete("/api/gamer/:student_number", async (req, res) => {
 app.get("/api/activity/:student_number", async (req, res) => {
   const { student_number } = req.params;
   try {
-    const query =
-      "SELECT * FROM users_test.gamer_activity WHERE student_number = $1";
+    const query = `SELECT * FROM ${schema}.gamer_activity WHERE student_number = $1`;
     const result = await db.query(query, [student_number]);
 
     res.json(result.rows);
@@ -202,7 +209,7 @@ app.get("/api/activity/:student_number", async (req, res) => {
  */
 app.get("/api/activity/all/recent", async (req, res) => {
   try {
-    const query = `SELECT * FROM users_test.gamer_activity
+    const query = `SELECT * FROM ${schema}.gamer_activity
       ORDER BY started_at 
       DESC NULLS LAST 
       LIMIT 20;`;
@@ -239,7 +246,7 @@ app.post("/api/activity", async (req, res) => {
     .tz("America/Los_Angeles")
     .format("YYYY-MM-DD HH:mm");
 
-  const query = `INSERT INTO users_test.gamer_activity 
+  const query = `INSERT INTO ${schema}.gamer_activity 
       (student_number, pc_number, game, started_at) 
       VALUES ($1, $2, $3, $4) 
       RETURNING *`;
@@ -253,8 +260,8 @@ app.post("/api/activity", async (req, res) => {
     ]);
     res.status(201).send(result.rows[0]);
   } catch (err) {
-    if (err.code === "23503") {
-      res.status(404).send(`Foreign key ${student_number} not found.`);
+    if (err.code === FK_VIOLATION) {
+      return res.status(404).send(`Foreign key ${student_number} not found.`);
     }
     res.status(500).send(`Error creating activity: ${err}`);
   }
@@ -283,13 +290,13 @@ app.patch("/api/activity/update/:student_number", async (req, res) => {
     .format("YYYY-MM-DD HH:mm");
   const { student_number } = req.params;
 
-  const query = `UPDATE users_test.gamer_activity
+  const query = `UPDATE ${schema}.gamer_activity
                  SET ended_at = $1 
                  WHERE student_number = $2
                  AND ended_at IS NULL
                  AND started_at = (
                   SELECT MAX(started_at) 
-                  FROM users_test.gamer_activity 
+                  FROM ${schema}.gamer_activity 
                   WHERE student_number = $2
                 )
                  RETURNING *`;

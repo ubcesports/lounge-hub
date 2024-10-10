@@ -6,15 +6,29 @@ import db from "../db.js";
 describe("Activity API", () => {
   // Clean up the database before each test
   beforeEach(async () => {
-    await db.query("DROP TABLE IF EXISTS users_test.gamer_activity_test");
-    await db.query(
-      "CREATE TABLE users_test.gamer_activity_test (LIKE users_test.gamer_activity INCLUDING ALL)",
-    );
+    await db.query("TRUNCATE TABLE test.gamer_profile CASCADE;");
+    const mock1 = `
+      INSERT INTO test.gamer_profile 
+      (first_name, last_name, student_number, membership_tier) 
+      VALUES ('John', 'Doe', '11223344', 1);
+    `;
+    const mock2 = `
+      INSERT INTO test.gamer_profile 
+      (first_name, last_name, student_number, membership_tier) 
+      VALUES ('Jane', 'Doe', '87654321', 1);
+    `;
+    await db.query(mock1);
+    await db.query(mock2);
+    await db.query("TRUNCATE TABLE test.gamer_activity;");
   });
 
   // Clean up the database after each test
   afterEach(async () => {
-    await db.query("DROP TABLE IF EXISTS users_test.gamer_activity_test");
+    await db.query("TRUNCATE TABLE test.gamer_activity;");
+  });
+
+  after(async () => {
+    await db.query("TRUNCATE TABLE test.gamer_profile CASCADE;");
   });
 
   it("should add an activity", (done) => {
