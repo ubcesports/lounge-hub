@@ -19,6 +19,20 @@ const FK_VIOLATION = "23503";
 
 app.use(bodyParser.json());
 
+// TODO: Move this to a middleware file
+const camelToSnake = (str) =>
+  str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
+
+const convertCamelToSnake = (req, res, next) => {
+  req.body = Object.keys(req.body).reduce((acc, key) => {
+    acc[camelToSnake(key)] = req.body[key];
+    return acc;
+  }, {});
+  next();
+};
+
+app.use(convertCamelToSnake);
+
 /**
  * @api {get} /gamer/:student_number Get Gamer Profile
  * @apiName GetGamerProfile

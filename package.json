@@ -8,7 +8,7 @@
     "prettier": "3.3.3"
   },
   "scripts": {
-    "format": "prettier --write \"**/*.js\""
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
     "concurrently": "^9.0.1"
