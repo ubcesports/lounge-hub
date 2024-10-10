@@ -6,15 +6,12 @@ import db from "../db.js";
 describe("Gamer API", () => {
   // Clean up the database before each test
   beforeEach(async () => {
-    await db.query("DROP TABLE IF EXISTS users_test.gamer_profile_test");
-    await db.query(
-      "CREATE TABLE users_test.gamer_profile_test (LIKE users_test.gamer_profile INCLUDING ALL)",
-    );
+    await db.query("TRUNCATE TABLE test.gamer_profile CASCADE;");
   });
 
   // Clean up the database after each test
   afterEach(async () => {
-    await db.query("DROP TABLE IF EXISTS users_test.gamer_profile_test");
+    await db.query("TRUNCATE TABLE test.gamer_profile CASCADE;");
   });
 
   it("should add a gamer profile", (done) => {
