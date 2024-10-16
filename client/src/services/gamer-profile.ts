@@ -2,9 +2,7 @@ import { GamerProfile } from "../interfaces/gamer-profile";
 
 const API_URL = "http://localhost:8000/api";
 
-export const addGamerProfile = async (
-  gamerProfile: GamerProfile
-) => {
+export const addGamerProfile = async (gamerProfile: GamerProfile) => {
   const url = `${API_URL}/gamer`;
   const settings = {
     method: "POST",
