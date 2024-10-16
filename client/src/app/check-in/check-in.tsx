@@ -2,21 +2,17 @@ import React, { useState, ChangeEvent } from "react";
 
 import Button from "../components/button";
 import TextField from "../components/text-field";
-
-interface CheckInData {
-  studentNumber: string;
-  game: string;
-  pc: string;
-}
+import { Activity } from "../../interfaces/activity";
+import { checkInGamer } from "../../services/activity";
 
 const CheckIn = () => {
-  const [checkInData, setCheckInData] = useState<CheckInData>({
+  const [checkInData, setCheckInData] = useState<Activity>({
     studentNumber: "",
     game: "",
-    pc: "",
+    pcNumber: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCheckInData({
       ...checkInData,
       [e.target.name]: e.target.value,
@@ -25,10 +21,7 @@ const CheckIn = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", checkInData);
-    alert(
-      `Signed in: ${checkInData.studentNumber}, ${checkInData.game}, PC: ${checkInData.pc}`,
-    );
+    checkInGamer(checkInData);
   };
 
   return (
@@ -39,19 +32,19 @@ const CheckIn = () => {
           label="Student Number"
           name="studentNumber"
           value={checkInData.studentNumber}
-          onChange={handleChange}
+          onChange={handleInputChange}
         />
         <TextField
           label="Game"
           name="game"
           value={checkInData.game}
-          onChange={handleChange}
+          onChange={handleInputChange}
         />
         <TextField
           label="PC #"
-          name="pc"
-          value={checkInData.pc}
-          onChange={handleChange}
+          name="pcNumber"
+          value={checkInData.pcNumber}
+          onChange={handleInputChange}
         />
         <Button onClick={handleSubmit} label="Check in" />
       </form>
