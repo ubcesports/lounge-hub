@@ -9,7 +9,7 @@ const CheckIn = () => {
   const [checkInData, setCheckInData] = useState<Activity>({
     studentNumber: "",
     game: "",
-    pc: "",
+    pcNumber: "",
   });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -42,8 +42,8 @@ const CheckIn = () => {
         />
         <TextField
           label="PC #"
-          name="pc"
-          value={checkInData.pc}
+          name="pcNumber"
+          value={checkInData.pcNumber}
           onChange={handleInputChange}
         />
         <Button onClick={handleSubmit} label="Check in" />
