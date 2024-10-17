@@ -4,8 +4,11 @@ import Button from "../components/button";
 import TextField from "../components/text-field";
 import { Activity } from "../../interfaces/activity";
 import { checkInGamer } from "../../services/activity";
+import { getGamerProfile } from "../../services/gamer-profile";
+import useBoundStore from "../../store/store";
 
 const CheckIn = () => {
+  const store = useBoundStore();
   const [checkInData, setCheckInData] = useState<Activity>({
     studentNumber: "",
     game: "",
@@ -19,9 +22,18 @@ const CheckIn = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     checkInGamer(checkInData);
+    const addedProfile = await getGamerProfile(checkInData.studentNumber);
+    store.setGamerProfile({
+      ...addedProfile,
+      studentNumber: addedProfile.student_number,
+      firstName: addedProfile.first_name,
+      lastName: addedProfile.last_name,
+      membershipTier: addedProfile.membership_tier,
+      notes: addedProfile.notes,
+    });
   };
 
   return (

@@ -21,3 +21,15 @@ export const addGamerProfile = async (gamerProfile: GamerProfile) => {
     return error;
   }
 };
+
+export const getGamerProfile = async (studentNumber: string) => {
+  const url = `${API_URL}/gamer/${studentNumber}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
