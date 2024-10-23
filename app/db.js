@@ -1,16 +1,14 @@
-import dotenv from "dotenv";
 import pkg from "pg";
-
-dotenv.config();
+import { user, host, database, password, port } from "./config.js";
 
 const { Pool } = pkg;
 
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASS,
-  port: process.env.DB_PORT,
+  user: user,
+  host: host,
+  database: database,
+  password: password,
+  port: port,
 });
 
 const query = (text, params) => pool.query(text, params);
