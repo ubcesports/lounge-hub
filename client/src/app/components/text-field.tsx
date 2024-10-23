@@ -16,7 +16,13 @@ const TextField: React.FC<TextFieldProps> = ({
   return (
     <div>
       <label>{label}</label>
-      <input type="text" name={name} value={value} onChange={onChange} />
+      <input
+        className="bg-gray-50 outline outline-1"
+        type="text"
+        name={name}
+        value={value}
+        onChange={onChange}
+      />
     </div>
   );
 };
