@@ -9,7 +9,7 @@
     "prettier-plugin-tailwindcss": "^0.6.8"
   },
   "scripts": {
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\""
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\""
   },
   "dependencies": {
     "concurrently": "^9.0.1"
