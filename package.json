@@ -5,7 +5,8 @@
   "main": "app.js",
   "type": "module",
   "devDependencies": {
-    "prettier": "3.3.3"
+    "prettier": "3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8"
   },
   "scripts": {
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\""
