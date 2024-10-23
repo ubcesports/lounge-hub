@@ -18,12 +18,7 @@ const DropdownField: React.FC<DropdownFieldProps> = ({
   return (
     <div>
       <label>{label}</label>
-      <select
-        className="outline outline-1"
-        name={name}
-        value={value}
-        onChange={onChange}
-      >
+      <select name={name} value={value} onChange={onChange}>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
