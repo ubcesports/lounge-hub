@@ -29,6 +29,9 @@ router.get("/activity/:student_number", async (req, res) => {
     const query = `SELECT * FROM ${schema}.gamer_activity WHERE student_number = $1`;
     const result = await db.query(query, [student_number]);
 
+    if (result.rows.length === 0) {
+      return res.status(404).send("Student not found");
+    }
     res.json(result.rows);
   } catch (err) {
     console.error(err);
@@ -154,7 +157,7 @@ router.patch("/activity/update/:student_number", async (req, res) => {
   }
 });
 
-router.get("/activity/get-active-pcs", async (req, res) => {
+router.get("/activity/all/get-active-pcs", async (req, res) => {
   console.log("Getting active PCs");
   const query = `SELECT ${schema}.gamer_activity.pc_number, 
     ${schema}.gamer_activity.started_at, 
