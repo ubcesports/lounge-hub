@@ -158,11 +158,7 @@ router.patch("/activity/update/:student_number", async (req, res) => {
 });
 
 router.get("/activity/all/get-active-pcs", async (req, res) => {
-  console.log("Getting active PCs");
-  const query = `SELECT ${schema}.gamer_activity.pc_number, 
-    ${schema}.gamer_activity.started_at, 
-    ${schema}.gamer_profile.membership_tier, 
-    ${schema}.gamer_activity.ended_at
+  const query = `SELECT *
     FROM ${schema}.gamer_activity
     JOIN ${schema}.gamer_profile ON 
     ${schema}.gamer_activity.student_number = ${schema}.gamer_profile.student_number
@@ -170,7 +166,6 @@ router.get("/activity/all/get-active-pcs", async (req, res) => {
 
   try {
     const pcs_in_use = await db.query(query);
-    console.log(pcs_in_use.rows);
 
     res.status(200).send(pcs_in_use.rows);
   } catch (err) {

@@ -1,5 +1,5 @@
 import useBoundStore from "../../store/store";
-import { initialGamerState } from "../../store/store";
+import { initialGamerState } from "../../store/gamer-store";
 
 export default function StudentInfo() {
   const gamer = useBoundStore((state) => state.GamerProfile);
