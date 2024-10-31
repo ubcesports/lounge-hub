@@ -21,3 +21,23 @@ export const checkInGamer = async (activity: Activity) => {
     return error;
   }
 };
+
+
+export const getRecentActivity = async () => {
+  const url = `${API_URL}/activity/all/recent`;
+  const settings = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    }
+  };
+
+  try {
+    const response = await fetch(url, settings);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
