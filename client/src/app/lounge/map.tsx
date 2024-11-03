@@ -12,9 +12,7 @@ const LoungeMap = () => {
     <div className="grid grid-cols-5 gap-4 p-4">
       {pcList.pcs.map((pc) => {
         const isOccupied = pc.startedAt !== "";
-        return (
-          <PCStation pc={pc} key={pc.pcNumber} isOccupied={isOccupied}/>
-        );
+        return <PCStation pc={pc} key={pc.pcNumber} isOccupied={isOccupied} />;
       })}
     </div>
   );

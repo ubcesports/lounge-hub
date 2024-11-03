@@ -17,7 +17,7 @@ const initialPCState: PCList = {
     startedAt: "",
     firstName: "",
     lastName: "",
-    membershipTier: "",
+    membershipTier: 0,
     notes: "",
   })),
 };
@@ -25,7 +25,7 @@ const initialPCState: PCList = {
 const updatePCList = (pcList: PCList, data: any) => {
   const updatedPCList = pcList.pcs.map((pc) => {
     const updatedPC = data.find((d: any) => d.pc_number === pc.pcNumber);
-    
+
     if (updatedPC) {
       return {
         ...pc,
@@ -47,9 +47,9 @@ const updatePCList = (pcList: PCList, data: any) => {
 
 export const createPCSlice: StateCreator<PCSlice> = (set) => ({
   PCList: initialPCState,
-  setPCList: (payload: any) => set((state) => ({
-    PCList: updatePCList(state.PCList, payload),
-  })),
+  setPCList: (payload: any) =>
+    set((state) => ({
+      PCList: updatePCList(state.PCList, payload),
+    })),
   removePCList: () => set({ PCList: initialPCState }),
 });
-

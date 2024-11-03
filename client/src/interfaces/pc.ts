@@ -9,6 +9,6 @@ export interface PC {
   startedAt: string;
   firstName: string;
   lastName: string;
-  membershipTier: string;
+  membershipTier: number;
   notes: string;
 }
