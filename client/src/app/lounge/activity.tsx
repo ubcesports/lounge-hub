@@ -6,6 +6,8 @@ export default function Activity() {
   const [recentLogs, setRecentLogs] = useState([]);
 
   useEffect(() => {
+
+    // TODO: use join by FK instead
     const fetchActivities = async () => {
       try {
         const activities = await getRecentActivity();
@@ -55,6 +57,7 @@ export default function Activity() {
       <h1 className="text-xl">Activity Log</h1>
       <div className="bg-gray-900 p-4">
         {recentLogs.map((log) => (
+          // TODO: fix unique key warning
           <div className="mb-4 border-b border-gray-700 pb-4">
             <h1 className="text-xl text-white">
               {log.first_name} {log.last_name}
