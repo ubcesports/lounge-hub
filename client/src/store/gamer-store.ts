@@ -15,7 +15,9 @@ export const initialGamerState: GamerProfile = {
   notes: "",
 };
 
-export const createGamerProfileSlice: StateCreator<GamerProfileSlice> = (set) => ({
+export const createGamerProfileSlice: StateCreator<GamerProfileSlice> = (
+  set,
+) => ({
   GamerProfile: initialGamerState,
   setGamerProfile: (payload: GamerProfile) => set({ GamerProfile: payload }),
   removeGamerProfile: () => set({ GamerProfile: initialGamerState }),
