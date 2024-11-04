@@ -1,6 +1,8 @@
 import { Activity } from "../interfaces/activity";
 import { useEffect } from "react";
 import useBoundStore from "../store/store";
+import { getGamerProfile } from "./gamer-profile";
+import useStore from "../store/store";
 
 const API_URL = "http://localhost:8000/api";
 
@@ -42,7 +44,6 @@ export const useFetchPCStatus = () => {
   }, []);
 };
 
-
 export const getRecentActivity = async () => {
   const url = `${API_URL}/activity/all/recent`;
   const settings = {
@@ -50,7 +51,7 @@ export const getRecentActivity = async () => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-    }
+    },
   };
 
   try {
@@ -60,4 +61,35 @@ export const getRecentActivity = async () => {
   } catch (error) {
     return error;
   }
+};
+
+export const useFetchActivities = () => {
+  const setLogList = useStore((state) => state.setLogList);
+  const logList = useStore((state) => state.logList);
+
+  useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        const activities = await getRecentActivity();
+
+        const activitiesWithProfiles = await Promise.all(
+          activities.map(async (activity) => {
+            const profile = await getGamerProfile(activity.student_number);
+
+            return {
+              first_name: profile.first_name,
+              last_name: profile.last_name,
+              ...activity,
+            };
+          }),
+        );
+
+        setLogList(activitiesWithProfiles);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchActivities();
+  }, [logList, setLogList]);
 };
