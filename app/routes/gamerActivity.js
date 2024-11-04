@@ -29,6 +29,9 @@ router.get("/activity/:student_number", async (req, res) => {
     const query = `SELECT * FROM ${schema}.gamer_activity WHERE student_number = $1`;
     const result = await db.query(query, [student_number]);
 
+    if (result.rows.length === 0) {
+      return res.status(404).send("Student not found");
+    }
     res.json(result.rows);
   } catch (err) {
     console.error(err);
@@ -151,6 +154,23 @@ router.patch("/activity/update/:student_number", async (req, res) => {
     res.status(201).send(result.rows[0]);
   } catch (err) {
     res.status(500).send(`Error updating activity: ${err}`);
+  }
+});
+
+router.get("/activity/all/get-active-pcs", async (req, res) => {
+  const query = `SELECT *
+    FROM ${schema}.gamer_activity
+    JOIN ${schema}.gamer_profile ON 
+    ${schema}.gamer_activity.student_number = ${schema}.gamer_profile.student_number
+    WHERE ${schema}.gamer_activity.ended_at IS NULL`;
+
+  try {
+    const pcs_in_use = await db.query(query);
+
+    res.status(200).send(pcs_in_use.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(`Error getting active PCs: ${err}`);
   }
 });
 
