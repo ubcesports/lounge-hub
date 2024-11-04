@@ -38,9 +38,9 @@ export default function Activity() {
     const startedDate = new Date(log.started_at);
     const endedDate = log.ended_at ? new Date(log.ended_at) : null;
 
-    const dateFormatted = `${String(startedDate.getMonth() + 1).padStart(2, "0")}-
-                            ${String(startedDate.getDate()).padStart(2, "0")}-
-                            ${startedDate.getFullYear()}`;
+    const dateFormatted = `${String(startedDate.getMonth() + 1).padStart(2, "0")}-` +
+                            `${String(startedDate.getDate()).padStart(2, "0")}-` +
+                            `${startedDate.getFullYear()}`;
     const startTimeFormatted = startedDate.toTimeString().slice(0, 5);
     const endTimeFormatted = endedDate?.toTimeString().slice(0, 5);
 
@@ -56,6 +56,12 @@ export default function Activity() {
     <div>
       <h1 className="text-xl">Activity Log</h1>
       <div className="bg-gray-900 p-4">
+        {recentLogs.length === 0 && 
+        <div className="mb-4 border-b border-gray-700 pb-4">
+            <h1 className="text-xl text-white">
+              No Recent Activity
+            </h1>
+          </div>}
         {recentLogs.map((log) => (
           // TODO: fix unique key warning
           <div className="mb-4 border-b border-gray-700 pb-4">
