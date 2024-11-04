@@ -6,8 +6,6 @@ export default function Activity() {
   const [recentLogs, setRecentLogs] = useState([]);
 
   useEffect(() => {
-
-    // TODO: use join by FK instead
     const fetchActivities = async () => {
       try {
         const activities = await getRecentActivity();
