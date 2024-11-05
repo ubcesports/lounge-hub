@@ -27,6 +27,7 @@ export const checkInGamer = async (activity: Activity) => {
 export const checkOutGamer = async (
   studentNumber: string,
   pcNumber: number,
+  execName: string,
 ) => {
   const url = `${API_URL}/activity/update/${studentNumber}`;
   const settings = {
