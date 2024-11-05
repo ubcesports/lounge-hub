@@ -26,18 +26,6 @@ export const checkInGamer = async (activity: Activity) => {
 
 export const useFetchPCStatus = () => {
   useEffect(() => {
-    const fetchPCStatus = async () => {
-      const url = `${API_URL}/activity/all/get-active-pcs`;
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        const store = useBoundStore.getState();
-        store.setPCList(data);
-      } catch (error) {
-        console.error("Error fetching PC status:", error);
-      }
-    };
-
     fetchPCStatus();
   }, []);
 };
