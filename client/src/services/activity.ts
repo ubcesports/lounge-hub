@@ -40,4 +40,4 @@ export const fetchPCStatus = async () => {
   } catch (error) {
     return error;
   }
-}
+};

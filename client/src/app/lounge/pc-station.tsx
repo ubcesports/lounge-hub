@@ -8,7 +8,7 @@ interface PCStationProps {
 
 const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied }) => {
   const [timeRemaining, setTimeRemaining] = useState<String>("");
-  
+
   const calculateTimeRemaining = (
     startedAt: string,
     membershipTier: number,
