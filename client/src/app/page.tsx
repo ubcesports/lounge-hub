@@ -20,15 +20,15 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4">
-      <div className="grid h-full grid-cols-5 gap-4">
+    <div className="min-h-screen bg-gray-900 p-2">
+      <div className="grid h-full grid-cols-5 gap-2">
         {/* Live Lounge Map - Left Section */}
         <div className="col-span-2 min-h-full rounded-lg bg-gray-800 p-4">
           <Map />
         </div>
 
         {/* Right Column - Check In, Student Info, and Records */}
-        <div className="relative col-span-3 flex flex-col gap-4">
+        <div className="relative col-span-3 flex flex-col gap-2">
           <div className="absolute right-0 top-0 m-4">
             <Button
               onClick={handleToggleForm}
