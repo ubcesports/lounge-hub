@@ -4,10 +4,11 @@ import { PC } from "../../interfaces/pc";
 interface PCStationProps {
   pc: PC;
   isOccupied: boolean;
+  onClick: (pc: PC, timeRemaining: string, isOccupied: boolean) => void;
 }
 
-const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied }) => {
-  const [timeRemaining, setTimeRemaining] = useState<String>("");
+const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied, onClick }) => {
+  const [timeRemaining, setTimeRemaining] = useState<string>("");
 
   const calculateTimeRemaining = (
     startedAt: string,
@@ -45,19 +46,20 @@ const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied }) => {
   const isTimeUp = timeRemaining === "Time Up";
 
   return (
-    <div
-      className={`flex items-center justify-center rounded p-4 text-xs ${isTimeUp ? "border border-black" : isOccupied ? "border bg-red-500 text-white" : "border bg-green-500 text-white"}`}
-      style={{
-        height: "100px",
-        width: "100px",
-        backgroundColor: isTimeUp ? "transparent" : "",
-      }}
-    >
-      <div className="text-center">
-        <p className="text-lg">{pc.pcNumber}</p>
-        {isOccupied && <p className="text-lg">{timeRemaining}</p>}
-      </div>
-    </div>
+      <button
+        onClick={() => onClick(pc, timeRemaining, isOccupied)}
+        className={`flex items-center justify-center rounded p-4 text-xs ${isTimeUp ? "border border-black" : isOccupied ? "border bg-red-500 text-white" : "border bg-green-500 text-white"}`}
+        style={{
+          height: "100px",
+          width: "100px",
+          backgroundColor: isTimeUp ? "transparent" : "",
+        }}
+      >
+        <div className="text-center">
+          <p className="text-lg">{pc.pcNumber}</p>
+          {isOccupied && <p className="text-lg">{timeRemaining}</p>}
+        </div>
+      </button>
   );
 };
 
