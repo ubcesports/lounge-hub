@@ -1,28 +1,10 @@
-import { create, StateCreator } from "zustand";
-import { GamerProfile } from "../interfaces/gamer-profile";
+import { create } from "zustand";
+import { createGamerProfileSlice, GamerProfileSlice } from "./gamer-store";
+import { createPCSlice, PCSlice } from "./pc-store";
 
-interface GamerProfileSlice {
-  GamerProfile: GamerProfile;
-  setGamerProfile: (payload: GamerProfile) => void;
-  removeGamerProfile: () => void;
-}
-
-export const initialGamerState: GamerProfile = {
-  studentNumber: "",
-  firstName: "",
-  lastName: "",
-  membershipTier: 0,
-  notes: "",
-};
-
-const createGamerProfileSlice: StateCreator<GamerProfileSlice> = (set) => ({
-  GamerProfile: initialGamerState,
-  setGamerProfile: (payload: GamerProfile) => set({ GamerProfile: payload }),
-  removeGamerProfile: () => set({ GamerProfile: initialGamerState }),
-});
-
-const useStore = create<GamerProfileSlice>()((...a) => ({
+const useStore = create<GamerProfileSlice & PCSlice>()((...a) => ({
   ...createGamerProfileSlice(...a),
+  ...createPCSlice(...a),
 }));
 
 export default useStore;

@@ -1,7 +1,20 @@
-export default function Map() {
+import useBoundStore from "../../store/store";
+import { useFetchPCStatus } from "../../services/activity";
+import PCStation from "./pc-station";
+
+const LoungeMap = () => {
+  useFetchPCStatus();
+
+  const pcList = useBoundStore((state) => state.PCList);
+
   return (
-    <div>
-      <h1>Map</h1>
+    <div className="grid grid-cols-5 gap-4 p-4">
+      {pcList.pcs.map((pc) => {
+        const isOccupied = pc.startedAt !== "";
+        return <PCStation pc={pc} key={pc.pcNumber} isOccupied={isOccupied} />;
+      })}
     </div>
   );
-}
+};
+
+export default LoungeMap;
