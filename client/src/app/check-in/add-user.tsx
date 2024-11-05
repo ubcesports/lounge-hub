@@ -50,27 +50,27 @@ const AddUser = () => {
           name="studentNumber"
           value={addGamerData.studentNumber}
           onChange={handleInputChange}
-          className="col-span-1 rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
+          className="col-span-1 rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
         />
         <TextField
           label="First Name"
           name="firstName"
           value={addGamerData.firstName}
           onChange={handleInputChange}
-          className="col-span-1 rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
+          className="col-span-1 rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
         />
         <TextField
           label="Last Name"
           name="lastName"
           value={addGamerData.lastName}
           onChange={handleInputChange}
-          className="col-span-1 rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
+          className="col-span-1 rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
         />
         <DropdownField
           label="Membership Tier"
           name="membershipTier"
           value={addGamerData.membershipTier}
-          className="col-span-1 rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
+          className="col-span-1 rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
           onChange={handleDropdownChange}
           options={[
             { value: "1", label: "Tier 1" },
@@ -88,7 +88,7 @@ const AddUser = () => {
             name="notes"
             value={addGamerData.notes}
             onChange={handleInputChange}
-            className="col-span-5 rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
+            className="col-span-5 rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
           />
         </div>
       </form>

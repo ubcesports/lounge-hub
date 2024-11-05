@@ -63,21 +63,21 @@ const CheckIn = () => {
           name="studentNumber"
           value={checkInData.studentNumber}
           onChange={handleInputChange}
-          className="rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
+          className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
         />
         <TextField
           label="Game"
           name="game"
           value={checkInData.game}
           onChange={handleInputChange}
-          className="rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
+          className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
         />
         <TextField
           label="Table #"
           name="pcNumber"
           value={checkInData.pcNumber}
           onChange={handleInputChange}
-          className="rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
+          className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
         />
         <Button
           onClick={handleSubmit}
