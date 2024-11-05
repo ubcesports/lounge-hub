@@ -53,9 +53,9 @@ const CheckIn = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 rounded-lg bg-gray-800 p-4">
+    <div className="flex flex-col gap-4 rounded-lg bg-[#20222C] p-4">
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-lg text-white">Check in</h1>
+        <h1 className="text-lg text-[#DEE7EC]">Check in</h1>
       </div>
       <form className="grid grid-cols-4 items-end gap-4">
         <TextField
@@ -63,26 +63,26 @@ const CheckIn = () => {
           name="studentNumber"
           value={checkInData.studentNumber}
           onChange={handleInputChange}
-          className="rounded bg-gray-700 p-2 text-white"
+          className="rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
         />
         <TextField
           label="Game"
           name="game"
           value={checkInData.game}
           onChange={handleInputChange}
-          className="rounded bg-gray-700 p-2 text-white"
+          className="rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
         />
         <TextField
           label="Table #"
           name="pcNumber"
           value={checkInData.pcNumber}
           onChange={handleInputChange}
-          className="rounded bg-gray-700 p-2 text-white"
+          className="rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
         />
         <Button
           onClick={handleSubmit}
           label="Sign in"
-          className="max-w-[90px] rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-500"
+          className="max-w-[90px] rounded bg-[#3A6AAC] px-4 py-2 text-[#DEE7EC] hover:bg-blue-500"
         />
       </form>
     </div>

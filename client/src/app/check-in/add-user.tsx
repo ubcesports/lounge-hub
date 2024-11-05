@@ -40,9 +40,9 @@ const AddUser = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 rounded-lg bg-gray-800 p-4">
+    <div className="flex flex-col gap-4 rounded-lg bg-[#20222C] p-4">
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-lg text-white">Add Profile</h1>
+        <h1 className="text-lg text-[#DEE7EC]">Add Profile</h1>
       </div>
       <form className="grid grid-cols-5 items-end gap-4">
         <TextField
@@ -50,27 +50,27 @@ const AddUser = () => {
           name="studentNumber"
           value={addGamerData.studentNumber}
           onChange={handleInputChange}
-          className="col-span-1 rounded bg-gray-700 p-2 text-white"
+          className="col-span-1 rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
         />
         <TextField
           label="First Name"
           name="firstName"
           value={addGamerData.firstName}
           onChange={handleInputChange}
-          className="col-span-1 rounded bg-gray-700 p-2 text-white"
+          className="col-span-1 rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
         />
         <TextField
           label="Last Name"
           name="lastName"
           value={addGamerData.lastName}
           onChange={handleInputChange}
-          className="col-span-1 rounded bg-gray-700 p-2 text-white"
+          className="col-span-1 rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
         />
         <DropdownField
           label="Membership Tier"
           name="membershipTier"
           value={addGamerData.membershipTier}
-          className="col-span-1 rounded bg-gray-700 p-2 text-white"
+          className="col-span-1 rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
           onChange={handleDropdownChange}
           options={[
             { value: "1", label: "Tier 1" },
@@ -80,7 +80,7 @@ const AddUser = () => {
         <Button
           onClick={handleSubmit}
           label="Add Gamer"
-          className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-500"
+          className="rounded bg-[#3A6AAC] px-4 py-2 text-[#DEE7EC] hover:bg-blue-500"
         />
         <div className="col-span-5 col-start-1 row-span-1 row-start-2">
           <TextField
@@ -88,7 +88,7 @@ const AddUser = () => {
             name="notes"
             value={addGamerData.notes}
             onChange={handleInputChange}
-            className="col-span-5 rounded bg-gray-700 p-2 text-white"
+            className="col-span-5 rounded bg-[#20222C] p-2 text-[#DEE7EC] border border-[#62667B]"
           />
         </div>
       </form>

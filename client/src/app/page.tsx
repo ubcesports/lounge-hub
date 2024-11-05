@@ -20,10 +20,10 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 p-2">
+    <div className="min-h-screen bg-[#0D0D0E] p-2">
       <div className="grid h-full grid-cols-5 gap-2">
         {/* Live Lounge Map - Left Section */}
-        <div className="col-span-2 min-h-full rounded-lg bg-gray-800 p-4">
+        <div className="col-span-2 min-h-full rounded-lg bg-[#20222C] p-4">
           <Map />
         </div>
 
@@ -36,13 +36,13 @@ export default function Page() {
               className="flex items-center text-green-400 hover:text-green-300"
             />
           </div>
-          <div className="max-h-[300px] flex-grow rounded-lg bg-gray-800 p-4">
+          <div className="max-h-[300px] flex-grow rounded-lg bg-[#20222C] p-4">
             {isAddingNewGamer ? <CheckIn /> : <AddUser />}
           </div>
-          <div className="rounded-lg bg-gray-800 p-4">
+          <div className="rounded-lg bg-[#20222C] p-4">
             <StudentInfo />
           </div>
-          <div className="rounded-lg bg-gray-800 p-4">
+          <div className="rounded-lg bg-[#20222C] p-4">
             <Records />
           </div>
         </div>

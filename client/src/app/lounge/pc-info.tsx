@@ -13,7 +13,7 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
   };
 
   return (
-    <div className="flex items-center justify-between rounded-lg bg-gray-800 p-4">
+    <div className="flex items-center justify-between rounded-lg bg-[#20222C] p-4">
       <div>
         <h1 className="mb-3 text-3xl text-white">Desk {pc.pcNumber}</h1>
         <p
