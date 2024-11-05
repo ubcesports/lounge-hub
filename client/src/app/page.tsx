@@ -8,7 +8,7 @@ import Map from "./lounge/map";
 import StudentInfo from "./student-info/student-info";
 import Records from "./records/records";
 import Activity from "./lounge/activity";
-import PcInfo from "./lounge/pc-info";
+import PCInfo from "./lounge/pc-info";
 import AddUser from "./check-in/add-user";
 
 export default function Page() {

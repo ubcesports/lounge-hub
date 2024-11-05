@@ -3,7 +3,7 @@ import { useFetchPCStatus } from "../../services/activity";
 import PCStation from "./pc-station";
 import { useState } from "react";
 import { PC } from "../../interfaces/pc";
-import PcInfo from "./pc-info";
+import PCInfo from "./pc-info";
 
 const LoungeMap = () => {
   const [selectedPC, setSelectedPC] = useState<PC | null>(null);
@@ -36,7 +36,7 @@ const LoungeMap = () => {
         ))}
       </div>
       {selectedPC && (
-        <PcInfo
+        <PCInfo
           pc={selectedPC}
           timeRemaining={timeRemaining}
           isOccupied={isOccupied}

@@ -7,7 +7,7 @@ interface PCInfoProps {
   isOccupied: boolean;
 }
 
-const PcInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
+const PCInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
   const handleClick = async () => {
     await checkOutGamer(pc.studentNumber, pc.pcNumber);
   };
@@ -36,4 +36,4 @@ const PcInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
   );
 };
 
-export default PcInfo;
+export default PCInfo;
