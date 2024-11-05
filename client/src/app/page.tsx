@@ -20,7 +20,6 @@ export default function Page() {
       <div>
         <Map />
         <Activity />
-        <PcInfo />
       </div>
       <div>
         <CheckIn />
