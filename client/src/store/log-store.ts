@@ -25,10 +25,7 @@ const updateLogList = (data: any) => {
   return updatedLogList;
 };
 
-export const createLogsSlice: StateCreator<LogsSlice> = (
-  set,
-  get,
-) => ({
+export const createLogsSlice: StateCreator<LogsSlice> = (set, get) => ({
   logList: initialLogState,
   setLogList: (payload: any) => {
     const newLogList = updateLogList(payload);
