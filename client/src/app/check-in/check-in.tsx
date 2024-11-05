@@ -24,6 +24,13 @@ const CheckIn = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const store = useBoundStore.getState();
+    const pcList = store.PCList;
+    console.log(pcList);
+    if (pcList.pcs.some((pc) => pc.studentNumber === checkInData.studentNumber)) {
+      alert("This student is already checked in.");
+      return;
+    }
     checkInGamer(checkInData);
     const addedProfile = await getGamerProfile(checkInData.studentNumber);
     store.setGamerProfile({
