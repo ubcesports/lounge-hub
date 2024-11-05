@@ -19,12 +19,13 @@ const DropdownField: React.FC<DropdownFieldProps> = ({
 }) => {
   return (
     <div className="flex flex-col">
-      <label className="text-white mb-1">{label}</label> {/* Apply text-white class */}
+      <label className="mb-1 text-white">{label}</label>{" "}
+      {/* Apply text-white class */}
       <select
         name={name}
         value={value}
         onChange={onChange}
-        className={`p-2 rounded bg-gray-700 text-white ${className}`} // Merge default and custom classes
+        className={`rounded bg-gray-700 p-2 text-white ${className}`} // Merge default and custom classes
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>

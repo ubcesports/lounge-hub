@@ -17,13 +17,14 @@ const TextField: React.FC<TextFieldProps> = ({
 }) => {
   return (
     <div className="flex flex-col">
-      <label className="text-white mb-1">{label}</label> {/* Apply text-white class */}
+      <label className="mb-1 text-white">{label}</label>{" "}
+      {/* Apply text-white class */}
       <input
         type="text"
         name={name}
         value={value}
         onChange={onChange}
-        className={`p-2 rounded bg-gray-700 text-white ${className}`} // Merge default and custom classes
+        className={`rounded bg-gray-700 p-2 text-white ${className}`} // Merge default and custom classes
       />
     </div>
   );

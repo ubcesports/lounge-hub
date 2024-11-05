@@ -32,7 +32,10 @@ const CheckIn = () => {
       alert("This student is already checked in.");
       return;
     }
-    if (pcList.pcs.find((pc) => String(pc.pcNumber) === checkInData.pcNumber).studentNumber) {
+    if (
+      pcList.pcs.find((pc) => String(pc.pcNumber) === checkInData.pcNumber)
+        .studentNumber
+    ) {
       alert("This PC is already occupied.");
       return;
     }
@@ -50,36 +53,36 @@ const CheckIn = () => {
   };
 
   return (
-    <div className="bg-gray-800 rounded-lg p-4 flex flex-col gap-4">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-white text-lg">Check in</h1>
+    <div className="flex flex-col gap-4 rounded-lg bg-gray-800 p-4">
+      <div className="mb-4 flex items-center justify-between">
+        <h1 className="text-lg text-white">Check in</h1>
       </div>
-      <form className="grid grid-cols-4 gap-4 items-end">
+      <form className="grid grid-cols-4 items-end gap-4">
         <TextField
           label="Student number"
           name="studentNumber"
           value={checkInData.studentNumber}
           onChange={handleInputChange}
-          className="p-2 rounded bg-gray-700 text-white"
+          className="rounded bg-gray-700 p-2 text-white"
         />
         <TextField
           label="Game"
           name="game"
           value={checkInData.game}
           onChange={handleInputChange}
-          className="p-2 rounded bg-gray-700 text-white"
+          className="rounded bg-gray-700 p-2 text-white"
         />
         <TextField
           label="Table #"
           name="pcNumber"
           value={checkInData.pcNumber}
           onChange={handleInputChange}
-          className="p-2 rounded bg-gray-700 text-white"
+          className="rounded bg-gray-700 p-2 text-white"
         />
         <Button
           onClick={handleSubmit}
           label="Sign in"
-          className="bg-blue-600 text-white rounded py-2 px-4 hover:bg-blue-500 max-w-[90px]"
+          className="max-w-[90px] rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-500"
         />
       </form>
     </div>
