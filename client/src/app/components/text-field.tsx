@@ -5,6 +5,7 @@ interface TextFieldProps {
   name: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
 }
 
 const TextField: React.FC<TextFieldProps> = ({
@@ -12,16 +13,17 @@ const TextField: React.FC<TextFieldProps> = ({
   name,
   value,
   onChange,
+  className = "",
 }) => {
   return (
-    <div>
-      <label>{label}</label>
+    <div className="flex flex-col">
+      <label className="text-white mb-1">{label}</label> {/* Apply text-white class */}
       <input
         type="text"
         name={name}
         value={value}
         onChange={onChange}
-        className="rounded border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className={`p-2 rounded bg-gray-700 text-white ${className}`} // Merge default and custom classes
       />
     </div>
   );

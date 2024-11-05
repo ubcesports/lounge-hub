@@ -25,7 +25,7 @@ const LoungeMap = () => {
   };
   return (
     <div>
-      <div className="grid grid-cols-5 gap-4 p-4">
+      <div className="grid grid-cols-6 gap-4 p-4">
         {pcList.pcs.map((pc) => (
           <PCStation
             key={pc.pcNumber}
@@ -45,5 +45,4 @@ const LoungeMap = () => {
     </div>
   );
 };
-
 export default LoungeMap;

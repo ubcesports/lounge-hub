@@ -32,6 +32,10 @@ const CheckIn = () => {
       alert("This student is already checked in.");
       return;
     }
+    if (pcList.pcs.find((pc) => String(pc.pcNumber) === checkInData.pcNumber).studentNumber) {
+      alert("This PC is already occupied.");
+      return;
+    }
     checkInGamer(checkInData);
     const addedProfile = await getGamerProfile(checkInData.studentNumber);
     store.setGamerProfile({
@@ -46,28 +50,37 @@ const CheckIn = () => {
   };
 
   return (
-    <div>
-      <h1>Check In</h1>
-      <form>
+    <div className="bg-gray-800 rounded-lg p-4 flex flex-col gap-4">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-white text-lg">Check in</h1>
+      </div>
+      <form className="grid grid-cols-4 gap-4 items-end">
         <TextField
-          label="Student Number"
+          label="Student number"
           name="studentNumber"
           value={checkInData.studentNumber}
           onChange={handleInputChange}
+          className="p-2 rounded bg-gray-700 text-white"
         />
         <TextField
           label="Game"
           name="game"
           value={checkInData.game}
           onChange={handleInputChange}
+          className="p-2 rounded bg-gray-700 text-white"
         />
         <TextField
-          label="PC #"
+          label="Table #"
           name="pcNumber"
           value={checkInData.pcNumber}
           onChange={handleInputChange}
+          className="p-2 rounded bg-gray-700 text-white"
         />
-        <Button onClick={handleSubmit} label="Check in" />
+        <Button
+          onClick={handleSubmit}
+          label="Sign in"
+          className="bg-blue-600 text-white rounded py-2 px-4 hover:bg-blue-500 max-w-[90px]"
+        />
       </form>
     </div>
   );
