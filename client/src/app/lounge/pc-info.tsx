@@ -1,6 +1,5 @@
 import { PC } from "../../interfaces/pc";
 import { checkOutGamer } from "../../services/activity";
-import { useState } from "react";
 
 interface PCInfoProps {
   pc: PC;
@@ -9,11 +8,8 @@ interface PCInfoProps {
 }
 
 const PCInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
-  const [status, setStatus] = useState(isOccupied ? "BUSY" : "OPEN");
-
   const handleClick = async () => {
     await checkOutGamer(pc.studentNumber, pc.pcNumber);
-    setStatus("OPEN");
   };
 
   return (
@@ -21,9 +17,12 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
       <div>
         <h1 className="mb-3 text-3xl text-white">Desk {pc.pcNumber}</h1>
         <p
-          className={`text-1xl mb-3 ${status === "BUSY" ? "text-red-500" : "text-green-500"}`}
+          className={`text-1xl mb-1 ${isOccupied ? "text-red-500" : "text-green-500"}`}
         >
-          {status}
+          {isOccupied ? "BUSY" : "OPEN"}
+        </p>
+        <p className="text-1xl mb-3 text-white">
+          {isOccupied ? `Time remaining: ${timeRemaining}` : ""}
         </p>
       </div>
       <button
