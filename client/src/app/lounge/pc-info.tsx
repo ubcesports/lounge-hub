@@ -1,4 +1,5 @@
 import { PC } from "../../interfaces/pc";
+import { checkOutGamer } from "../../services/activity";
 
 interface PCInfoProps {
   pc: PC;
@@ -7,6 +8,10 @@ interface PCInfoProps {
 }
 
 const PcInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
+  const handleClick = async () => {
+    await checkOutGamer(pc.studentNumber, pc.pcNumber);
+  }
+
   return (
     <div>
       <h1>PC Info</h1>
@@ -20,6 +25,12 @@ const PcInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
       <p>Notes: {pc.notes}</p>
       <p>Time Remaining: {timeRemaining}</p>
       <p>Status: {isOccupied ? "Occupied" : "Available"}</p>
+
+      <button
+        className="p-2 bg-blue-500 text-white rounded"
+        onClick={handleClick}>
+          Free
+        </button>
     </div>
   );
 };
