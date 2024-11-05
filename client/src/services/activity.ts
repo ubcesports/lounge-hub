@@ -2,7 +2,6 @@ import { Activity } from "../interfaces/activity";
 import { useEffect } from "react";
 import useBoundStore from "../store/store";
 import { getGamerProfile } from "./gamer-profile";
-import useStore from "../store/store";
 
 const API_URL = "http://localhost:8000/api";
 
@@ -44,7 +43,6 @@ export const fetchPCStatus = async () => {
   }
 };
 
-
 export const getRecentActivity = async () => {
   const url = `${API_URL}/activity/all/recent`;
   const settings = {
@@ -65,8 +63,7 @@ export const getRecentActivity = async () => {
 };
 
 export const useFetchActivities = () => {
-  const setLogList = useStore((state) => state.setLogList);
-  const logList = useStore((state) => state.logList);
+  const store = useBoundStore.getState();
 
   useEffect(() => {
     const fetchActivities = async () => {
@@ -85,12 +82,15 @@ export const useFetchActivities = () => {
           }),
         );
 
-        setLogList(activitiesWithProfiles);
+        store.setLogList(activitiesWithProfiles);
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchActivities();
-  }, [logList, setLogList]);
+
+    const intervalId = setInterval(fetchActivities, 5000); // fetch every 5 seconds
+    return () => clearInterval(intervalId);
+  }, []);
 };
