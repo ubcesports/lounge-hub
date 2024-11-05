@@ -46,20 +46,20 @@ const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied, onClick }) => {
   const isTimeUp = timeRemaining === "Time Up";
 
   return (
-      <button
-        onClick={() => onClick(pc, timeRemaining, isOccupied)}
-        className={`flex items-center justify-center rounded p-4 text-xs ${isTimeUp ? "border border-black" : isOccupied ? "border bg-red-500 text-white" : "border bg-green-500 text-white"}`}
-        style={{
-          height: "100px",
-          width: "100px",
-          backgroundColor: isTimeUp ? "transparent" : "",
-        }}
-      >
-        <div className="text-center">
-          <p className="text-lg">{pc.pcNumber}</p>
-          {isOccupied && <p className="text-lg">{timeRemaining}</p>}
-        </div>
-      </button>
+    <button
+      onClick={() => onClick(pc, timeRemaining, isOccupied)}
+      className={`flex items-center justify-center rounded p-4 text-xs ${isTimeUp ? "border border-black" : isOccupied ? "border bg-red-500 text-white" : "border bg-green-500 text-white"}`}
+      style={{
+        height: "100px",
+        width: "100px",
+        backgroundColor: isTimeUp ? "transparent" : "",
+      }}
+    >
+      <div className="text-center">
+        <p className="text-lg">{pc.pcNumber}</p>
+        {isOccupied && <p className="text-lg">{timeRemaining}</p>}
+      </div>
+    </button>
   );
 };
 

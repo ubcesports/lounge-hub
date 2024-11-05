@@ -24,15 +24,18 @@ export const checkInGamer = async (activity: Activity) => {
   }
 };
 
-export const checkOutGamer = async (studentNumber: string, pcNumber: number) => {
+export const checkOutGamer = async (
+  studentNumber: string,
+  pcNumber: number,
+) => {
   const url = `${API_URL}/activity/update/${studentNumber}`;
   const settings = {
     method: "PATCH",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-    }
-  }
+    },
+  };
 
   try {
     await fetch(url, settings);

@@ -64,7 +64,7 @@ const resetPCState = (pcNumber: number, pcList: PCList) => {
   });
 
   return { pcs: updatedPCList };
-}
+};
 
 export const createPCSlice: StateCreator<PCSlice> = (set) => ({
   PCList: initialPCListState,
@@ -73,8 +73,8 @@ export const createPCSlice: StateCreator<PCSlice> = (set) => ({
       PCList: updatePCList(state.PCList, payload),
     })),
   resetPCState: (pcNumber: number) =>
-      set((state) => ({
-        PCList: resetPCState(pcNumber, state.PCList),
+    set((state) => ({
+      PCList: resetPCState(pcNumber, state.PCList),
     })),
   removePCList: () => set({ PCList: initialPCListState }),
 });

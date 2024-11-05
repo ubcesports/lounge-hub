@@ -27,7 +27,9 @@ const CheckIn = () => {
     const store = useBoundStore.getState();
     const pcList = store.PCList;
     console.log(pcList);
-    if (pcList.pcs.some((pc) => pc.studentNumber === checkInData.studentNumber)) {
+    if (
+      pcList.pcs.some((pc) => pc.studentNumber === checkInData.studentNumber)
+    ) {
       alert("This student is already checked in.");
       return;
     }

@@ -36,7 +36,11 @@ const LoungeMap = () => {
         ))}
       </div>
       {selectedPC && (
-        <PcInfo pc={selectedPC} timeRemaining={timeRemaining} isOccupied={isOccupied} />
+        <PcInfo
+          pc={selectedPC}
+          timeRemaining={timeRemaining}
+          isOccupied={isOccupied}
+        />
       )}
     </div>
   );

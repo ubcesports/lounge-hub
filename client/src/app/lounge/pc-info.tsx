@@ -10,7 +10,7 @@ interface PCInfoProps {
 const PcInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
   const handleClick = async () => {
     await checkOutGamer(pc.studentNumber, pc.pcNumber);
-  }
+  };
 
   return (
     <div>
@@ -27,10 +27,11 @@ const PcInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
       <p>Status: {isOccupied ? "Occupied" : "Available"}</p>
 
       <button
-        className="p-2 bg-blue-500 text-white rounded"
-        onClick={handleClick}>
-          Free
-        </button>
+        className="rounded bg-blue-500 p-2 text-white"
+        onClick={handleClick}
+      >
+        Free
+      </button>
     </div>
   );
 };
