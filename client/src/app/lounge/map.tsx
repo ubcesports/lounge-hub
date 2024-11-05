@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import useBoundStore from "../../store/store";
 import { useFetchPCStatus } from "../../services/activity";
 import PCStation from "./pc-station";
