@@ -25,7 +25,7 @@ const updateLogList = (data: any) => {
   return updatedLogList;
 };
 
-export const createRecentActivitySlice: StateCreator<LogsSlice> = (
+export const createLogsSlice: StateCreator<LogsSlice> = (
   set,
   get,
 ) => ({
