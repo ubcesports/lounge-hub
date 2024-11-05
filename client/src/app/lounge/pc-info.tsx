@@ -1,5 +1,6 @@
 import { PC } from "../../interfaces/pc";
 import { checkOutGamer } from "../../services/activity";
+import { useState } from "react";
 
 interface PCInfoProps {
   pc: PC;
@@ -8,29 +9,26 @@ interface PCInfoProps {
 }
 
 const PCInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
+  const [status, setStatus] = useState(isOccupied ? "BUSY" : "OPEN");
+  
   const handleClick = async () => {
     await checkOutGamer(pc.studentNumber, pc.pcNumber);
+    setStatus("OPEN");
   };
 
   return (
-    <div>
-      <h1>PC Info</h1>
-      <p>PC Number: {pc.pcNumber}</p>
-      <p>Student Number: {pc.studentNumber}</p>
-      <p>Game: {pc.game}</p>
-      <p>Started At: {pc.startedAt}</p>
-      <p>First Name: {pc.firstName}</p>
-      <p>Last Name: {pc.lastName}</p>
-      <p>Membership Tier: {pc.membershipTier}</p>
-      <p>Notes: {pc.notes}</p>
-      <p>Time Remaining: {timeRemaining}</p>
-      <p>Status: {isOccupied ? "Occupied" : "Available"}</p>
-
+    <div className="p-4 bg-gray-800 rounded-lg flex items-center justify-between">
+      <div>
+        <h1 className="text-3xl text-white mb-3">Desk {pc.pcNumber}</h1>
+        <p className={`text-1xl mb-3 ${status === "BUSY" ? "text-red-500" : "text-green-500"}`}>
+          {status}
+        </p>
+      </div>
       <button
-        className="rounded bg-blue-500 p-2 text-white"
+        className="border border-red-500 text-white rounded p-2 hover:bg-red-500 hover:text-white"
         onClick={handleClick}
       >
-        Free
+        Close
       </button>
     </div>
   );
