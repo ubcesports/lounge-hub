@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { PC } from "../../interfaces/pc";
 
 interface PCStationProps {
@@ -7,7 +7,7 @@ interface PCStationProps {
 }
 
 const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied }) => {
-  const [timeRemaining, setTimeRemaining] = React.useState<string>("");
+  const [timeRemaining, setTimeRemaining] = useState<String>("");
   
   const calculateTimeRemaining = (
     startedAt: string,
