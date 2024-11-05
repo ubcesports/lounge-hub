@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PC } from "../../interfaces/pc";
 
 interface PCStationProps {
@@ -7,6 +7,8 @@ interface PCStationProps {
 }
 
 const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied }) => {
+  const [timeRemaining, setTimeRemaining] = useState<String>("");
+
   const calculateTimeRemaining = (
     startedAt: string,
     membershipTier: number,
@@ -31,7 +33,15 @@ const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied }) => {
     return `${hours}h ${minutes.toString().padStart(2, "0")}m`;
   };
 
-  const timeRemaining = calculateTimeRemaining(pc.startedAt, pc.membershipTier);
+  useEffect(() => {
+    const updateRemainingTime = () => {
+      setTimeRemaining(calculateTimeRemaining(pc.startedAt, pc.membershipTier));
+    };
+    updateRemainingTime(); // Initial call
+    const intervalId = setInterval(updateRemainingTime, 1000); // Update every second
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, [pc.startedAt, pc.membershipTier]);
+
   const isTimeUp = timeRemaining === "Time Up";
 
   return (
