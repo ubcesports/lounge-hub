@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { getRecentActivity, useFetchActivities } from "../../services/activity";
-import { getGamerProfile } from "../../services/gamer-profile";
+import { useFetchActivities } from "../../services/activity";
 import useBoundStore from "../../store/store";
 import { Log } from "../../interfaces/log";
 
