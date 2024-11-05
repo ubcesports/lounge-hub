@@ -6,10 +6,11 @@ const NUM_PCS = 23;
 export interface PCSlice {
   PCList: PCList;
   setPCList: (payload: PCList) => void;
+  resetPCState: (pcNumber: number) => void;
   removePCList: () => void;
 }
 
-const initialPCState: PCList = {
+const initialPCListState: PCList = {
   pcs: Array.from({ length: NUM_PCS }, (_, index) => ({
     studentNumber: "",
     pcNumber: index + 1,
@@ -45,11 +46,35 @@ const updatePCList = (pcList: PCList, data: any) => {
   return { pcs: updatedPCList };
 };
 
+const resetPCState = (pcNumber: number, pcList: PCList) => {
+  const updatedPCList = pcList.pcs.map((pc, index) => {
+    if (index === pcNumber - 1) {
+      return {
+        ...pc,
+        studentNumber: "",
+        game: "",
+        startedAt: "",
+        firstName: "",
+        lastName: "",
+        membershipTier: 0,
+        notes: "",
+      };
+    }
+    return pc;
+  });
+
+  return { pcs: updatedPCList };
+};
+
 export const createPCSlice: StateCreator<PCSlice> = (set) => ({
-  PCList: initialPCState,
+  PCList: initialPCListState,
   setPCList: (payload: any) =>
     set((state) => ({
       PCList: updatePCList(state.PCList, payload),
     })),
-  removePCList: () => set({ PCList: initialPCState }),
+  resetPCState: (pcNumber: number) =>
+    set((state) => ({
+      PCList: resetPCState(pcNumber, state.PCList),
+    })),
+  removePCList: () => set({ PCList: initialPCListState }),
 });
