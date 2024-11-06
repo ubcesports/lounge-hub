@@ -1,6 +1,7 @@
 import { Activity } from "../interfaces/activity";
 import { useEffect } from "react";
 import useBoundStore from "../store/store";
+import { getGamerProfile } from "./gamer-profile";
 
 const API_URL = "http://localhost:8000/api";
 
@@ -66,5 +67,40 @@ export const fetchPCStatus = async () => {
     store.setPCList(data);
   } catch (error) {
     return error;
+  }
+};
+
+export const getRecentActivity = async () => {
+  const url = `${API_URL}/activity/all/recent`;
+  const settings = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+
+  try {
+    const response = await fetch(url, settings);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const useFetchActivities = () => {
+  useEffect(() => {
+    fetchActivities();
+  }, []);
+};
+
+export const fetchActivities = async () => {
+  try {
+    const store = useBoundStore.getState();
+    const activities = await getRecentActivity();
+    store.setLogList(activities);
+  } catch (error) {
+    console.error(error);
   }
 };
