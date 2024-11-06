@@ -36,13 +36,14 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D0D0E] p-2">
-      <div className="grid h-full grid-cols-9 gap-2">
+    <div className="min-h-screen bg-[#0D0D0E] p-1">
+      <div className="grid h-full grid-cols-9 gap-1">
         {/* left buffer */}
       <div className="col-span-1"></div>
         {/* Live Lounge Map - Left Section */}
-        <div className="relative col-span-3 flex flex-col gap-2">
-          <div className="col-span-3 h-full rounded-lg bg-[#20222C] p-4">
+        <div className="relative col-span-3 flex flex-col gap-1">
+          <div className="col-span-3 h-full rounded-md bg-[#20222C] p-4">
+            <h1 className="text-white text-2xl font-bold p-4">Lounge Map</h1>
             <Map onPCClick={handlePCClick} />
           </div>
           {selectedPC ? (
@@ -52,13 +53,13 @@ export default function Page() {
               isOccupied={isOccupied}
             />
           ) : (
-            <div className="col-span-3 h-full rounded-lg bg-[#20222C] p-4">
+            <div className="col-span-3 h-full rounded-md bg-[#20222C] p-4">
               <PlaceholderImage />
             </div>
           )}
         </div>
         {/* Right Column - Check In, Student Info, and Records */}
-        <div className="relative col-span-4 flex flex-col gap-2">
+        <div className="relative col-span-4 flex flex-col gap-1">
           <div className="absolute right-0 top-0 m-4">
             <Button
               onClick={handleToggleForm}
@@ -66,13 +67,13 @@ export default function Page() {
               className="flex items-center text-green-400 hover:text-green-300"
             />
           </div>
-          <div className="max-h-[300px] flex-grow rounded-lg bg-[#20222C] p-4">
+          <div className="max-h-[300px] flex-grow rounded-md bg-[#20222C] p-4">
             {isAddingNewGamer ? <CheckIn /> : <AddUser />}
           </div>
-          <div className="rounded-lg bg-[#20222C] p-4">
+          <div className="rounded-md bg-[#20222C] p-4">
             <StudentInfo />
           </div>
-          <div className="rounded-lg bg-[#20222C] p-4">
+          <div className="rounded-md bg-[#20222C] p-4">
             <Records />
           </div>
         </div>

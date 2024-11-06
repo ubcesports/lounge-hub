@@ -35,10 +35,12 @@ const LoungeMap: React.FC<LoungeMapProps> = ({ onPCClick }) => {
     [1, 1], // Position for PC 17
     [2, 1], // Position for PC 18
     [3, 1], // Position for PC 19
+    [5, 1], // check-in PC
+    [5, 9], // cab
   ]
 
   return (
-    <div className="grid grid-cols-5 grid-rows-8 gap-1 p-1 max-h-[700px] max-w-[370px]" style={{ margin : 'auto'}}>
+    <div className="grid grid-cols-5 grid-rows-8 gap-4 max-h-[700px] max-w-[370px]" style={{ margin : 'auto'}}>
       {pcList.pcs.map((pc, index) => {
         const [x, y] = positions[index];
         return (

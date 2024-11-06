@@ -44,20 +44,40 @@ const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied, onClick }) => {
   }, [pc.startedAt, pc.membershipTier]);
 
   const isTimeUp = timeRemaining === "Time Up";
+  const isDoubleHeight = pc.pcNumber === 9 || pc.pcNumber === 14;
+  const isCab = pc.pcNumber === 21;
+  const isCheckIn = pc.pcNumber === 20;
+
+  if (isCheckIn) { // Check-in PC
+    return (
+      <div
+        className="flex items-center justify-center rounded-md p-4 text-xs border border-white"
+        style={{
+          height: "70px",
+          width: "70px",
+          backgroundColor: "transparent",
+        }}
+      >
+        <div className="text-center">
+          <p className="text-lg text-white">You</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <button
       onClick={() => onClick(pc, timeRemaining, isOccupied)}
-      className={`flex items-center justify-center rounded p-4 text-xs ${isTimeUp ? "border border-black" : isOccupied ? "border bg-red-500 text-white" : "border bg-green-500 text-white"}`}
+      className={`flex items-center justify-center rounded-md p-4 text-xs ${isTimeUp ? "border border-black" : isOccupied ? "bg-[#DD4345] text-white" : "bg-[#64CC9F] text-white"}`}
       style={{
-        height: "70px",
+        height: isDoubleHeight ? "148px" : "70px",
         width: "70px",
         backgroundColor: isTimeUp ? "transparent" : "",
       }}
     >
       <div className="text-center">
-        <p className="text-lg">{pc.pcNumber}</p>
-        {isOccupied && <p className="text-lg">{timeRemaining}</p>}
+        <p className="text-2xl">{ isCab ? "Cab" : pc.pcNumber}</p>
+        {isOccupied && <p className="text-xs">{timeRemaining}</p>}
       </div>
     </button>
   );
