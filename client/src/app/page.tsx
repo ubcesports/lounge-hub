@@ -10,25 +10,55 @@ import Records from "./records/records";
 import Activity from "./lounge/activity";
 import PCInfo from "./lounge/pc-info";
 import AddUser from "./check-in/add-user";
+import PlaceholderImage from "./lounge/placeholder";
 import Button from "./components/button";
+import { useState } from "react";
+import { PC } from "../interfaces/pc";
 
 export default function Page() {
   const [isAddingNewGamer, setIsAddingNewGamer] = React.useState(true);
+  const [selectedPC, setSelectedPC] = useState<PC | null>(null);
+  const [timeRemaining, setTimeRemaining] = useState<string>("");
+  const [isOccupied, setIsOccupied] = useState<boolean>(false);
 
   const handleToggleForm = () => {
     setIsAddingNewGamer(!isAddingNewGamer);
   };
 
+  const handlePCClick = (
+    pc: PC,
+    timeRemaining: string,
+    isOccupied: boolean,
+  ) => {
+    setSelectedPC(pc);
+    setTimeRemaining(timeRemaining);
+    setIsOccupied(isOccupied);
+  };
+
   return (
     <div className="min-h-screen bg-[#0D0D0E] p-2">
-      <div className="grid h-full grid-cols-5 gap-2">
+      <div className="grid h-full grid-cols-9 gap-2">
+        {/* left buffer */}
+      <div className="col-span-1"></div>
         {/* Live Lounge Map - Left Section */}
-        <div className="col-span-2 min-h-full rounded-lg bg-[#20222C] p-4">
-          <Map />
-        </div>
-
-        {/* Right Column - Check In, Student Info, and Records */}
         <div className="relative col-span-3 flex flex-col gap-2">
+          <div className="col-span-3 h-full rounded-lg bg-[#20222C] p-4">
+            <Map onPCClick={handlePCClick} />
+          </div>
+          {selectedPC ? (
+            <PCInfo
+              pc={selectedPC}
+              timeRemaining={timeRemaining}
+              isOccupied={isOccupied}
+            />
+          ) : (
+            <div className="col-span-3 h-full rounded-lg bg-[#20222C] p-4">
+              <PlaceholderImage />
+            </div>
+          )}
+        </div>
+        {/* Right Column - Check In, Student Info, and Records */}
+        <div className="relative col-span-4 flex flex-col gap-2">
           <div className="absolute right-0 top-0 m-4">
             <Button
               onClick={handleToggleForm}
@@ -46,6 +76,8 @@ export default function Page() {
             <Records />
           </div>
         </div>
+        {/* right */}
+        <div className="col-span-1"></div>
       </div>
     </div>
   );

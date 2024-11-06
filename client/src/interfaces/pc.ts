@@ -11,7 +11,4 @@ export interface PC {
   lastName: string;
   membershipTier: number;
   notes: string;
-  type: "empty" | "regular" | "wide";
-  col: string;
-  row: string;
 }

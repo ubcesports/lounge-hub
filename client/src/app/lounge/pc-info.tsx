@@ -29,9 +29,6 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
         >
           {isOccupied ? "BUSY" : "OPEN"}
         </p>
-        <p className="text-1xl mb-3 text-white">
-          {isOccupied ? `Time remaining: ${timeRemaining}` : ""}
-        </p>
       </div>
       <div className="flex items-end gap-4 rounded-lg bg-[#20222C] p-4">
         <TextField

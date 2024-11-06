@@ -50,8 +50,8 @@ const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied, onClick }) => {
       onClick={() => onClick(pc, timeRemaining, isOccupied)}
       className={`flex items-center justify-center rounded p-4 text-xs ${isTimeUp ? "border border-black" : isOccupied ? "border bg-red-500 text-white" : "border bg-green-500 text-white"}`}
       style={{
-        height: "100px",
-        width: "100px",
+        height: "70px",
+        width: "70px",
         backgroundColor: isTimeUp ? "transparent" : "",
       }}
     >
