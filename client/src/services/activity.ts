@@ -28,6 +28,10 @@ export const checkOutGamer = async (
   studentNumber: string,
   pcNumber: number,
 ) => {
+  if (!studentNumber) {
+    alert("This table is not occupied.");
+    return;
+  }
   const url = `${API_URL}/activity/update/${studentNumber}`;
   const settings = {
     method: "PATCH",

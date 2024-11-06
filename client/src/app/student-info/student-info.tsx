@@ -1,8 +1,19 @@
 import useBoundStore from "../../store/store";
 import { initialGamerState } from "../../store/gamer-store";
+import PlaceholderImage from "../lounge/placeholder";
 
 export default function StudentInfo() {
   const gamer = useBoundStore((state) => state.GamerProfile);
+
+  if (gamer === initialGamerState) {
+    return (
+      <div className="flex items-center justify-center rounded-md bg-[#20222C] p-4">
+        <div className="col-span-3 h-full rounded-md bg-[#20222C] p-4">
+          <PlaceholderImage />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-md bg-[#20222C] p-4">
