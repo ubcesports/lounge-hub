@@ -37,7 +37,7 @@ const CheckIn = () => {
       alert("This PC is already occupied.");
       return;
     }
-    checkInGamer(checkInData);
+    await checkInGamer(checkInData);
     const addedProfile = await getGamerProfile(checkInData.studentNumber);
     store.setGamerProfile({
       ...addedProfile,
@@ -47,7 +47,7 @@ const CheckIn = () => {
       membershipTier: addedProfile.membership_tier,
       notes: addedProfile.notes,
     });
-    fetchPCStatus();
+    await fetchPCStatus();
   };
 
   return (
@@ -79,8 +79,8 @@ const CheckIn = () => {
         />
         <Button
           onClick={handleSubmit}
-          label="Sign in"
-          className="max-w-[90px] rounded bg-[#3A6AAC] px-4 py-2 text-[#DEE7EC] hover:bg-blue-500"
+          label="Check in"
+          className="max-w-[100px] rounded bg-[#3A6AAC] px-4 py-2 text-[#DEE7EC] hover:bg-blue-500"
         />
       </form>
     </div>
