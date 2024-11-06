@@ -25,18 +25,22 @@ const updateLogList = (data: any) => {
   return updatedLogList;
 };
 
+const replaceLogList = (data: any, set, get) => {
+  const newLogList = updateLogList(data);
+  const currentLogList = get().logList;
+
+  const hasChanged =
+    JSON.stringify(currentLogList) !== JSON.stringify(newLogList);
+
+  if (hasChanged) {
+    set({ logList: newLogList });
+  }
+}
+
 export const createLogsSlice: StateCreator<LogsSlice> = (set, get) => ({
   logList: initialLogState,
   setLogList: (payload: any) => {
-    const newLogList = updateLogList(payload);
-    const currentLogList = get().logList;
-
-    const hasChanged =
-      JSON.stringify(currentLogList) !== JSON.stringify(newLogList);
-
-    if (hasChanged) {
-      set({ logList: newLogList });
-    }
+    replaceLogList(payload, set, get)
   },
   removeLogList: () => set({ logList: initialLogState }),
 });
