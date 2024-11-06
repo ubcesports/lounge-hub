@@ -55,10 +55,16 @@ router.get("/activity/:student_number", async (req, res) => {
  */
 router.get("/activity/all/recent", async (req, res) => {
   try {
-    const query = `SELECT * FROM ${schema}.gamer_activity
-        ORDER BY started_at 
-        DESC NULLS LAST 
-        LIMIT 20;`;
+    const query = `
+        SELECT ${schema}.gamer_activity.*, 
+              ${schema}.gamer_profile.first_name, 
+              ${schema}.gamer_profile.last_name 
+        FROM ${schema}.gamer_activity
+        JOIN ${schema}.gamer_profile 
+        ON ${schema}.gamer_activity.student_number = ${schema}.gamer_profile.student_number
+        ORDER BY ${schema}.gamer_activity.started_at DESC NULLS LAST 
+        LIMIT 20;
+`;
     const result = await db.query(query);
 
     res.json(result.rows);
