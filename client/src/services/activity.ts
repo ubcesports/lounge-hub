@@ -92,20 +92,7 @@ export const useFetchActivities = () => {
     const fetchActivities = async () => {
       try {
         const activities = await getRecentActivity();
-
-        const activitiesWithProfiles = await Promise.all(
-          activities.map(async (activity) => {
-            const profile = await getGamerProfile(activity.student_number);
-
-            return {
-              first_name: profile.first_name,
-              last_name: profile.last_name,
-              ...activity,
-            };
-          }),
-        );
-
-        store.setLogList(activitiesWithProfiles);
+        store.setLogList(activities);
       } catch (error) {
         console.error(error);
       }
