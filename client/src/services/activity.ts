@@ -86,21 +86,17 @@ export const getRecentActivity = async () => {
 };
 
 export const useFetchActivities = () => {
-  const store = useBoundStore.getState();
-
   useEffect(() => {
-    const fetchActivities = async () => {
-      try {
-        const activities = await getRecentActivity();
-        store.setLogList(activities);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     fetchActivities();
-
-    const intervalId = setInterval(fetchActivities, 5000); // fetch every 5 seconds
-    return () => clearInterval(intervalId);
   }, []);
+};
+
+const fetchActivities = async () => {
+  try {
+    const store = useBoundStore.getState();
+    const activities = await getRecentActivity();
+    store.setLogList(activities);
+  } catch (error) {
+    console.error(error);
+  }
 };
