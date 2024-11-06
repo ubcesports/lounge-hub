@@ -4,7 +4,7 @@ const PlaceholderImage: React.FC = () => {
   return (
     <div className="flex items-center justify-center h-full">
       <img
-        src="../assets/ubceasleep.png"
+        src="/images/ubceasleep.png"
         alt="Cute Placeholder"
         className="rounded-lg"
       />
