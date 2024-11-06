@@ -3,7 +3,11 @@ import React, { useState, ChangeEvent } from "react";
 import Button from "../components/button";
 import TextField from "../components/text-field";
 import { Activity } from "../../interfaces/activity";
-import { checkInGamer, fetchPCStatus } from "../../services/activity";
+import {
+  checkInGamer,
+  fetchActivities,
+  fetchPCStatus,
+} from "../../services/activity";
 import { getGamerProfile } from "../../services/gamer-profile";
 import useBoundStore from "../../store/store";
 
@@ -43,6 +47,7 @@ const CheckIn = () => {
       notes: addedProfile.notes,
     });
     fetchPCStatus();
+    fetchActivities();
   };
 
   return (

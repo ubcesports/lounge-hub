@@ -91,7 +91,7 @@ export const useFetchActivities = () => {
   }, []);
 };
 
-const fetchActivities = async () => {
+export const fetchActivities = async () => {
   try {
     const store = useBoundStore.getState();
     const activities = await getRecentActivity();
