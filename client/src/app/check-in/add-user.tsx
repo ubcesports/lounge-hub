@@ -41,7 +41,7 @@ const AddUser = () => {
   return (
     <div className="flex flex-col gap-4 rounded-lg bg-[#20222C] p-4">
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-2xl text-white font-bold">Add Profile</h1>
+        <h1 className="text-2xl font-bold text-white">Add Profile</h1>
       </div>
       <form className="grid grid-cols-5 items-end gap-4">
         <TextField

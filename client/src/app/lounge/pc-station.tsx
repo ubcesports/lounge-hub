@@ -48,10 +48,11 @@ const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied, onClick }) => {
   const isCab = pc.pcNumber === 21;
   const isCheckIn = pc.pcNumber === 20;
 
-  if (isCheckIn) { // Check-in PC
+  if (isCheckIn) {
+    // Check-in PC
     return (
       <div
-        className="flex items-center justify-center rounded-md p-4 text-xs border border-white"
+        className="flex items-center justify-center rounded-md border border-white p-4 text-xs"
         style={{
           height: "70px",
           width: "70px",
@@ -76,7 +77,7 @@ const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied, onClick }) => {
       }}
     >
       <div className="text-center">
-        <p className="text-2xl">{ isCab ? "Cab" : pc.pcNumber}</p>
+        <p className="text-2xl">{isCab ? "Cab" : pc.pcNumber}</p>
         {isOccupied && <p className="text-xs">{timeRemaining}</p>}
       </div>
     </button>
