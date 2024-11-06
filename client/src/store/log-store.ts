@@ -35,12 +35,12 @@ const replaceLogList = (data: any, set, get) => {
   if (hasChanged) {
     set({ logList: newLogList });
   }
-}
+};
 
 export const createLogsSlice: StateCreator<LogsSlice> = (set, get) => ({
   logList: initialLogState,
   setLogList: (payload: any) => {
-    replaceLogList(payload, set, get)
+    replaceLogList(payload, set, get);
   },
   removeLogList: () => set({ logList: initialLogState }),
 });
