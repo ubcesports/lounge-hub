@@ -1,5 +1,4 @@
 import React, { useState, ChangeEvent } from "react";
-
 import Button from "../components/button";
 import TextField from "../components/text-field";
 import { Activity } from "../../interfaces/activity";
@@ -12,7 +11,6 @@ import { getGamerProfile } from "../../services/gamer-profile";
 import useBoundStore from "../../store/store";
 
 const CheckIn = () => {
-  const store = useBoundStore();
   const [checkInData, setCheckInData] = useState<Activity>({
     studentNumber: "",
     game: "",
@@ -36,7 +34,14 @@ const CheckIn = () => {
       alert("This student is already checked in.");
       return;
     }
-    checkInGamer(checkInData);
+    if (
+      pcList.pcs.find((pc) => String(pc.pcNumber) === checkInData.pcNumber)
+        .studentNumber
+    ) {
+      alert("This PC is already occupied.");
+      return;
+    }
+    await checkInGamer(checkInData);
     const addedProfile = await getGamerProfile(checkInData.studentNumber);
     store.setGamerProfile({
       ...addedProfile,
@@ -46,33 +51,42 @@ const CheckIn = () => {
       membershipTier: addedProfile.membership_tier,
       notes: addedProfile.notes,
     });
-    fetchPCStatus();
+    await fetchPCStatus();
     fetchActivities();
   };
 
   return (
-    <div>
-      <h1>Check In</h1>
-      <form>
+    <div className="flex flex-col gap-4 rounded-lg bg-[#20222C] p-4">
+      <div className="mb-4 flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-white">Check in</h1>
+      </div>
+      <form className="grid grid-cols-4 items-end gap-4">
         <TextField
-          label="Student Number"
+          label="Student number"
           name="studentNumber"
           value={checkInData.studentNumber}
           onChange={handleInputChange}
+          className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
         />
         <TextField
           label="Game"
           name="game"
           value={checkInData.game}
           onChange={handleInputChange}
+          className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
         />
         <TextField
-          label="PC #"
+          label="Table #"
           name="pcNumber"
           value={checkInData.pcNumber}
           onChange={handleInputChange}
+          className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
         />
-        <Button onClick={handleSubmit} label="Check in" />
+        <Button
+          onClick={handleSubmit}
+          label="Check in"
+          className="max-w-[100px] rounded bg-[#3A6AAC] px-4 py-2 text-[#DEE7EC] hover:bg-blue-500"
+        />
       </form>
     </div>
   );

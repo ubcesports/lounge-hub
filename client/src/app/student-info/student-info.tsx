@@ -1,35 +1,46 @@
 import useBoundStore from "../../store/store";
 import { initialGamerState } from "../../store/gamer-store";
+import PlaceholderImage from "../lounge/placeholder";
 
 export default function StudentInfo() {
   const gamer = useBoundStore((state) => state.GamerProfile);
 
+  if (gamer === initialGamerState) {
+    return (
+      <div className="flex items-center justify-center rounded-md bg-[#20222C] p-4">
+        <div className="col-span-3 h-full rounded-md bg-[#20222C] p-4">
+          <PlaceholderImage />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <h1>Student info</h1>
+    <div className="rounded-md bg-[#20222C] p-4">
+      <h1 className="mb-4 text-2xl font-bold text-[#DEE7EC]">Student Info</h1>
       {gamer !== initialGamerState && (
         <>
-          <div style={{ display: "flex", gap: "20px" }}>
+          <div className="mb-4 flex gap-8">
             <div>
-              <h3>First Name</h3>
-              <p>{gamer.firstName}</p>
+              <h3 className="text-[#DEE7EC]">First Name</h3>
+              <p className="text-[#62667B]">{gamer.firstName}</p>
             </div>
             <div>
-              <h3>Surname</h3>
-              <p>{gamer.lastName}</p>
+              <h3 className="text-[#DEE7EC]">Surname</h3>
+              <p className="text-[#62667B]">{gamer.lastName}</p>
             </div>
             <div>
-              <h3>Membership Level</h3>
-              <p>{gamer.membershipTier}</p>
+              <h3 className="text-[#DEE7EC]">Membership Level</h3>
+              <p className="text-[#62667B]">{gamer.membershipTier}</p>
             </div>
             <div>
-              <h3>Student Number</h3>
-              <p>{gamer.studentNumber}</p>
+              <h3 className="text-[#DEE7EC]">Student Number</h3>
+              <p className="text-[#62667B]">{gamer.studentNumber}</p>
             </div>
           </div>
           <div>
-            <h3>Notes</h3>
-            <p>{gamer.notes}</p>
+            <h3 className="text-[#DEE7EC]">Notes</h3>
+            <p className="text-[#62667B]">{gamer.notes}</p>
           </div>
         </>
       )}
