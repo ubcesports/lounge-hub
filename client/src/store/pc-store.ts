@@ -1,7 +1,7 @@
 import { StateCreator } from "zustand";
 import { PCList } from "../interfaces/pc";
 
-const NUM_PCS = 23;
+const NUM_PCS = 21;
 
 export interface PCSlice {
   PCList: PCList;

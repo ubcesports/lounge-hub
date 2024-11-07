@@ -1,5 +1,4 @@
 import React, { useState, ChangeEvent } from "react";
-
 import Button from "../components/button";
 import TextField from "../components/text-field";
 import DropdownField from "../components/dropdown";
@@ -17,6 +16,7 @@ const AddUser = () => {
 
   const submitData = async (data: GamerProfile) => {
     addGamerProfile(data);
+    alert("Gamer added successfully!"); // TODO: Check if someone is already added
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -39,44 +39,57 @@ const AddUser = () => {
   };
 
   return (
-    <div>
-      <h1>Add New</h1>
-      <form>
+    <div className="flex flex-col gap-4 rounded-lg bg-[#20222C] p-4">
+      <div className="mb-4 flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-white">Add Profile</h1>
+      </div>
+      <form className="grid grid-cols-5 items-end gap-4">
         <TextField
-          label="Student Number"
+          label="Student number"
           name="studentNumber"
           value={addGamerData.studentNumber}
           onChange={handleInputChange}
+          className="col-span-1 rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
         />
         <TextField
           label="First Name"
           name="firstName"
           value={addGamerData.firstName}
           onChange={handleInputChange}
+          className="col-span-1 rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
         />
         <TextField
-          label="Surname"
+          label="Last Name"
           name="lastName"
           value={addGamerData.lastName}
           onChange={handleInputChange}
+          className="col-span-1 rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
         />
         <DropdownField
           label="Membership Tier"
           name="membershipTier"
           value={addGamerData.membershipTier}
-          options={[
-            { value: "1", label: "1" },
-            { value: "2", label: "2" },
-          ]}
+          className="col-span-1 rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
           onChange={handleDropdownChange}
+          options={[
+            { value: "1", label: "Tier 1" },
+            { value: "2", label: "Tier 2" },
+          ]}
         />
-        <TextField
-          label="Notes"
-          name="notes"
-          value={addGamerData.notes}
-          onChange={handleInputChange}
+        <Button
+          onClick={handleSubmit}
+          label="Add Gamer"
+          className="rounded bg-[#3A6AAC] px-4 py-2 text-[#DEE7EC] hover:bg-blue-500"
         />
-        <Button onClick={handleSubmit} label="Create" />
+        <div className="col-span-5 col-start-1 row-span-1 row-start-2">
+          <TextField
+            label="Notes"
+            name="notes"
+            value={addGamerData.notes}
+            onChange={handleInputChange}
+            className="col-span-5 rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
+          />
+        </div>
       </form>
     </div>
   );
