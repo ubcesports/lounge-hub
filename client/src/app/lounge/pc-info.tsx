@@ -1,5 +1,7 @@
 import { PC } from "../../interfaces/pc";
 import { checkOutGamer } from "../../services/activity";
+import TextField from "../components/text-field";
+import { useState } from "react";
 
 interface PCInfoProps {
   pc: PC;
@@ -8,30 +10,41 @@ interface PCInfoProps {
 }
 
 const PCInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
+  const [execName, setExecName] = useState<string>("");
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setExecName(e.target.value);
+  };
+
   const handleClick = async () => {
     await checkOutGamer(pc.studentNumber, pc.pcNumber);
   };
 
   return (
-    <div>
-      <h1>PC Info</h1>
-      <p>PC Number: {pc.pcNumber}</p>
-      <p>Student Number: {pc.studentNumber}</p>
-      <p>Game: {pc.game}</p>
-      <p>Started At: {pc.startedAt}</p>
-      <p>First Name: {pc.firstName}</p>
-      <p>Last Name: {pc.lastName}</p>
-      <p>Membership Tier: {pc.membershipTier}</p>
-      <p>Notes: {pc.notes}</p>
-      <p>Time Remaining: {timeRemaining}</p>
-      <p>Status: {isOccupied ? "Occupied" : "Available"}</p>
-
-      <button
-        className="rounded bg-blue-500 p-2 text-white"
-        onClick={handleClick}
-      >
-        Free
-      </button>
+    <div className="flex items-center justify-between rounded-lg bg-[#20222C] p-4">
+      <div>
+        <h1 className="mb-3 text-3xl text-white">Desk {pc.pcNumber}</h1>
+        <p
+          className={`text-1xl mb-1 ${isOccupied ? "text-red-500" : "text-green-500"}`}
+        >
+          {isOccupied ? "BUSY" : "OPEN"}
+        </p>
+      </div>
+      <div className="flex items-end gap-4 rounded-lg bg-[#20222C] p-4">
+        <TextField
+          label="Exec Name"
+          name="execName"
+          value={execName}
+          onChange={handleInputChange}
+          className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
+        />
+        <button
+          className="h-full rounded border border-red-500 p-2 text-white hover:bg-red-500 hover:text-white"
+          onClick={handleClick}
+        >
+          Close
+        </button>
+      </div>
     </div>
   );
 };
