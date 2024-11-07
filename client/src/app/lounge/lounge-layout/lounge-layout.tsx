@@ -1,12 +1,12 @@
 /*
  * Below is the layout of the lounge. The lounge is represented as a 9x5 grid where each cell
  * may represent a PC station. The position of the i-th numbered PC station is given by pcPositions[i],
- * and is in the form [x, y] where x is the column and y is the row. New PCs may be added by changing 
+ * and is in the form [x, y] where x is the column and y is the row. New PCs may be added by changing
  * the NUM_PCS constant in client/src/store/pc-store.ts and adding a new position to the pcPositions array
- * and the intended index. Keep in mind that the Cab and Check-in PC are also represented in this layout 
- * as PCs 20 and 21, and are treated as special cases in the PCStation component. Therefore, if you add 
+ * and the intended index. Keep in mind that the Cab and Check-in PC are also represented in this layout
+ * as PCs 20 and 21, and are treated as special cases in the PCStation component. Therefore, if you add
  * a new PC, make sure to update the PCStation component accordingly.
- * 
+ *
  * For a visual representation of the lounge layout, refer to layout.md in the same directory as this file.
  */
 
