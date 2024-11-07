@@ -44,12 +44,17 @@ const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied, onClick }) => {
   }, [pc.startedAt, pc.membershipTier]);
 
   const isTimeUp = timeRemaining === "Time Up";
+
+  // This following block defines "special" renderings for certain PCs. Double height PCs
+  // are PCs 9 and 14, the cab is PC 21, and the admin (exec) PC is PC 20.
+  // ========================================
   const isDoubleHeight = pc.pcNumber === 9 || pc.pcNumber === 14;
   const isCab = pc.pcNumber === 21;
-  const isCheckIn = pc.pcNumber === 20;
+  const isAdmin = pc.pcNumber === 20;
+  // ========================================
 
-  if (isCheckIn) {
-    // Check-in PC
+  if (isAdmin) {
+    // The admin PC should be rendered as a transparent div with a white border (not a button)
     return (
       <div
         className="flex items-center justify-center rounded-md border border-white p-4 text-xs"
@@ -71,7 +76,7 @@ const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied, onClick }) => {
       onClick={() => onClick(pc, timeRemaining, isOccupied)}
       className={`flex items-center justify-center rounded-md p-4 text-xs ${isTimeUp ? "border border-black" : isOccupied ? "bg-[#DD4345] text-white" : "bg-[#64CC9F] text-white"}`}
       style={{
-        height: isDoubleHeight ? "148px" : "70px",
+        height: isDoubleHeight ? "148px" : "70px", // Double height PCs
         width: "70px",
         backgroundColor: isTimeUp ? "transparent" : "",
       }}
