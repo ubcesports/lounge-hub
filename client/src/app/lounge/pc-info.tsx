@@ -38,12 +38,17 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
           onChange={handleInputChange}
           className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
         />
-        <button
-          className="h-full rounded border border-red-500 p-2 text-white hover:bg-red-500 hover:text-white"
-          onClick={handleClick}
-        >
-          Close
-        </button>
+        <div className="group relative">
+          <button
+            className="h-full rounded border border-red-500 p-2 text-white hover:bg-red-500 hover:text-white"
+            onClick={handleClick}
+          >
+            Close
+          </button>
+          <div className="absolute bottom-full left-1/2 mb-2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
+            This sign out will be associated with the provided exec name.
+          </div>
+        </div>
       </div>
     </div>
   );
