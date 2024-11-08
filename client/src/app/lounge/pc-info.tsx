@@ -5,11 +5,10 @@ import { useState } from "react";
 
 interface PCInfoProps {
   pc: PC;
-  timeRemaining: string;
   isOccupied: boolean;
 }
 
-const PCInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
+const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied }) => {
   const [execName, setExecName] = useState<string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,11 +23,12 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
     <div className="flex items-center justify-between rounded-lg bg-[#20222C] p-4">
       <div>
         <h1 className="mb-3 text-3xl text-white">Desk {pc.pcNumber}</h1>
-        <p
-          className={`text-1xl mb-1 ${isOccupied ? "text-red-500" : "text-green-500"}`}
-        >
-          {isOccupied ? "BUSY" : "OPEN"}
-        </p>
+        <div className="flex items-center">
+          <p className={`text-1xl mb-1 ${isOccupied ? "text-red-500" : "text-green-500"}`}>
+            {isOccupied ? "BUSY" : "OPEN"}
+          </p>
+          <p className="text-1xl mb-1 text-white ml-2">{isOccupied ? "- " + pc.firstName : ""} {pc.lastName}</p>
+        </div>
       </div>
       <div className="flex items-end gap-4 rounded-lg bg-[#20222C] p-4">
         <TextField
