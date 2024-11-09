@@ -1,3 +1,4 @@
+import { describe, it } from "mocha";
 import { expect } from "chai";
 import convertCamelToSnake from "./camel-to-snake.js";
 
@@ -32,6 +33,6 @@ describe("convertCamelToSnake middleware", () => {
       camel_case_key: "value",
       another_example: "anotherValue",
     });
-    expect(nextCalled).to.be.true;
+    expect(nextCalled).to.equal(true);
   });
 });
