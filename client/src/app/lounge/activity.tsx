@@ -1,3 +1,4 @@
+import React from "react";
 import { useFetchActivities } from "../../services/activity";
 import useBoundStore from "../../store/store";
 import { Log } from "../../interfaces/log";

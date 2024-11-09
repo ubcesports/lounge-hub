@@ -1,3 +1,4 @@
+import { describe, it, beforeEach, afterEach } from "mocha";
 import request from "supertest";
 import { expect } from "chai";
 import app from "../app.js";
@@ -50,7 +51,7 @@ describe("Gamer API", () => {
         notes: "Another test user",
       })
       .expect(201)
-      .end((err, res) => {
+      .end((err) => {
         if (err) return done(err);
 
         request(app)
@@ -92,7 +93,7 @@ describe("Gamer API", () => {
         notes: "Initial notes",
       })
       .expect(201)
-      .end((err, res) => {
+      .end((err) => {
         if (err) return done(err);
 
         request(app)
@@ -169,7 +170,7 @@ describe("Gamer API", () => {
         notes: "Test user for deletion",
       })
       .expect(201)
-      .end((err, res) => {
+      .end((err) => {
         if (err) return done(err);
 
         request(app)

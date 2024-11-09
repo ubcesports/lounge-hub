@@ -1,3 +1,4 @@
+import { describe, it, afterEach, after, beforeEach } from "mocha";
 import request from "supertest";
 import { expect } from "chai";
 import app from "../app.js";
@@ -86,7 +87,7 @@ describe("Activity API", () => {
             expect(res.body).to.have.property("student_number", "11223344");
             expect(res.body).to.have.property("pc_number", 1);
             expect(res.body).to.have.property("game", "Valorant");
-            expect(res.body).to.have.property("ended_at").and.not.to.be.null;
+            expect(res.body).to.have.property("ended_at").and.not.equal(null);
             done();
           });
       });
@@ -112,7 +113,7 @@ describe("Activity API", () => {
         game: "Valorant",
       })
       .expect(201)
-      .end((err, res) => {
+      .end((err) => {
         if (err) return done(err);
 
         request(app)
@@ -123,7 +124,7 @@ describe("Activity API", () => {
             game: "Valorant",
           })
           .expect(201)
-          .end((err, res) => {
+          .end((err) => {
             if (err) return done(err);
 
             request(app)
@@ -147,7 +148,7 @@ describe("Activity API", () => {
         game: "Valorant",
       })
       .expect(201)
-      .end((err, res) => {
+      .end((err) => {
         if (err) return done(err);
 
         request(app)
@@ -158,7 +159,7 @@ describe("Activity API", () => {
             game: "Valorant",
           })
           .expect(201)
-          .end((err, res) => {
+          .end((err) => {
             if (err) return done(err);
 
             request(app)

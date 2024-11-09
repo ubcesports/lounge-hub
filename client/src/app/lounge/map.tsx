@@ -1,9 +1,8 @@
+import React from "react";
 import useBoundStore from "../../store/store";
 import { useFetchPCStatus } from "../../services/activity";
 import PCStation from "./pc-station";
-import { useState } from "react";
 import { PC } from "../../interfaces/pc";
-import PCInfo from "./pc-info";
 import { pcPositions } from "./lounge-layout/lounge-layout";
 
 interface LoungeMapProps {
@@ -42,4 +41,5 @@ const LoungeMap: React.FC<LoungeMapProps> = ({ onPCClick }) => {
     </div>
   );
 };
+
 export default LoungeMap;

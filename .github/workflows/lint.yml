@@ -29,3 +29,6 @@ jobs:
         uses: wearerequired/lint-action@v2
         with:
           prettier: true
+
+      - name: ESLint
+        run: npm run lint

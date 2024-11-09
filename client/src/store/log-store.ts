@@ -1,15 +1,15 @@
 import { StateCreator } from "zustand";
-import { Log } from "../interfaces/log";
+import { APILog, Log } from "../interfaces/log";
 
 export interface LogsSlice {
   logList: Log[];
-  setLogList: (payload: Log[]) => void;
+  setLogList: (payload: APILog[]) => void;
   removeLogList: () => void;
 }
 
 const initialLogState: Log[] = [];
 
-const updateLogList = (data: any) => {
+const updateLogList = (data: APILog[]) => {
   const updatedLogList = data.map((log) => {
     return {
       firstName: log.first_name,
@@ -25,7 +25,7 @@ const updateLogList = (data: any) => {
   return updatedLogList;
 };
 
-const replaceLogList = (data: any, set, get) => {
+const replaceLogList = (data: APILog[], set, get) => {
   const newLogList = updateLogList(data);
   const currentLogList = get().logList;
 
@@ -39,7 +39,7 @@ const replaceLogList = (data: any, set, get) => {
 
 export const createLogsSlice: StateCreator<LogsSlice> = (set, get) => ({
   logList: initialLogState,
-  setLogList: (payload: any) => {
+  setLogList: (payload: APILog[]) => {
     replaceLogList(payload, set, get);
   },
   removeLogList: () => set({ logList: initialLogState }),

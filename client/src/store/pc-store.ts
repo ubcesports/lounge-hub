@@ -1,11 +1,12 @@
 import { StateCreator } from "zustand";
 import { PCList } from "../interfaces/pc";
+import { ActivePC } from "../interfaces/active-pc";
 
 const NUM_PCS = 21;
 
 export interface PCSlice {
   PCList: PCList;
-  setPCList: (payload: PCList) => void;
+  setPCList: (payload: ActivePC[]) => void;
   resetPCState: (pcNumber: number) => void;
   removePCList: () => void;
 }
@@ -23,9 +24,9 @@ const initialPCListState: PCList = {
   })),
 };
 
-const updatePCList = (pcList: PCList, data: any) => {
+const updatePCList = (pcList: PCList, data: ActivePC[]) => {
   const updatedPCList = pcList.pcs.map((pc) => {
-    const updatedPC = data.find((d: any) => d.pc_number === pc.pcNumber);
+    const updatedPC = data.find((d: ActivePC) => d.pc_number === pc.pcNumber);
 
     if (updatedPC) {
       return {
@@ -68,7 +69,7 @@ const resetPCState = (pcNumber: number, pcList: PCList) => {
 
 export const createPCSlice: StateCreator<PCSlice> = (set) => ({
   PCList: initialPCListState,
-  setPCList: (payload: any) =>
+  setPCList: (payload: ActivePC[]) =>
     set((state) => ({
       PCList: updatePCList(state.PCList, payload),
     })),

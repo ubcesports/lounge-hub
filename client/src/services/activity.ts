@@ -1,7 +1,6 @@
 import { Activity } from "../interfaces/activity";
 import { useEffect } from "react";
 import useBoundStore from "../store/store";
-import { getGamerProfile } from "./gamer-profile";
 
 const API_URL = "http://localhost:8000/api";
 
