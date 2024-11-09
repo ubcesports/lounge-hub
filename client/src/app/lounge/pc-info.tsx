@@ -1,3 +1,4 @@
+import React from "react";
 import { PC } from "../../interfaces/pc";
 import { checkOutGamer } from "../../services/activity";
 import TextField from "../components/text-field";
@@ -9,7 +10,7 @@ interface PCInfoProps {
   isOccupied: boolean;
 }
 
-const PCInfo: React.FC<PCInfoProps> = ({ pc, timeRemaining, isOccupied }) => {
+const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied }) => {
   const [execName, setExecName] = useState<string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
