@@ -12,7 +12,6 @@ import Button from "./components/button";
 import { useState } from "react";
 import { PC } from "../interfaces/pc";
 import Activity from "./lounge/activity";
-import Records from "./records/records";
 
 export default function Page() {
   const [isAddingNewGamer, setIsAddingNewGamer] = React.useState(true);
