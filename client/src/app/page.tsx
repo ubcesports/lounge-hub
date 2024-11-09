@@ -5,13 +5,13 @@ import React from "react";
 import CheckIn from "./check-in/check-in";
 import Map from "./lounge/map";
 import StudentInfo from "./student-info/student-info";
-import Records from "./records/records";
 import PCInfo from "./lounge/pc-info";
 import AddUser from "./check-in/add-user";
 import PlaceholderImage from "./lounge/placeholder";
 import Button from "./components/button";
 import { useState } from "react";
 import { PC } from "../interfaces/pc";
+import Activity from "./lounge/activity";
 
 export default function Page() {
   const [isAddingNewGamer, setIsAddingNewGamer] = React.useState(true);
@@ -72,7 +72,7 @@ export default function Page() {
             <StudentInfo />
           </div>
           <div className="rounded-md bg-[#20222C] p-4">
-            <Records />
+            <Activity />
           </div>
         </div>
         {/* right */}
