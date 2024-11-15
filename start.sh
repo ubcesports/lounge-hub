@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npx concurrently "cd app && node app.js" "cd client && npm run dev"
+npx concurrently "cd app && npx nodemon app.js" "cd client && npm run dev"
