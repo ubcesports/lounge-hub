@@ -16,6 +16,11 @@ docker compose up -d --build
 ```
 
 4. Go to `localhost:3000` to see the app. Changes on the backend and frontend will hot reload.
+5. To stop containers run,
+
+```
+docker compose down
+```
 
 ### Local Machine
 
