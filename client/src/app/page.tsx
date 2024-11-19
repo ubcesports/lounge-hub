@@ -22,10 +22,7 @@ export default function Page() {
     setIsAddingNewGamer(!isAddingNewGamer);
   };
 
-  const handlePCClick = (
-    pc: PC,
-    isOccupied: boolean,
-  ) => {
+  const handlePCClick = (pc: PC, isOccupied: boolean) => {
     setSelectedPC(pc);
     setIsOccupied(isOccupied);
   };
