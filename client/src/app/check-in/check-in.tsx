@@ -47,6 +47,14 @@ const CheckIn = () => {
     const store = useBoundStore.getState();
     const pcList = store.PCList;
     if (
+      !checkInData.studentNumber ||
+      !checkInData.game ||
+      !checkInData.pcNumber
+    ) {
+      alert("Please fill out all fields.");
+      return;
+    }
+    if (
       pcList.pcs.some((pc) => pc.studentNumber === checkInData.studentNumber)
     ) {
       alert("This student is already checked in.");
@@ -63,7 +71,12 @@ const CheckIn = () => {
       alert("This is the check in PC.");
       return;
     }
-    await checkInGamer(checkInData);
+    try {
+      await checkInGamer(checkInData);
+    } catch {
+      alert("Student not found.");
+      return;
+    }
     const addedProfile = await getGamerProfile(checkInData.studentNumber);
     store.setGamerProfile({
       ...addedProfile,
