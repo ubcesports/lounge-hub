@@ -17,7 +17,6 @@ const CheckIn = () => {
     game: "",
     pcNumber: "",
   });
-
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

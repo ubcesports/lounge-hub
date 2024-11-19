@@ -22,7 +22,6 @@ const games = [
   "Apex Legends",
   "Armored core VI: Fires of Rubicon",
   "Brigador",
-  "Call of Duty",
   "Cyberpunk",
   "Destiny 2",
   "DNF Duel",
