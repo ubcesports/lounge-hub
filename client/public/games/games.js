@@ -1,4 +1,4 @@
-games = [
+const games = [
   "VALORANT",
   "League of Legends",
   "Overwatch 2",
