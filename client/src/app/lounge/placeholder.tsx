@@ -7,6 +7,10 @@ const PlaceholderImage: React.FC = () => {
     "/images/ubceaeyes.png",
     "/images/ubceasleep.png",
     "/images/ubcealove.png",
+    "/images/ubceaAYAYA.png",
+    "/images/ubceahi.png",
+    "/images/ubceaTEA.png",
+    "/images/ubceacomfy.png",
   ];
 
   const getRandomImage = () => {
@@ -24,7 +28,7 @@ const PlaceholderImage: React.FC = () => {
 
   return (
     <div className="flex h-full items-center justify-center">
-      <img src={randomImage} alt="Cute Placeholder" className="rounded-lg" />
+      <img src={randomImage} className="rounded-lg" />
     </div>
   );
 };

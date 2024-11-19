@@ -14,14 +14,9 @@ export const checkInGamer = async (activity: Activity) => {
     },
     body: JSON.stringify(activity),
   };
-
-  try {
-    const response = await fetch(url, settings);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    return error;
-  }
+  const response = await fetch(url, settings);
+  const data = await response.json();
+  return data;
 };
 
 export const checkOutGamer = async (

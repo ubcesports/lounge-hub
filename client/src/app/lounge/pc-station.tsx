@@ -82,7 +82,9 @@ const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied, onClick }) => {
       }}
     >
       <div className="text-center">
-        <p className="text-2xl">{isCab ? "Cab" : pc.pcNumber}</p>
+        <p className="text-2xl">
+          {isCab ? "Cab" : pc.pcNumber.toString().padStart(2, "0")}
+        </p>
         {isOccupied && <p className="text-xs">{timeRemaining}</p>}
       </div>
     </button>
