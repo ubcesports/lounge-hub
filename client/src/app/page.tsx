@@ -71,7 +71,7 @@ export default function Page() {
           <div className="rounded-md bg-[#20222C] p-4">
             <StudentInfo />
           </div>
-          <div className="rounded-md bg-[#20222C] p-4">
+          <div className="h-full rounded-md bg-[#20222C] p-4">
             <Activity />
           </div>
         </div>
