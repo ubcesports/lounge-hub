@@ -93,7 +93,7 @@ const CheckIn = () => {
             name="game"
             value={checkInData.game}
             onChange={handleInputChange}
-            onBlur={() => setSuggestions([])}
+            onBlur={() => setTimeout(() => setSuggestions([]), 100)}
             className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
           />
           <div className="relative">
