@@ -2,7 +2,29 @@
 
 ## Dev Environment
 
-### Install Node
+### Docker Compose (recommended)
+
+1. Install docker desktop
+2. Add environment variables
+
+Create a `.env` file in the `/app` directory following the `.env.example` file. Ask your development directors for the values.
+
+> Note: The app will not run correctly unless you have the `.env` file in your `/app` directory. 3. Run the following in the root directory
+
+```
+docker compose up -d --build
+```
+
+4. Go to `localhost:3000` to see the app. Changes on the backend and frontend will hot reload.
+5. To stop containers run,
+
+```
+docker compose down
+```
+
+### Local Machine
+
+If you wish to run the app on your local machine instead, please follow these instructions.
 
 Install node version `20.4.0`
 
@@ -37,12 +59,6 @@ npm install
 #### Root
 
 You'll also need to install node module dependencies in the root directory for development and deployment dependencies. Run `npm install` in the root directory.
-
-### Environment variables
-
-Create a `.env` file in the `/app` directory following the `.env.example` file. Ask your development directors for the values.
-
-> Note: The app will not run correctly unless you have the `.env` file in your `/app` directory.
 
 ### Run the app
 

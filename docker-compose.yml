@@ -1,0 +1,27 @@
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - ./app:/app
+    environment:
+      - TZ=America/Los_Angeles
+    ports:
+      - "8000:8000"
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - /client/node_modules
+      - ./client:/client
+      - /app/.next
+    environment:
+      - TZ=America/Los_Angeles
+      - WATCHPACK_POLLING=true
+    ports:
+      - "3000:3000"

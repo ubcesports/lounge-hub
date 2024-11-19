@@ -1,6 +1,8 @@
+import React from "react";
 import { useFetchActivities } from "../../services/activity";
 import useBoundStore from "../../store/store";
 import { Log } from "../../interfaces/log";
+import PlaceholderImage from "../lounge/placeholder";
 
 export default function Activity() {
   useFetchActivities();
@@ -25,15 +27,23 @@ export default function Activity() {
             ${log.game}`;
   }
 
+  if (logList.length === 0) {
+    return (
+      <div>
+        <h1 className="text-2xl font-bold text-white">Activity Log</h1>
+        <div className="flex items-center justify-center rounded-md p-4">
+          <div className="col-span-3 flex h-full items-center justify-center rounded-md bg-[#20222C] p-4">
+            <PlaceholderImage />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <h1 className="text-xl">Activity Log</h1>
-      <div className="bg-gray-900 p-4">
-        {logList.length === 0 && (
-          <div className="mb-4 border-b border-gray-700 pb-4">
-            <h1 className="text-xl text-white">No Recent Activity</h1>
-          </div>
-        )}
+      <h1 className="text-2xl font-bold text-white">Activity Log</h1>
+      <div className="h-96 overflow-y-auto p-4">
         {logList.map((log, index) => (
           <div key={index} className="mb-4 border-b border-gray-700 pb-4">
             <h1 className="text-xl text-white">

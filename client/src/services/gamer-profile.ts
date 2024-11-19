@@ -30,6 +30,6 @@ export const getGamerProfile = async (studentNumber: string) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    alert("Gamer not found.");
+    alert(`Gamer not found. ${error}`);
   }
 };

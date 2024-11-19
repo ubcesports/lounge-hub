@@ -3,17 +3,15 @@ import "./globals.css";
 
 import React from "react";
 import CheckIn from "./check-in/check-in";
-import Login from "./auth/login";
 import Map from "./lounge/map";
 import StudentInfo from "./student-info/student-info";
-import Records from "./records/records";
-import Activity from "./lounge/activity";
 import PCInfo from "./lounge/pc-info";
 import AddUser from "./check-in/add-user";
 import PlaceholderImage from "./lounge/placeholder";
 import Button from "./components/button";
 import { useState } from "react";
 import { PC } from "../interfaces/pc";
+import Activity from "./lounge/activity";
 
 export default function Page() {
   const [isAddingNewGamer, setIsAddingNewGamer] = React.useState(true);
@@ -69,8 +67,8 @@ export default function Page() {
           <div className="rounded-md bg-[#20222C] p-4">
             <StudentInfo />
           </div>
-          <div className="rounded-md bg-[#20222C] p-4">
-            <Records />
+          <div className="h-full rounded-md bg-[#20222C] p-4">
+            <Activity />
           </div>
         </div>
         {/* right */}

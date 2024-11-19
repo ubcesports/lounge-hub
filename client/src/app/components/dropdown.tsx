@@ -3,7 +3,7 @@ import React, { ChangeEvent } from "react";
 interface DropdownFieldProps {
   label: string;
   name: string;
-  value: any;
+  value: string | number | readonly string[];
   options: { value: string; label: string }[];
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   className?: string;

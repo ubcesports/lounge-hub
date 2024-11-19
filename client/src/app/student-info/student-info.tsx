@@ -1,3 +1,4 @@
+import React from "react";
 import useBoundStore from "../../store/store";
 import { initialGamerState } from "../../store/gamer-store";
 import PlaceholderImage from "../lounge/placeholder";

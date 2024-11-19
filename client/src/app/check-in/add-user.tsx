@@ -76,11 +76,16 @@ const AddUser = () => {
             { value: "2", label: "Tier 2" },
           ]}
         />
-        <Button
-          onClick={handleSubmit}
-          label="Add Gamer"
-          className="rounded bg-[#3A6AAC] px-4 py-2 text-[#DEE7EC] hover:bg-blue-500"
-        />
+        <div className="group relative">
+          <Button
+            onClick={handleSubmit}
+            label="Add Gamer"
+            className="rounded bg-[#3A6AAC] px-4 py-2 text-[#DEE7EC] hover:bg-blue-500"
+          />
+          <div className="absolute left-1/2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
+            This either creates a new profile or updates an existing one.
+          </div>
+        </div>
         <div className="col-span-5 col-start-1 row-span-1 row-start-2">
           <TextField
             label="Notes"
