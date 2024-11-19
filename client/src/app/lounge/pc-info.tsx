@@ -48,7 +48,7 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied }) => {
   const formatTime = (time: string, game: string, membershipTier: number) => {
     const date = new Date(time);
     const currentTime = new Date();
-    let endTime = new Date(date);
+    const endTime = new Date(date);
 
     if (membershipTier === 1) {
       endTime.setHours(date.getHours() + 1);
@@ -63,7 +63,7 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied }) => {
     const formattedHours = hours.toString();
     const formattedMinutes = minutes.toString().padStart(2, "0");
 
-    return `Started ${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")} \u00B7 ${game} \u00B7 ${formattedHours}h${formattedMinutes}m left`;
+    return `Started ${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")} \u00B7 ${game} \u00B7 ${formattedHours}h ${formattedMinutes}m left`;
   };
 
   return (

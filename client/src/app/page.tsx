@@ -16,7 +16,6 @@ import Activity from "./lounge/activity";
 export default function Page() {
   const [isAddingNewGamer, setIsAddingNewGamer] = React.useState(true);
   const [selectedPC, setSelectedPC] = useState<PC | null>(null);
-  const [timeRemaining, setTimeRemaining] = useState<string>("");
   const [isOccupied, setIsOccupied] = useState<boolean>(false);
 
   const handleToggleForm = () => {
@@ -25,11 +24,9 @@ export default function Page() {
 
   const handlePCClick = (
     pc: PC,
-    timeRemaining: string,
     isOccupied: boolean,
   ) => {
     setSelectedPC(pc);
-    setTimeRemaining(timeRemaining);
     setIsOccupied(isOccupied);
   };
 
