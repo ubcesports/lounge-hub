@@ -1,4 +1,4 @@
-test_list = [
+games = [
   "VALORANT",
   "League of Legends",
   "Overwatch 2",
@@ -52,6 +52,6 @@ test_list = [
   "Warframe",
   "World of Horror",
   "Yu-Gi-Oh DUEL LINKS",
-]
+];
 
 export default games;
