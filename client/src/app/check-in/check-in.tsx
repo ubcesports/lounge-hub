@@ -9,6 +9,7 @@ import {
 } from "../../services/activity";
 import { getGamerProfile } from "../../services/gamer-profile";
 import useBoundStore from "../../store/store";
+import games from "../../../public/games/games.js";
 
 const CheckIn = () => {
   const [checkInData, setCheckInData] = useState<Activity>({
@@ -17,11 +18,29 @@ const CheckIn = () => {
     pcNumber: "",
   });
 
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setCheckInData({
       ...checkInData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+
+    if (name === "game") {
+      const filteredSuggestions = games.filter((game) =>
+        game.toLowerCase().includes(value.toLowerCase()),
+      );
+      setSuggestions(filteredSuggestions);
+    }
+  };
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setCheckInData({
+      ...checkInData,
+      game: suggestion,
+    });
+    setSuggestions([]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,13 +87,31 @@ const CheckIn = () => {
           onChange={handleInputChange}
           className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
         />
-        <TextField
-          label="Game"
-          name="game"
-          value={checkInData.game}
-          onChange={handleInputChange}
-          className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
-        />
+        <div>
+          <TextField
+            label="Game"
+            name="game"
+            value={checkInData.game}
+            onChange={handleInputChange}
+            onBlur={() => setSuggestions([])}
+            className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
+          />
+          <div className="relative">
+            {suggestions.length > 0 && (
+              <ul className="absolute z-10 mt-1 w-full rounded-md border border-gray-300 bg-white">
+                {suggestions.slice(0, 7).map((suggestion, index) => (
+                  <li
+                    key={index}
+                    className="cursor-pointer p-2 hover:bg-gray-200"
+                    onClick={() => handleSuggestionClick(suggestion)}
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
         <TextField
           label="Table #"
           name="pcNumber"

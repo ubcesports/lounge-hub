@@ -6,6 +6,7 @@ interface TextFieldProps {
   value: string;
   type?: "text" | "password" | "email" | "number" | "date" | "time" | "search";
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
   className?: string;
 }
 const TextField: React.FC<TextFieldProps> = ({
@@ -14,6 +15,7 @@ const TextField: React.FC<TextFieldProps> = ({
   value,
   type,
   onChange,
+  onBlur,
   className = "",
 }) => {
   return (
@@ -25,6 +27,7 @@ const TextField: React.FC<TextFieldProps> = ({
         name={name}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         className={`rounded bg-gray-700 p-2 text-white ${className}`} // Merge default and custom classes
       />
     </div>
