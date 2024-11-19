@@ -59,6 +59,10 @@ const CheckIn = () => {
       alert("This PC is already occupied.");
       return;
     }
+    if (checkInData.pcNumber === "20") {
+      alert("This is the check in PC.");
+      return;
+    }
     await checkInGamer(checkInData);
     const addedProfile = await getGamerProfile(checkInData.studentNumber);
     store.setGamerProfile({

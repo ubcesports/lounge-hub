@@ -30,7 +30,7 @@ export default function Activity() {
   if (logList.length === 0) {
     return (
       <div>
-        <h1 className="text-2xl font-bold text-white">Activity Log</h1>
+        <h1 className="text-2xl font-bold text-white p-2">Activity Log</h1>
         <div className="flex items-center justify-center rounded-md p-4">
           <div className="col-span-3 flex h-full items-center justify-center rounded-md bg-[#20222C] p-4">
             <PlaceholderImage />
@@ -42,7 +42,7 @@ export default function Activity() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white">Activity Log</h1>
+      <h1 className="text-2xl font-bold text-white p-2">Activity Log</h1>
       <div className="h-96 overflow-y-auto p-4">
         {logList.map((log, index) => (
           <div key={index} className="mb-4 border-b border-gray-700 pb-4">
