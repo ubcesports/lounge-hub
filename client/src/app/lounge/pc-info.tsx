@@ -63,7 +63,10 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied }) => {
     const formattedHours = hours.toString();
     const formattedMinutes = minutes.toString().padStart(2, "0");
 
-    const timeLeft = timeDiff >= 0 ? `${formattedHours}h ${formattedMinutes}m left` : "Time up";
+    const timeLeft =
+      timeDiff >= 0
+        ? `${formattedHours}h ${formattedMinutes}m left`
+        : "Time up";
 
     return `Started ${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")} \u00B7 ${game} \u00B7 ${timeLeft}`;
   };
