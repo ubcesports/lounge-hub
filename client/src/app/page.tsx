@@ -16,20 +16,14 @@ import Activity from "./lounge/activity";
 export default function Page() {
   const [isAddingNewGamer, setIsAddingNewGamer] = React.useState(true);
   const [selectedPC, setSelectedPC] = useState<PC | null>(null);
-  const [timeRemaining, setTimeRemaining] = useState<string>("");
   const [isOccupied, setIsOccupied] = useState<boolean>(false);
 
   const handleToggleForm = () => {
     setIsAddingNewGamer(!isAddingNewGamer);
   };
 
-  const handlePCClick = (
-    pc: PC,
-    timeRemaining: string,
-    isOccupied: boolean,
-  ) => {
+  const handlePCClick = (pc: PC, isOccupied: boolean) => {
     setSelectedPC(pc);
-    setTimeRemaining(timeRemaining);
     setIsOccupied(isOccupied);
   };
 
@@ -45,11 +39,7 @@ export default function Page() {
             <Map onPCClick={handlePCClick} />
           </div>
           {selectedPC ? (
-            <PCInfo
-              pc={selectedPC}
-              timeRemaining={timeRemaining}
-              isOccupied={isOccupied}
-            />
+            <PCInfo pc={selectedPC} isOccupied={isOccupied} />
           ) : (
             <div className="col-span-3 h-full rounded-md bg-[#20222C] p-4">
               <PlaceholderImage />

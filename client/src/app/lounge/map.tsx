@@ -6,7 +6,7 @@ import { PC } from "../../interfaces/pc";
 import { pcPositions } from "./lounge-layout/lounge-layout";
 
 interface LoungeMapProps {
-  onPCClick: (pc: PC, timeRemaining: string, isOccupied: boolean) => void;
+  onPCClick: (pc: PC, isOccupied: boolean) => void;
 }
 
 const LoungeMap: React.FC<LoungeMapProps> = ({ onPCClick }) => {
@@ -33,7 +33,7 @@ const LoungeMap: React.FC<LoungeMapProps> = ({ onPCClick }) => {
             <PCStation
               pc={pc}
               isOccupied={!!pc?.studentNumber}
-              onClick={() => onPCClick(pc, "", !!pc?.studentNumber)}
+              onClick={() => onPCClick(pc, !!pc?.studentNumber)}
             />
           </div>
         );
