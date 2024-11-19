@@ -42,7 +42,7 @@ export default function Activity() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white">Activity Log</h1>
+      <h1 className="text-2xl font-bold text-white p-2">Activity Log</h1>
       <div className="h-96 overflow-y-auto p-4">
         {logList.map((log, index) => (
           <div key={index} className="mb-4 border-b border-gray-700 pb-4">
