@@ -47,11 +47,7 @@ export default function Page() {
             <Map onPCClick={handlePCClick} />
           </div>
           {selectedPC ? (
-            <PCInfo
-              pc={selectedPC}
-              timeRemaining={timeRemaining}
-              isOccupied={isOccupied}
-            />
+            <PCInfo pc={selectedPC} isOccupied={isOccupied} />
           ) : (
             <div className="col-span-3 h-full rounded-md bg-[#20222C] p-4">
               <PlaceholderImage />
