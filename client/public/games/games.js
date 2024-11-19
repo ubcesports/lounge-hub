@@ -1,4 +1,4 @@
-const games = [
+test_list = [
   "VALORANT",
   "League of Legends",
   "Overwatch 2",
@@ -27,7 +27,6 @@ const games = [
   "DNF Duel",
   "Dragonball Fighter Z",
   "Europa Universalis IV",
-  "Fortnite",
   "Genshin Impact",
   "Granblue Fantasy Versus",
   "Helldivers 2",
@@ -36,7 +35,6 @@ const games = [
   "Lethal Company",
   "Minecraft",
   "Mortal Kombat",
-  "Overwatch 2",
   "Persona 3 Reload",
   "Portal",
   "Puyo Puyo Tetris 2",
@@ -54,6 +52,6 @@ const games = [
   "Warframe",
   "World of Horror",
   "Yu-Gi-Oh DUEL LINKS",
-];
+]
 
 export default games;
