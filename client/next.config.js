@@ -9,4 +9,5 @@ module.exports = {
       },
     ];
   },
+  output: "standalone",
 };
