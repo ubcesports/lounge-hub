@@ -1,9 +1,7 @@
 import { GamerProfile } from "../interfaces/gamer-profile";
 
-const API_URL = "http://localhost:8000/api";
-
 export const addGamerProfile = async (gamerProfile: GamerProfile) => {
-  const url = `${API_URL}/gamer`;
+  const url = `/api/gamer`;
   const settings = {
     method: "POST",
     headers: {
@@ -23,7 +21,7 @@ export const addGamerProfile = async (gamerProfile: GamerProfile) => {
 };
 
 export const getGamerProfile = async (studentNumber: string) => {
-  const url = `${API_URL}/gamer/${studentNumber}`;
+  const url = `/api/gamer/${studentNumber}`;
 
   try {
     const response = await fetch(url);

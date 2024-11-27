@@ -8,8 +8,6 @@ services:
       - ./app:/app
     environment:
       - TZ=America/Los_Angeles
-    ports:
-      - "8000:8000"
 
   client:
     build:
@@ -23,5 +21,11 @@ services:
     environment:
       - TZ=America/Los_Angeles
       - WATCHPACK_POLLING=true
+      - API_URL=http://app:8000
+
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
     ports:
-      - "3000:3000"
+      - "80:80"
