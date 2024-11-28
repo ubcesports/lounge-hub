@@ -1,0 +1,23 @@
+services:
+  app:
+    image: public.ecr.aws/d0w1o5s2/ubcea/lounge-hub:lounge-hub-app
+    container_name: "app"
+    environment:
+      - TZ=America/Los_Angeles
+
+  client:
+    image: public.ecr.aws/d0w1o5s2/ubcea/lounge-hub:lounge-hub-client
+    container_name: "client"
+    depends_on:
+      - app
+    environment:
+      - TZ=America/Los_Angeles
+
+  proxy:
+    image: public.ecr.aws/d0w1o5s2/ubcea/lounge-hub:lounge-hub-nginx
+    container_name: "proxy"
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      - TZ=America/Los_Angeles

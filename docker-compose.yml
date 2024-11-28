@@ -8,6 +8,9 @@ services:
       - ./app:/app
     environment:
       - TZ=America/Los_Angeles
+    env_file:
+      - .env
+    platform: linux/amd64
 
   client:
     build:
@@ -22,6 +25,7 @@ services:
       - TZ=America/Los_Angeles
       - WATCHPACK_POLLING=true
       - API_URL=http://app:8000
+    platform: linux/amd64
 
   nginx:
     restart: always
@@ -29,3 +33,6 @@ services:
       context: ./nginx
     ports:
       - "80:80"
+    environment:
+      - TZ=America/Los_Angeles
+    platform: linux/amd64

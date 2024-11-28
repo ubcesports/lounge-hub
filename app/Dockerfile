@@ -11,4 +11,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["npx", "nodemon", "-L", "app.js"]
+CMD ["node", "app.js"]
