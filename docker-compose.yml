@@ -15,6 +15,7 @@ services:
   client:
     build:
       context: ./client
+      target: dev
     restart: always
     volumes:
       - /client/node_modules
