@@ -46,6 +46,7 @@ describe("Activity API", () => {
         expect(res.body).to.have.property("student_number", "11223344");
         expect(res.body).to.have.property("pc_number", 1);
         expect(res.body).to.have.property("game", "Valorant");
+        expect(res.body).to.have.property("exec_name", null);
         done();
       });
   });
@@ -80,7 +81,7 @@ describe("Activity API", () => {
         expect(res.body).to.have.property("ended_at", null);
 
         request(app)
-          .patch("/api/activity/update/11223344")
+          .patch("/api/activity/update/11223344/John")
           .expect(201)
           .end((err, res) => {
             if (err) return done(err);
@@ -88,6 +89,7 @@ describe("Activity API", () => {
             expect(res.body).to.have.property("pc_number", 1);
             expect(res.body).to.have.property("game", "Valorant");
             expect(res.body).to.have.property("ended_at").and.not.equal(null);
+            expect(res.body).to.have.property("exec_name", "John");
             done();
           });
       });
@@ -95,7 +97,7 @@ describe("Activity API", () => {
 
   it("should return 404 if student does not have active activity", (done) => {
     request(app)
-      .patch("/api/activity/update/11223344")
+      .patch("/api/activity/update/11223344/John")
       .expect(404)
       .end((err, res) => {
         if (err) return done(err);

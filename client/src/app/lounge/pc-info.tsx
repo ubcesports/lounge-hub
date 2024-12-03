@@ -19,7 +19,8 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied }) => {
   };
 
   const handleClick = async () => {
-    await checkOutGamer(pc.studentNumber, pc.pcNumber);
+    await checkOutGamer(pc.studentNumber, pc.pcNumber, execName);
+    window.location.reload();
   };
 
   const truncateName = (

@@ -22,12 +22,17 @@ export const checkInGamer = async (activity: Activity) => {
 export const checkOutGamer = async (
   studentNumber: string,
   pcNumber: number,
+  execName: string,
 ) => {
   if (!studentNumber) {
     alert("This table is not occupied.");
     return;
   }
-  const url = `${API_URL}/activity/update/${studentNumber}`;
+  if (!execName) {
+    alert("Please enter your name.");
+    return;
+  }
+  const url = `${API_URL}/activity/update/${studentNumber}/${execName}`;
   const settings = {
     method: "PATCH",
     headers: {

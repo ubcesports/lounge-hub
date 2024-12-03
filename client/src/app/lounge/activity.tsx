@@ -24,7 +24,8 @@ export default function Activity() {
             Started ${startTimeFormatted} ・ 
             Ended ${endTimeFormatted || "N/A"} ・ 
             ${log.pcNumber} ・ 
-            ${log.game}`;
+            ${log.game} ・ 
+            Exec - ${log.execName}`;
   }
 
   if (logList.length === 0) {

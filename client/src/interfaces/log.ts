@@ -6,6 +6,7 @@ export interface Log {
   pcNumber: string;
   startedAt: Date;
   endedAt: Date;
+  execName: string;
 }
 
 export interface APILog {
@@ -16,4 +17,5 @@ export interface APILog {
   ended_at: string;
   first_name: string;
   last_name: string;
+  exec_name: string;
 }

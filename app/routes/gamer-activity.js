@@ -20,6 +20,7 @@ const FK_VIOLATION = "23503";
  * @apiSuccess {String} gamer_activity.game Game name.
  * @apiSuccess {String} gamer_activity.started_at Datetime when the activity started.
  * @apiSuccess {String} gamer_activity.ended_at Datetime when the activity ended.
+ * @apiSuccess {string} gamer_activity.exec_name Exec that ended the activity.
  *
  * @apiError {String} 500 Server error.
  */
@@ -50,6 +51,7 @@ router.get("/activity/:student_number", async (req, res) => {
  * @apiSuccess {String} gamer_activity.game Game name.
  * @apiSuccess {String} gamer_activity.started_at Datetime when the activity started.
  * @apiSuccess {String} gamer_activity.ended_at Datetime when the activity ended.
+ * @apiSuccess {string} gamer_activity.exec_name Exec that ended the activity.
  *
  * @apiError {String} 500 Server error.
  */
@@ -125,6 +127,7 @@ router.post("/activity", async (req, res) => {
  * @apiGroup Activity
  *
  * @apiParam {String} student_number Student number, 8 digit integer.
+ * @apiParam {String} exec_name Exec that ended the activity.
  *
  * @apiSuccess {Object} gamer_activity Gamer profile object.
  * @apiSuccess {String} gamer_activity.student_number Student number, 8 digit integer.
@@ -132,17 +135,20 @@ router.post("/activity", async (req, res) => {
  * @apiSuccess {String} gamer_activity.game Game name.
  * @apiSuccess {String} gamer_activity.started_at Datetime when the activity started.
  * @apiSuccess {String} gamer_activity.ended_at Datetime when the activity ended.
+ * @apiSuccess {string} gamer_activity.exec_name Exec that ended the activity.
  *
  * @apiError {String} 500 Internal server error.
  */
-router.patch("/activity/update/:student_number", async (req, res) => {
-  const ended_at = moment()
-    .tz("America/Los_Angeles")
-    .format("YYYY-MM-DD HH:mm");
-  const { student_number } = req.params;
+router.patch(
+  "/activity/update/:student_number/:exec_name",
+  async (req, res) => {
+    const ended_at = moment()
+      .tz("America/Los_Angeles")
+      .format("YYYY-MM-DD HH:mm");
+    const { student_number, exec_name } = req.params;
 
-  const query = `UPDATE ${schema}.gamer_activity
-                   SET ended_at = $1 
+    const query = `UPDATE ${schema}.gamer_activity
+                   SET ended_at = $1, exec_name = $3
                    WHERE student_number = $2
                    AND ended_at IS NULL
                    AND started_at = (
@@ -152,16 +158,21 @@ router.patch("/activity/update/:student_number", async (req, res) => {
                   )
                    RETURNING *`;
 
-  try {
-    const result = await db.query(query, [ended_at, student_number]);
-    if (result.rows.length === 0) {
-      return res.status(404).send("Student not active.");
+    try {
+      const result = await db.query(query, [
+        ended_at,
+        student_number,
+        exec_name,
+      ]);
+      if (result.rows.length === 0) {
+        return res.status(404).send("Student not active.");
+      }
+      res.status(201).send(result.rows[0]);
+    } catch (err) {
+      res.status(500).send(`Error updating activity: ${err}`);
     }
-    res.status(201).send(result.rows[0]);
-  } catch (err) {
-    res.status(500).send(`Error updating activity: ${err}`);
-  }
-});
+  },
+);
 
 router.get("/activity/all/get-active-pcs", async (req, res) => {
   const query = `SELECT *
