@@ -25,10 +25,15 @@ export const checkInGamer = async (activity: Activity) => {
 export const checkOutGamer = async (
   studentNumber: string,
   pcNumber: number,
-) => {
+  execName: string,
+): Promise<boolean> => {
   if (!studentNumber) {
     alert("This table is not occupied.");
-    return;
+    return false;
+  }
+  if (!execName) {
+    alert("Please enter your name.");
+    return false;
   }
   const url = `/api/activity/update/${studentNumber}`;
   const settings = {
@@ -37,15 +42,17 @@ export const checkOutGamer = async (
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({ execName }),
   };
 
   try {
     await fetch(url, settings);
     const store = useBoundStore.getState();
     store.resetPCState(pcNumber);
-    return;
+    return true;
   } catch (error) {
-    return error;
+    console.error("Error checking out gamer:", error);
+    return false;
   }
 };
 

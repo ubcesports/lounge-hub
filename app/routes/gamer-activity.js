@@ -20,6 +20,7 @@ const FK_VIOLATION = "23503";
  * @apiSuccess {String} gamer_activity.game Game name.
  * @apiSuccess {String} gamer_activity.started_at Datetime when the activity started.
  * @apiSuccess {String} gamer_activity.ended_at Datetime when the activity ended.
+ * @apiSuccess {string} gamer_activity.exec_name Exec that ended the activity.
  *
  * @apiError {String} 500 Server error.
  */
@@ -50,6 +51,7 @@ router.get("/activity/:student_number", async (req, res) => {
  * @apiSuccess {String} gamer_activity.game Game name.
  * @apiSuccess {String} gamer_activity.started_at Datetime when the activity started.
  * @apiSuccess {String} gamer_activity.ended_at Datetime when the activity ended.
+ * @apiSuccess {string} gamer_activity.exec_name Exec that ended the activity.
  *
  * @apiError {String} 500 Server error.
  */
@@ -151,6 +153,7 @@ router.post("/activity", async (req, res) => {
  * @apiSuccess {String} gamer_activity.game Game name.
  * @apiSuccess {String} gamer_activity.started_at Datetime when the activity started.
  * @apiSuccess {String} gamer_activity.ended_at Datetime when the activity ended.
+ * @apiSuccess {string} gamer_activity.exec_name Exec that ended the activity.
  *
  * @apiError {String} 500 Internal server error.
  */
@@ -159,9 +162,10 @@ router.patch("/activity/update/:student_number", async (req, res) => {
     .tz("America/Los_Angeles")
     .format("YYYY-MM-DD HH:mm");
   const { student_number } = req.params;
+  const { exec_name } = req.body;
 
   const query = `UPDATE ${schema}.gamer_activity
-                   SET ended_at = $1 
+                   SET ended_at = $1, exec_name = $3
                    WHERE student_number = $2
                    AND ended_at IS NULL
                    AND started_at = (
@@ -172,7 +176,7 @@ router.patch("/activity/update/:student_number", async (req, res) => {
                    RETURNING *`;
 
   try {
-    const result = await db.query(query, [ended_at, student_number]);
+    const result = await db.query(query, [ended_at, student_number, exec_name]);
     if (result.rows.length === 0) {
       return res.status(404).send("Student not active.");
     }

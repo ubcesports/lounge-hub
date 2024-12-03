@@ -19,6 +19,7 @@ const updateLogList = (data: APILog[]) => {
       pcNumber: log.pc_number,
       startedAt: log.started_at,
       endedAt: log.ended_at,
+      execName: log.exec_name,
     };
   });
 

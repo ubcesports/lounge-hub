@@ -46,6 +46,7 @@ describe("Activity API", () => {
         expect(res.body).to.have.property("student_number", "11223344");
         expect(res.body).to.have.property("pc_number", 1);
         expect(res.body).to.have.property("game", "Valorant");
+        expect(res.body).to.have.property("exec_name", null);
         done();
       });
   });
@@ -81,6 +82,7 @@ describe("Activity API", () => {
 
         request(app)
           .patch("/api/activity/update/11223344")
+          .send({ exec_name: "John" })
           .expect(201)
           .end((err, res) => {
             if (err) return done(err);
@@ -88,6 +90,7 @@ describe("Activity API", () => {
             expect(res.body).to.have.property("pc_number", 1);
             expect(res.body).to.have.property("game", "Valorant");
             expect(res.body).to.have.property("ended_at").and.not.equal(null);
+            expect(res.body).to.have.property("exec_name", "John");
             done();
           });
       });
@@ -96,6 +99,7 @@ describe("Activity API", () => {
   it("should return 404 if student does not have active activity", (done) => {
     request(app)
       .patch("/api/activity/update/11223344")
+      .send({ exec_name: "John" })
       .expect(404)
       .end((err, res) => {
         if (err) return done(err);
@@ -193,6 +197,7 @@ describe("Activity API", () => {
 
         request(app)
           .patch("/api/activity/update/11223344")
+          .send({ exec_name: "John" })
           .expect(201)
           .end((err) => {
             if (err) return done(err);
@@ -233,6 +238,7 @@ describe("Activity API", () => {
 
         request(app)
           .patch("/api/activity/update/87654321")
+          .send({ exec_name: "Jane" })
           .expect(201)
           .end((err) => {
             if (err) return done(err);
