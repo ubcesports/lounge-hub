@@ -146,7 +146,6 @@ router.post("/activity", async (req, res) => {
  * @apiGroup Activity
  *
  * @apiParam {String} student_number Student number, 8 digit integer.
- * @apiParam {String} exec_name Exec that ended the activity.
  *
  * @apiSuccess {Object} gamer_activity Gamer profile object.
  * @apiSuccess {String} gamer_activity.student_number Student number, 8 digit integer.
