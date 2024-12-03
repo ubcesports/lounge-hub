@@ -158,15 +158,14 @@ router.post("/activity", async (req, res) => {
  *
  * @apiError {String} 500 Internal server error.
  */
-router.patch(
-  "/activity/update/:student_number/:exec_name",
-  async (req, res) => {
-    const ended_at = moment()
-      .tz("America/Los_Angeles")
-      .format("YYYY-MM-DD HH:mm");
-    const { student_number, exec_name } = req.params;
+router.patch("/activity/update/:student_number", async (req, res) => {
+  const ended_at = moment()
+    .tz("America/Los_Angeles")
+    .format("YYYY-MM-DD HH:mm");
+  const { student_number } = req.params;
+  const { exec_name } = req.body;
 
-    const query = `UPDATE ${schema}.gamer_activity
+  const query = `UPDATE ${schema}.gamer_activity
                    SET ended_at = $1, exec_name = $3
                    WHERE student_number = $2
                    AND ended_at IS NULL
@@ -177,21 +176,16 @@ router.patch(
                   )
                    RETURNING *`;
 
-    try {
-      const result = await db.query(query, [
-        ended_at,
-        student_number,
-        exec_name,
-      ]);
-      if (result.rows.length === 0) {
-        return res.status(404).send("Student not active.");
-      }
-      res.status(201).send(result.rows[0]);
-    } catch (err) {
-      res.status(500).send(`Error updating activity: ${err}`);
+  try {
+    const result = await db.query(query, [ended_at, student_number, exec_name]);
+    if (result.rows.length === 0) {
+      return res.status(404).send("Student not active.");
     }
-  },
-);
+    res.status(201).send(result.rows[0]);
+  } catch (err) {
+    res.status(500).send(`Error updating activity: ${err}`);
+  }
+});
 
 router.get("/activity/all/get-active-pcs", async (req, res) => {
   const query = `SELECT *

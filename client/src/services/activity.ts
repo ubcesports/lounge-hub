@@ -37,13 +37,14 @@ export const checkOutGamer = async (
     alert("Please enter your name.");
     return;
   }
-  const url = `${API_URL}/activity/update/${studentNumber}/${execName}`;
+  const url = `${API_URL}/activity/update/${studentNumber}`;
   const settings = {
     method: "PATCH",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({ execName }),
   };
 
   try {
