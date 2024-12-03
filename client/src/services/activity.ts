@@ -13,6 +13,11 @@ export const checkInGamer = async (activity: Activity) => {
     body: JSON.stringify(activity),
   };
   const response = await fetch(url, settings);
+  if (response.status === 400) {
+    throw new Error("Tier 1 members can only check in once a day.");
+  } else if (response.status === 404) {
+    throw new Error("Student not found.");
+  }
   const data = await response.json();
   return data;
 };
