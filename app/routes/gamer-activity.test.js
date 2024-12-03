@@ -16,7 +16,7 @@ describe("Activity API", () => {
     const mock2 = `
       INSERT INTO test.gamer_profile 
       (first_name, last_name, student_number, membership_tier) 
-      VALUES ('Jane', 'Doe', '87654321', 1);
+      VALUES ('Jane', 'Doe', '87654321', 2);
     `;
     await db.query(mock1);
     await db.query(mock2);
@@ -170,6 +170,86 @@ describe("Activity API", () => {
                 res.body.forEach((item) => {
                   expect(item).to.have.property("student_number", "87654321");
                 });
+                done();
+              });
+          });
+      });
+  });
+
+  it("should throw 400 error if tier 1 member tries to check in more than once a day", (done) => {
+    request(app)
+      .post("/api/activity")
+      .send({
+        student_number: "11223344",
+        pc_number: 1,
+        game: "Valorant",
+      })
+      .expect(201)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body).to.have.property("student_number", "11223344");
+        expect(res.body).to.have.property("pc_number", 1);
+        expect(res.body).to.have.property("game", "Valorant");
+
+        request(app)
+          .patch("/api/activity/update/11223344")
+          .expect(201)
+          .end((err) => {
+            if (err) return done(err);
+
+            request(app)
+              .post("/api/activity")
+              .send({
+                student_number: "11223344",
+                pc_number: 2,
+                game: "CS:GO",
+              })
+              .expect(400)
+              .end((err, res) => {
+                if (err) return done(err);
+                expect(res.text).to.equal(
+                  "Tier 1 members can only sign in once a day.",
+                );
+                done();
+              });
+          });
+      });
+  });
+
+  it("should allow tier 2 member to check in two times a day", (done) => {
+    request(app)
+      .post("/api/activity")
+      .send({
+        student_number: "87654321",
+        pc_number: 1,
+        game: "Valorant",
+      })
+      .expect(201)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body).to.have.property("student_number", "87654321");
+        expect(res.body).to.have.property("pc_number", 1);
+        expect(res.body).to.have.property("game", "Valorant");
+
+        request(app)
+          .patch("/api/activity/update/87654321")
+          .expect(201)
+          .end((err) => {
+            if (err) return done(err);
+
+            request(app)
+              .post("/api/activity")
+              .send({
+                student_number: "87654321",
+                pc_number: 2,
+                game: "CS:GO",
+              })
+              .expect(201)
+              .end((err, res) => {
+                if (err) return done(err);
+                expect(res.body).to.have.property("student_number", "87654321");
+                expect(res.body).to.have.property("pc_number", 2);
+                expect(res.body).to.have.property("game", "CS:GO");
                 done();
               });
           });
