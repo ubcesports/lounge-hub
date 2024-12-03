@@ -93,6 +93,8 @@ router.get("/activity/all/recent", async (req, res) => {
  * @apiSuccess {String} gamer_activity.started_at Datetime when the activity started.
  *
  * @apiError {String} 500 Server error.
+ * @apiError {String} 404 Foreign key not found.
+ * @apiError {String} 400 Tier 1 members can only book one PC per day.
  */
 router.post("/activity", async (req, res) => {
   const { student_number, pc_number, game } = req.body;
@@ -100,12 +102,29 @@ router.post("/activity", async (req, res) => {
     .tz("America/Los_Angeles")
     .format("YYYY-MM-DD HH:mm");
 
+  const tierOneCheckQuery = `
+    SELECT ga.*
+    FROM ${schema}.gamer_activity ga
+    JOIN ${schema}.gamer_profile gp ON ga.student_number = gp.student_number
+    WHERE ga.student_number = $1
+    AND gp.membership_tier = 1
+    AND DATE(ga.started_at::timestamp) = DATE($2::timestamp)
+  `;
   const query = `INSERT INTO ${schema}.gamer_activity 
         (student_number, pc_number, game, started_at) 
         VALUES ($1, $2, $3, $4) 
         RETURNING *`;
 
   try {
+    const tierOneCheckResult = await db.query(tierOneCheckQuery, [
+      student_number,
+      started_at,
+    ]);
+    if (tierOneCheckResult.rows.length > 0) {
+      return res
+        .status(400)
+        .send("Tier 1 members can only sign in once a day.");
+    }
     const result = await db.query(query, [
       student_number,
       pc_number,

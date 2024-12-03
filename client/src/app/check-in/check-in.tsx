@@ -73,8 +73,8 @@ const CheckIn = () => {
     }
     try {
       await checkInGamer(checkInData);
-    } catch {
-      alert("Student not found.");
+    } catch (error) {
+      alert(error.message);
       return;
     }
     const addedProfile = await getGamerProfile(checkInData.studentNumber);
