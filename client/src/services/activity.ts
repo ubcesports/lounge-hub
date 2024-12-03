@@ -2,10 +2,8 @@ import { Activity } from "../interfaces/activity";
 import { useEffect } from "react";
 import useBoundStore from "../store/store";
 
-const API_URL = "http://localhost:8000/api";
-
 export const checkInGamer = async (activity: Activity) => {
-  const url = `${API_URL}/activity`;
+  const url = `/api/activity`;
   const settings = {
     method: "POST",
     headers: {
@@ -32,7 +30,7 @@ export const checkOutGamer = async (
     alert("This table is not occupied.");
     return;
   }
-  const url = `${API_URL}/activity/update/${studentNumber}`;
+  const url = `/api/activity/update/${studentNumber}`;
   const settings = {
     method: "PATCH",
     headers: {
@@ -58,7 +56,7 @@ export const useFetchPCStatus = () => {
 };
 
 export const fetchPCStatus = async () => {
-  const url = `${API_URL}/activity/all/get-active-pcs`;
+  const url = `/api/activity/all/get-active-pcs`;
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -70,7 +68,7 @@ export const fetchPCStatus = async () => {
 };
 
 export const getRecentActivity = async () => {
-  const url = `${API_URL}/activity/all/recent`;
+  const url = `/api/activity/all/recent`;
   const settings = {
     method: "GET",
     headers: {

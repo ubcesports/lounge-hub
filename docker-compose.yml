@@ -2,7 +2,8 @@ services:
   app:
     build:
       context: ./app
-      dockerfile: Dockerfile
+      target: dev
+    restart: always
     volumes:
       - /app/node_modules
       - ./app:/app
@@ -14,7 +15,7 @@ services:
   client:
     build:
       context: ./client
-      dockerfile: Dockerfile
+      target: dev
     restart: always
     volumes:
       - /client/node_modules
