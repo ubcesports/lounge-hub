@@ -2,20 +2,19 @@ services:
   app:
     build:
       context: ./app
-      dockerfile: Dockerfile
+      target: dev
+    restart: always
     volumes:
       - /app/node_modules
       - ./app:/app
     environment:
       - TZ=America/Los_Angeles
-    env_file:
-      - .env
-    platform: linux/amd64
+    ports:
+      - "8000:8000"
 
   client:
     build:
       context: ./client
-      dockerfile: Dockerfile
     restart: always
     volumes:
       - /client/node_modules
@@ -24,15 +23,5 @@ services:
     environment:
       - TZ=America/Los_Angeles
       - WATCHPACK_POLLING=true
-      - API_URL=http://app:8000
-    platform: linux/amd64
-
-  nginx:
-    restart: always
-    build:
-      context: ./nginx
     ports:
-      - "80:80"
-    environment:
-      - TZ=America/Los_Angeles
-    platform: linux/amd64
+      - "3000:3000"

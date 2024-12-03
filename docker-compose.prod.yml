@@ -1,0 +1,28 @@
+services:
+  app:
+    build:
+      context: ./app
+      target: prod
+    environment:
+      - TZ=America/Los_Angeles
+    env_file:
+      - .env
+    platform: linux/amd64
+
+  client:
+    build:
+      context: ./client
+      target: prod
+    environment:
+      - TZ=America/Los_Angeles
+    platform: linux/amd64
+
+  nginx:
+    build:
+      context: ./nginx
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      - TZ=America/Los_Angeles
+    platform: linux/amd64
