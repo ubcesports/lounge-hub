@@ -48,5 +48,5 @@ jobs:
           REGISTRY_ALIAS: d0w1o5s2
           REPOSITORY: ubcea/lounge-hub
         run: |
-          docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:${{ inputs.image-tag }} ./${{ inputs.layer }}
+          docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:${{ inputs.image-tag }} --target prod ./${{ inputs.layer }}
           docker push $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:${{ inputs.image-tag }}
