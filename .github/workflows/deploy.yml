@@ -38,6 +38,6 @@ jobs:
       
       - name: Build, tag, and push image to Amazon ECR - Backend
         run: |
-          docker build -t app .
+          docker build -t app -f app/Dockerfile .
           docker tag app:latest ${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}
           docker push ${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}
