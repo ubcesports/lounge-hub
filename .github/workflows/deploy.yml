@@ -12,12 +12,23 @@ jobs:
   backend-unit-tests:
     uses: ./.github/workflows/backend-unit-tests.yml
     secrets: inherit
-  
+
   frontend-unit-tests:
     uses: ./.github/workflows/frontend-unit-tests.yml
     secrets: inherit
 
-  deploy:
+  deploy-backend:
     needs: backend-unit-tests
     uses: ./.github/workflows/push-to-ecr.yml
     secrets: inherit
+    with:
+      image-tag: "backend-${{ github.sha }}"
+      layer: "app"
+  
+  deploy-frontend:
+    needs: frontend-unit-tests
+    uses: ./.github/workflows/push-to-ecr.yml
+    secrets: inherit
+    with:
+      image-tag: "frontend-${{ github.sha }}"
+      layer: "client"
