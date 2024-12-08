@@ -24,7 +24,7 @@ jobs:
     with:
       image-tag: "backend-${{ github.sha }}"
       layer: "app"
-  
+
   deploy-frontend:
     needs: frontend-unit-tests
     uses: ./.github/workflows/push-to-ecr.yml
@@ -32,3 +32,13 @@ jobs:
     with:
       image-tag: "frontend-${{ github.sha }}"
       layer: "client"
+    
+  deploy-nginx:
+    needs: 
+      - deploy-frontend
+      - deploy-backend
+    uses: ./.github/workflows/push-to-ecr.yml
+    secrets: inherit
+    with:
+      image-tag: "nginx-${{ github.sha }}"
+      layer: "nginx"

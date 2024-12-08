@@ -4,14 +4,13 @@ on:
   workflow_call:
     inputs:
       image-tag:
-        description: 'The tag of the image to deploy'
+        description: "The tag of the image to deploy"
         required: true
         type: string
       layer:
-        description: 'The layer of the application to deploy'
+        description: "The layer of the application to deploy"
         required: true
         type: string
-      
 
 jobs:
   build:
@@ -31,7 +30,7 @@ jobs:
         run: npm ci
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
