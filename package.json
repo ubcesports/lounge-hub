@@ -14,7 +14,7 @@
     "typescript-eslint": "^8.13.0"
   },
   "scripts": {
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,yml}\"",
     "lint": "eslint ."
   },
   "dependencies": {

@@ -1,0 +1,52 @@
+name: Deploy to ECR
+
+on:
+  workflow_call:
+    inputs:
+      image-tag:
+        description: "The tag of the image to deploy"
+        required: true
+        type: string
+      layer:
+        description: "The layer of the application to deploy"
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: Build and Push Images
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 20.4.0
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR Public
+        id: login-ecr-public
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          registry-type: public
+
+      - name: Build, tag, and push docker image to Amazon ECR Public
+        env:
+          REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
+          REGISTRY_ALIAS: d0w1o5s2
+          REPOSITORY: ubcea/lounge-hub
+        run: |
+          docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:${{ inputs.image-tag }} --target prod ./${{ inputs.layer }}
+          docker push $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:${{ inputs.image-tag }}
