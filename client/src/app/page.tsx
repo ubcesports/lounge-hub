@@ -21,8 +21,7 @@ export default function Page() {
   const [isOccupied, setIsOccupied] = useState<boolean>(false);
 
   // Auth contexts
-  const { isAuthenticated } =
-    useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   const handleToggleForm = () => {
     setIsAddingNewGamer(!isAddingNewGamer);
