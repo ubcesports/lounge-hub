@@ -12,11 +12,16 @@ import Button from "./components/button";
 import { useState } from "react";
 import { PC } from "../interfaces/pc";
 import Activity from "./lounge/activity";
+import AuthStatus from "./components/authStatus";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Page() {
   const [isAddingNewGamer, setIsAddingNewGamer] = React.useState(true);
   const [selectedPC, setSelectedPC] = useState<PC | null>(null);
   const [isOccupied, setIsOccupied] = useState<boolean>(false);
+
+  // Auth contexts
+  const { isAuthenticated, user, loginWithRedirect, logout, isLoading } = useAuth0();
 
   const handleToggleForm = () => {
     setIsAddingNewGamer(!isAddingNewGamer);
@@ -29,6 +34,8 @@ export default function Page() {
 
   return (
     <div className="min-h-screen bg-[#0D0D0E] p-1">
+      <AuthStatus />
+      {isAuthenticated ? (
       <div className="grid h-full grid-cols-9 gap-1">
         {/* left buffer */}
         <div className="col-span-1"></div>
@@ -67,7 +74,11 @@ export default function Page() {
         </div>
         {/* right */}
         <div className="col-span-1"></div>
-      </div>
+      </div>) : (
+        <div className="flex items-center justify-center h-screen">
+          <p className="text-center text-white text-lg">You not logged in boi!</p>
+        </div>
+              )}
     </div>
   );
 }
