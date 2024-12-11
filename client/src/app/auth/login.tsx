@@ -1,8 +1,10 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import Button from "../components/button";
 import TextField from "../components/text-field";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Login: React.FC = () => {
+  const { loginWithRedirect } = useAuth0();
   interface LoginFormState {
     username: string;
     password: string;
@@ -20,10 +22,11 @@ const Login: React.FC = () => {
     });
   }
 
-  function handleLogin(e: FormEvent<Element>): void {
+  async function handleLogin(e: FormEvent<Element>): Promise<void> {
     e.preventDefault();
     console.log("handleLogin not implemented");
     //call the User Authenitcation API
+    await loginWithRedirect();
   }
   return (
     <div>
