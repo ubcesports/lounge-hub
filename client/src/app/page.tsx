@@ -21,7 +21,7 @@ export default function Page() {
   const [isOccupied, setIsOccupied] = useState<boolean>(false);
 
   // Auth contexts
-  const { isAuthenticated, user, loginWithRedirect, logout, isLoading } =
+  const { isAuthenticated } =
     useAuth0();
 
   const handleToggleForm = () => {
