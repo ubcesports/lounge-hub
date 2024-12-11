@@ -9,10 +9,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AuthContext>
-        {children}
-          </AuthContext>
-        </body>
+        <AuthContext>{children}</AuthContext>
+      </body>
     </html>
   );
 }

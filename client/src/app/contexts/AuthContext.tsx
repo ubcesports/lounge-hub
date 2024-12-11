@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import { Auth0Provider } from "@auth0/auth0-react";
@@ -18,7 +18,7 @@ const AuthContext: React.FC<AuthContextProps> = ({ children }) => {
       domain={process.env.NEXT_PUBLIC_DOMAIN || ""}
       clientId={process.env.NEXT_PUBLIC_CLIENTID || ""}
       authorizationParams={{
-      redirect_uri: window.location.origin,
+        redirect_uri: window.location.origin,
       }}
     >
       {children}
