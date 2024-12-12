@@ -32,9 +32,9 @@ jobs:
     with:
       image-tag: "frontend-${{ github.sha }}"
       layer: "client"
-    
+
   push-nginx-image:
-    needs: 
+    needs:
       - push-backend-image
       - push-frontend-image
     uses: ./.github/workflows/push-to-ecr.yml
@@ -42,18 +42,18 @@ jobs:
     with:
       image-tag: "nginx-${{ github.sha }}"
       layer: "nginx"
-  
+
   deploy:
     runs-on: ubuntu-latest
     needs: push-nginx-image
     steps:
       - name: Execute commands via SSM
-        id : execute_command
+        id: execute_command
         run: |
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids ${{ secrets.AWS_INSTANCE_ID }} \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["echo "Commands to be executed" ",
+            --parameters 'commands=["echo \"Commands to be executed\"",
                                     "whoami"]' \
             --comment "Deploying comment" \
             --query "Command.CommandId" \
