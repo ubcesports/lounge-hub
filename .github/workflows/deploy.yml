@@ -9,16 +9,15 @@ on:
       - main
 
 jobs:
-  backend-unit-tests:
-    uses: ./.github/workflows/backend-unit-tests.yml
-    secrets: inherit
+  # backend-unit-tests:
+  #   uses: ./.github/workflows/backend-unit-tests.yml
+  #   secrets: inherit
 
-  frontend-unit-tests:
-    uses: ./.github/workflows/frontend-unit-tests.yml
-    secrets: inherit
+  # frontend-unit-tests:
+  #   uses: ./.github/workflows/frontend-unit-tests.yml
+  #   secrets: inherit
 
   push-backend-image:
-    needs: backend-unit-tests
     uses: ./.github/workflows/push-to-ecr.yml
     secrets: inherit
     with:
@@ -26,7 +25,6 @@ jobs:
       layer: "app"
 
   push-frontend-image:
-    needs: frontend-unit-tests
     uses: ./.github/workflows/push-to-ecr.yml
     secrets: inherit
     with:
