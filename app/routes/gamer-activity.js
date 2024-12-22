@@ -56,7 +56,6 @@ router.get("/activity/:student_number", async (req, res) => {
  * @apiError {String} 500 Server error.
  */
 router.get("/activity/all/recent", async (req, res) => {
-  console.log("HERE:", schema);
   try {
     const query = `
         SELECT ${schema}.gamer_activity.*, 

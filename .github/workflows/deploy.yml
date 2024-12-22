@@ -60,11 +60,19 @@ jobs:
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids ${{ secrets.AWS_INSTANCE_ID }} \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["echo \"Commands to be executed\"",
-                                    "whoami"]' \
-            --comment "Deploying comment" \
+            --parameters 'commands=[
+              "export APP_IMAGE=public.ecr.aws/d0w1o5s2/ubcea/lounge-hub:backend-${{ github.sha }}",
+              "export CLIENT_IMAGE=public.ecr.aws/d0w1o5s2/ubcea/lounge-hub:frontend-${{ github.sha }}",
+              "export NGINX_IMAGE=public.ecr.aws/d0w1o5s2/ubcea/lounge-hub:nginx-${{ github.sha }}",
+              "docker pull $APP_IMAGE",
+              "docker pull $CLIENT_IMAGE",
+              "docker pull $NGINX_IMAGE",
+              "docker-compose down",
+              "docker-compose up -d",
+              "docker image prune -af"
+            ]' \
+            --comment "Deploying new images" \
             --query "Command.CommandId" \
             --output text)
 
           echo "Command ID: $COMMAND_ID"
-          echo "::set-output name=command_id::$COMMAND_ID"

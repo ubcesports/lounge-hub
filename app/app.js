@@ -8,8 +8,6 @@ import gamerActivity from "./routes/gamer-activity.js";
 
 dotenv.config();
 
-console.log("HERE2:", process.env);
-
 const app = express();
 
 app.use(cors());
