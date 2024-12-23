@@ -59,6 +59,7 @@ jobs:
             --instance-ids ${{ secrets.AWS_INSTANCE_ID }} \
             --document-name "AWS-RunShellScript" \
             --parameters 'commands=[
+              "cd /home/ubuntu",
               "export APP_IMAGE=public.ecr.aws/d0w1o5s2/ubcea/lounge-hub:backend-${{ github.sha }}",
               "export CLIENT_IMAGE=public.ecr.aws/d0w1o5s2/ubcea/lounge-hub:frontend-${{ github.sha }}",
               "export NGINX_IMAGE=public.ecr.aws/d0w1o5s2/ubcea/lounge-hub:nginx-${{ github.sha }}",
@@ -67,9 +68,25 @@ jobs:
               "docker pull $NGINX_IMAGE",
               "docker-compose down",
               "docker-compose up -d --build",
+              "docker image prune -af "
             ]' \
             --comment "Deploying new images" \
             --query "Command.CommandId" \
             --output text)
 
           echo "Command ID: $COMMAND_ID"
+      
+      - name: Check SSM command status
+        run: |
+          STATUS=$(aws ssm list-command-invocations \
+            --command-id $COMMAND_ID \
+            --details \
+            --query "CommandInvocations[0].Status" \
+            --output text)
+  
+          if [ "$STATUS" != "Success" ]; then
+            echo "Deployment failed with status: $STATUS"
+            exit 1
+          fi
+  
+          echo "Deployment succeeded with status: $STATUS"
