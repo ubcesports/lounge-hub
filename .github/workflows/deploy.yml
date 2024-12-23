@@ -78,4 +78,13 @@ jobs:
 
       - name: Check SSM command deployment status
         run: |
-          echo "Command ID: ${{ steps.execute_command.outputs.command_id }}"
+          STATUS=$(aws ssm list-command-invocations \
+            --command-id ${{ steps.execute_command.outputs.command_id }} \
+            --details \
+            --query "CommandInvocations[0].Status" \
+            --output text)
+
+          if [ "$STATUS" != "Success" ]; then
+            echo "Deployment failed with status: $STATUS"
+            exit 1
+          fi
