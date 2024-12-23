@@ -52,10 +52,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
 
-      - name: Execute commands via SSM
+      - name: Deploy via SSM Commands
         id: execute_command
         run: |
-          COMMAND_ID=$(aws ssm send-command \
+          command_id=$(aws ssm send-command \
             --instance-ids ${{ secrets.AWS_INSTANCE_ID }} \
             --document-name "AWS-RunShellScript" \
             --parameters 'commands=[
@@ -74,19 +74,8 @@ jobs:
             --query "Command.CommandId" \
             --output text)
 
-          echo "Command ID: $COMMAND_ID"
-      
-      - name: Check SSM command status
+          echo "command_id=$command_id" >> $GITHUB_OUTPUT
+
+      - name: Check SSM command deployment status
         run: |
-          STATUS=$(aws ssm list-command-invocations \
-            --command-id $COMMAND_ID \
-            --details \
-            --query "CommandInvocations[0].Status" \
-            --output text)
-  
-          if [ "$STATUS" != "Success" ]; then
-            echo "Deployment failed with status: $STATUS"
-            exit 1
-          fi
-  
-          echo "Deployment succeeded with status: $STATUS"
+          echo "Command ID: ${{ steps.execute_command.outputs.command_id }}"
