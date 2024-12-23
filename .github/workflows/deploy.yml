@@ -78,7 +78,12 @@ jobs:
 
       - name: Check SSM command deployment status
         run: |
+          aws ssm wait command-executed \
+            --command-id ${{ steps.execute_command.outputs.command_id }} \
+            --instance-id ${{ secrets.AWS_INSTANCE_ID }} || true
+
           STATUS=$(aws ssm list-command-invocations \
+            --instance-id ${{ secrets.AWS_INSTANCE_ID }} \
             --command-id ${{ steps.execute_command.outputs.command_id }} \
             --details \
             --query "CommandInvocations[0].Status" \
