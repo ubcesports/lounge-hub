@@ -4,18 +4,15 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  # backend-unit-tests:
-  #   uses: ./.github/workflows/backend-unit-tests.yml
-  #   secrets: inherit
+  backend-unit-tests:
+    uses: ./.github/workflows/backend-unit-tests.yml
+    secrets: inherit
 
-  # frontend-unit-tests:
-  #   uses: ./.github/workflows/frontend-unit-tests.yml
-  #   secrets: inherit
+  frontend-unit-tests:
+    uses: ./.github/workflows/frontend-unit-tests.yml
+    secrets: inherit
 
   push-backend-image:
     uses: ./.github/workflows/push-to-ecr.yml
@@ -76,7 +73,7 @@ jobs:
 
           echo "command_id=$command_id" >> $GITHUB_OUTPUT
 
-      - name: Check SSM command deployment status
+      - name: Check deployment status
         run: |
           aws ssm wait command-executed \
             --command-id ${{ steps.execute_command.outputs.command_id }} \
