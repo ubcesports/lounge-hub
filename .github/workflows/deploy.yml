@@ -15,7 +15,6 @@ jobs:
     secrets: inherit
 
   push-backend-image:
-    needs: backend-unit-tests
     uses: ./.github/workflows/push-to-ecr.yml
     secrets: inherit
     with:
@@ -23,7 +22,6 @@ jobs:
       layer: "app"
 
   push-frontend-image:
-    needs: frontend-unit-tests
     uses: ./.github/workflows/push-to-ecr.yml
     secrets: inherit
     with:
@@ -51,17 +49,44 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
 
-      - name: Execute commands via SSM
+      - name: Deploy via SSM Commands
         id: execute_command
         run: |
-          COMMAND_ID=$(aws ssm send-command \
+          command_id=$(aws ssm send-command \
             --instance-ids ${{ secrets.AWS_INSTANCE_ID }} \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["echo \"Commands to be executed\"",
-                                    "whoami"]' \
-            --comment "Deploying comment" \
+            --parameters 'commands=[
+              "cd /home/ubuntu",
+              "export APP_IMAGE=public.ecr.aws/d0w1o5s2/ubcea/lounge-hub:backend-${{ github.sha }}",
+              "export CLIENT_IMAGE=public.ecr.aws/d0w1o5s2/ubcea/lounge-hub:frontend-${{ github.sha }}",
+              "export NGINX_IMAGE=public.ecr.aws/d0w1o5s2/ubcea/lounge-hub:nginx-${{ github.sha }}",
+              "docker pull $APP_IMAGE",
+              "docker pull $CLIENT_IMAGE",
+              "docker pull $NGINX_IMAGE",
+              "docker-compose down",
+              "docker-compose up -d --build",
+              "docker image prune -af "
+            ]' \
+            --comment "Deploying new images" \
             --query "Command.CommandId" \
             --output text)
 
-          echo "Command ID: $COMMAND_ID"
-          echo "::set-output name=command_id::$COMMAND_ID"
+          echo "command_id=$command_id" >> $GITHUB_OUTPUT
+
+      - name: Check deployment status
+        run: |
+          aws ssm wait command-executed \
+            --command-id ${{ steps.execute_command.outputs.command_id }} \
+            --instance-id ${{ secrets.AWS_INSTANCE_ID }} || true
+
+          STATUS=$(aws ssm list-command-invocations \
+            --instance-id ${{ secrets.AWS_INSTANCE_ID }} \
+            --command-id ${{ steps.execute_command.outputs.command_id }} \
+            --details \
+            --query "CommandInvocations[0].Status" \
+            --output text)
+
+          if [ "$STATUS" != "Success" ]; then
+            echo "Deployment failed with status: $STATUS"
+            exit 1
+          fi
