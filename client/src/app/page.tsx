@@ -10,7 +10,6 @@ import LoggedInPage from "./lounge/page/logged-in-page";
 import LoggedOutPage from "./lounge/page/logged-out-page";
 
 export default function Page() {
-
   // Auth contexts
   const { isAuthenticated } = useAuth0();
 
@@ -18,11 +17,7 @@ export default function Page() {
     <div className="min-h-screen bg-[#0D0D0E] p-1">
       <AuthStatus />
       {/* If authenticated, display LoggedInPage (regular lounge app). If not, display LoggedOutPage component */}
-      {isAuthenticated ? (
-        <LoggedInPage />
-      ) : (
-        <LoggedOutPage />
-      )}
+      {isAuthenticated ? <LoggedInPage /> : <LoggedOutPage />}
     </div>
   );
 }
