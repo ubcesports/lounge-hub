@@ -20,6 +20,10 @@ const AuthContext: React.FC<AuthContextProps> = ({ children }) => {
       authorizationParams={{
         redirect_uri: window.location.origin,
       }}
+      // Store the tokens in localStorage, so they aren't lost on the browser refresh (which it usually is w Auth0)
+      cacheLocation="localstorage"
+      // use refresh tokens
+      useRefreshTokens={true}
     >
       {children}
     </Auth0Provider>
