@@ -1,9 +1,7 @@
 name: Frontend Unit Tests
 
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
   pull_request:
     branches:
       - main
