@@ -15,8 +15,6 @@ services:
       target: prod
     environment:
       - TZ=America/Los_Angeles
-    env_file:
-      - .env
     platform: linux/amd64
 
   nginx:
