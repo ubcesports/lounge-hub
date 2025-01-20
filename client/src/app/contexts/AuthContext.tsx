@@ -13,6 +13,10 @@ interface AuthContextProps {
 
 // AuthContext to wrap the application around
 const AuthContext: React.FC<AuthContextProps> = ({ children }) => {
+  if (typeof window === "undefined") {
+    return null; // Return null on the server side
+  }
+
   return (
     <Auth0Provider
       domain={process.env.NEXT_PUBLIC_DOMAIN || ""}
