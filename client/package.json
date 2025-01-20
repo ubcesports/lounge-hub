@@ -13,7 +13,7 @@
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",
     "dotenv": "^16.4.7",
-    "next": "^14.2.13",
+    "next": "^14.2.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zustand": "^5.0.0"
