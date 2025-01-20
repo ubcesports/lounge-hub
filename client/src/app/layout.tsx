@@ -1,5 +1,4 @@
 import React from "react";
-import AuthContext from "./contexts/AuthContext";
 
 export default function RootLayout({
   children,
@@ -8,9 +7,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <AuthContext>{children}</AuthContext>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
