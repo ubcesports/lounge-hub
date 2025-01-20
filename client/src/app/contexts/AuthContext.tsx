@@ -13,14 +13,17 @@ interface AuthContextProps {
 
 // AuthContext to wrap the application around
 const AuthContext: React.FC<AuthContextProps> = ({ children }) => {
+  const domain = "dev-yayco41htm1qbg2o.us.auth0.com";
+  const clientId = "EOxanAxL6IJKIaWgumbCATs9iL22eaj0";
+
   if (typeof window === "undefined") {
     return null; // Return null on the server side
   }
 
   return (
     <Auth0Provider
-      domain={process.env.NEXT_PUBLIC_DOMAIN || ""}
-      clientId={process.env.NEXT_PUBLIC_CLIENTID || ""}
+      domain={domain}
+      clientId={clientId}
       authorizationParams={{
         redirect_uri: window.location.origin,
       }}
