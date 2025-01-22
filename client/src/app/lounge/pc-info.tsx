@@ -1,5 +1,5 @@
 import React from "react";
-import { PC } from "../../interfaces/pc";
+import { PC, PCStatus } from "../../interfaces/pc";
 import { checkOutGamer } from "../../services/activity";
 import TextField from "../components/text-field";
 import { useState } from "react";
@@ -7,11 +7,11 @@ import { useState } from "react";
 interface PCInfoProps {
   pc: PC;
   isOccupied: boolean;
+  pcStatus: PCStatus;
 }
 
-const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied }) => {
+const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied, pcStatus }) => {
   const maxLength = 30;
-
   const [execName, setExecName] = useState<string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,18 +82,18 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied }) => {
         <h1 className="mb-3 text-3xl text-white">Desk {pc.pcNumber}</h1>
         <div className="flex items-center">
           <p
-            className={`text-1xl mb-1 ${isOccupied ? "text-red-500" : "text-green-500"}`}
+            className={`text-1xl mb-1 ${pcStatus === PCStatus.Busy ? "text-red-500" : "text-green-500"}`}
           >
-            {isOccupied ? "BUSY" : "OPEN"}
+            {pcStatus === PCStatus.Busy ? "BUSY" : "OPEN"}
           </p>
           <p className="text-1xl mb-1 ml-2 max-w-xs truncate text-[#62667B]">
-            {isOccupied
+            {pcStatus === PCStatus.Busy
               ? `- ${truncateName(pc.firstName, pc.lastName, pc.studentNumber, maxLength)}`
               : ""}
           </p>
         </div>
         <p className="mb-1 text-xs text-[#62667B]">
-          {isOccupied
+          {pcStatus === PCStatus.Busy
             ? `${formatTime(pc.startedAt, pc.game, pc.membershipTier)}`
             : ""}
         </p>

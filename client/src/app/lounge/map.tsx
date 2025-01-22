@@ -2,11 +2,11 @@ import React from "react";
 import useBoundStore from "../../store/store";
 import { useFetchPCStatus } from "../../services/activity";
 import PCStation from "./pc-station";
-import { PC } from "../../interfaces/pc";
+import { PC, PCStatus } from "../../interfaces/pc";
 import { pcPositions } from "./lounge-layout/lounge-layout";
 
 interface LoungeMapProps {
-  onPCClick: (pc: PC, isOccupied: boolean) => void;
+  onPCClick: (pc: PC, isOccupied: boolean, pcStatus) => void;
 }
 
 const LoungeMap: React.FC<LoungeMapProps> = ({ onPCClick }) => {
@@ -33,7 +33,8 @@ const LoungeMap: React.FC<LoungeMapProps> = ({ onPCClick }) => {
             <PCStation
               pc={pc}
               isOccupied={!!pc?.studentNumber}
-              onClick={() => onPCClick(pc, !!pc?.studentNumber)}
+              pcStatus={!!pc?.studentNumber ? PCStatus.Busy : PCStatus.Open}
+              onClick={() => onPCClick(pc, !!pc?.studentNumber, !!pc?.studentNumber ? PCStatus.Busy : PCStatus.Open)}
             />
           </div>
         );

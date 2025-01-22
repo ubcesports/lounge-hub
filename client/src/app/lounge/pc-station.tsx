@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { PC } from "../../interfaces/pc";
+import { PC, PCStatus } from "../../interfaces/pc";
+
 
 interface PCStationProps {
   pc: PC;
   isOccupied: boolean;
-  onClick: (pc: PC, timeRemaining: string, isOccupied: boolean) => void;
+  pcStatus: PCStatus;
+  onClick: (pc: PC, timeRemaining: string, isOccupied: boolean, pcStatus: PCStatus) => void;
 }
 
-const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied, onClick }) => {
+const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied, pcStatus, onClick }) => {
   const [timeRemaining, setTimeRemaining] = useState<string>("");
 
   const calculateTimeRemaining = (
@@ -73,8 +75,8 @@ const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied, onClick }) => {
 
   return (
     <button
-      onClick={() => onClick(pc, timeRemaining, isOccupied)}
-      className={`flex items-center justify-center rounded-md p-4 text-xs ${isTimeUp ? "border border-white text-white" : isOccupied ? "bg-[#DD4345] text-white" : "bg-[#64CC9F] text-white"}`}
+      onClick={() => onClick(pc, timeRemaining, isOccupied, pcStatus)}
+      className={`flex items-center justify-center rounded-md p-4 text-xs ${isTimeUp ? "border border-white text-white" : pcStatus === PCStatus.Busy ? "bg-[#DD4345] text-white" : "bg-[#64CC9F] text-white"}`}
       style={{
         height: isDoubleHeight ? "148px" : "70px", // Double height PCs
         width: "70px",
@@ -85,7 +87,7 @@ const PCStation: React.FC<PCStationProps> = ({ pc, isOccupied, onClick }) => {
         <p className="text-2xl">
           {isCab ? "Cab" : pc.pcNumber.toString().padStart(2, "0")}
         </p>
-        {isOccupied && <p className="text-xs">{timeRemaining}</p>}
+        { pcStatus === PCStatus.Busy && <p className="text-xs">{timeRemaining}</p>}
       </div>
     </button>
   );

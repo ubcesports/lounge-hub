@@ -12,3 +12,10 @@ export interface PC {
   membershipTier: number;
   notes: string;
 }
+
+export enum PCStatus {
+  Open,
+  Exec,
+  Busy,
+  Closed
+}
