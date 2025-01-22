@@ -40,7 +40,11 @@ export default function LoggedInPage() {
             <Map onPCClick={handlePCClick} />
           </div>
           {selectedPC ? (
-            <PCInfo pc={selectedPC} isOccupied={isOccupied} pcStatus = {pcStatus} />
+            <PCInfo
+              pc={selectedPC}
+              isOccupied={isOccupied}
+              pcStatus={pcStatus}
+            />
           ) : (
             <div className="col-span-3 h-full rounded-md bg-[#20222C] p-4">
               <PlaceholderImage />

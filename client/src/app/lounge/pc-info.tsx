@@ -18,13 +18,20 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied, pcStatus }) => {
     setExecName(e.target.value);
   };
 
-  const handleClick = async () => {
+  const handleSignOutClick = async () => {
     const success = await checkOutGamer(
       pc.studentNumber,
       pc.pcNumber,
       execName,
     );
     if (success) window.location.reload();
+  };
+  const handleExecClick = async () => {
+    alert("Exec button clicked!");
+  };
+
+  const handleBrokenClick = async () => {
+    alert("Broken Button clicked!");
   };
 
   const truncateName = (
@@ -82,9 +89,9 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied, pcStatus }) => {
         <h1 className="mb-3 text-3xl text-white">Desk {pc.pcNumber}</h1>
         <div className="flex items-center">
           <p
-            className={`text-1xl mb-1 ${pcStatus === PCStatus.Busy ? "text-red-500" : "text-green-500"}`}
+            className={`text-1xl mb-1 ${PCStatus.getMessage(pcStatus, "text-green-500", "text-yellow-500", "text-red-500", "text-purple-500")}`}
           >
-            {pcStatus === PCStatus.Busy ? "BUSY" : "OPEN"}
+            {PCStatus.getMessage(pcStatus, "OPEN", "EXEC", "BUSY", "CLOSED")}
           </p>
           <p className="text-1xl mb-1 ml-2 max-w-xs truncate text-[#62667B]">
             {pcStatus === PCStatus.Busy
@@ -99,24 +106,54 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied, pcStatus }) => {
         </p>
       </div>
       <div className="flex items-end gap-4 rounded-lg bg-[#20222C] p-4">
-        <TextField
-          label="Exec Name"
-          name="execName"
-          value={execName}
-          onChange={handleInputChange}
-          className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
-        />
-        <div className="group relative">
-          <button
-            className="h-full rounded border border-red-500 p-2 text-white hover:bg-red-500 hover:text-white"
-            onClick={handleClick}
-          >
-            Close
-          </button>
-          <div className="absolute bottom-full left-1/2 mb-2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
-            This sign out will be associated with the provided exec name.
-          </div>
-        </div>
+        {pcStatus !== PCStatus.Busy && (
+          <>
+            <div className="group relative">
+              <button
+                className="h-full rounded border border-yellow-500 p-2 text-white hover:bg-yellow-500 hover:text-white"
+                onClick={handleExecClick}
+              >
+                Executive
+              </button>
+              <div className="absolute bottom-full left-1/2 mb-2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
+                This will mark the PC as being used by an exec.
+              </div>
+            </div>
+            <div className="group relative">
+              <button
+                className="h-full rounded border border-yellow-500 p-2 text-white hover:bg-yellow-500 hover:text-white"
+                onClick={handleBrokenClick}
+              >
+                Broken
+              </button>
+              <div className="absolute bottom-full left-1/2 mb-2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
+                This will mark the PC as broken.
+              </div>
+            </div>
+          </>
+        )}
+        {pcStatus === PCStatus.Busy && (
+          <>
+            <TextField
+              label="Exec Name"
+              name="execName"
+              value={execName}
+              onChange={handleInputChange}
+              className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
+            />
+            <div className="group relative">
+              <button
+                className="h-full rounded border border-red-500 p-2 text-white hover:bg-red-500 hover:text-white"
+                onClick={handleSignOutClick}
+              >
+                Close
+              </button>
+              <div className="absolute bottom-full left-1/2 mb-2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
+                This sign out will be associated with the provided exec name.
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
