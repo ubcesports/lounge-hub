@@ -41,7 +41,7 @@ Here is a [link](https://drive.google.com/file/d/1PYv8OYIQ7sKZhWRhkJRR2GrfvT1rjd
 
 **Notes**
 
-- This form can also be used to update a student's information based on their student number. For example, if you want to add some notes to a student's profile, you can fill in their student number, name, and add some notes about them. Click on "Add Gamer" to update. 
+- This form can also be used to update a student's information based on their student number. For example, if you want to add some notes to a student's profile, you can fill in their student number, name, and add some notes about them. Click on "Add Gamer" to update.
 
 ## User Sign Out
 
