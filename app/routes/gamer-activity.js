@@ -127,9 +127,7 @@ router.post("/activity", async (req, res) => {
       started_at,
     ]);
     if (tierOneCheckResult.rows.length > 0) {
-      return res
-        .status(400)
-        .send(result.rows[0]);
+      return res.status(400).send(result.rows[0]);
     }
     res.status(201).send(result.rows[0]);
   } catch (err) {

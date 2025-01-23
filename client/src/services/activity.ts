@@ -15,7 +15,9 @@ export const checkInGamer = async (activity: Activity) => {
   const response = await fetch(url, settings);
   const data = await response.json();
   if (response.status === 400) {
-    alert("Tier 1 members should only be able to check in once a day. If you wish to proceed, do nothing. Otherwise, please just sign the user out normally.");
+    alert(
+      "Tier 1 members should only be able to check in once a day. If you wish to proceed, do nothing. Otherwise, please just sign the user out normally.",
+    );
   } else if (response.status === 404) {
     throw new Error("Student not found.");
   }
