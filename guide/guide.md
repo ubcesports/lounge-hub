@@ -4,6 +4,8 @@
 
 Welcome to the lounge app! This is the official guide to help you get started and make the most out of our computer lounge system.
 
+Here is a [link](https://drive.google.com/file/d/1PYv8OYIQ7sKZhWRhkJRR2GrfvT1rjduw/view) to a video guide.
+
 ## Getting Started
 
 **Logging in**: During the opening shift, sign into the Lounge App using the credentials found in the [Notion](https://www.notion.so/ubcea/Lounge-App-1847e3749ac280148eaec07c0abfa2c3). If you are unsure where to find this, feel free to ask in the `#development` chat on slack.
