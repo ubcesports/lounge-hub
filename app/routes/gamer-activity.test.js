@@ -180,46 +180,47 @@ describe("Activity API", () => {
       });
   });
 
-  it("should throw 400 error if tier 1 member tries to check in more than once a day", (done) => {
-    request(app)
-      .post("/api/activity")
-      .send({
-        student_number: "11223344",
-        pc_number: 1,
-        game: "Valorant",
-      })
-      .expect(201)
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.body).to.have.property("student_number", "11223344");
-        expect(res.body).to.have.property("pc_number", 1);
-        expect(res.body).to.have.property("game", "Valorant");
+  // Commented out because we have temporarily changed behavior - we will revisit once we redo the tier 1 check-in logic
+  // it("should throw 400 error if tier 1 member tries to check in more than once a day", (done) => {
+  //   request(app)
+  //     .post("/api/activity")
+  //     .send({
+  //       student_number: "11223344",
+  //       pc_number: 1,
+  //       game: "Valorant",
+  //     })
+  //     .expect(201)
+  //     .end((err, res) => {
+  //       if (err) return done(err);
+  //       expect(res.body).to.have.property("student_number", "11223344");
+  //       expect(res.body).to.have.property("pc_number", 1);
+  //       expect(res.body).to.have.property("game", "Valorant");
 
-        request(app)
-          .patch("/api/activity/update/11223344")
-          .send({ exec_name: "John" })
-          .expect(201)
-          .end((err) => {
-            if (err) return done(err);
+  //       request(app)
+  //         .patch("/api/activity/update/11223344")
+  //         .send({ exec_name: "John" })
+  //         .expect(201)
+  //         .end((err) => {
+  //           if (err) return done(err);
 
-            request(app)
-              .post("/api/activity")
-              .send({
-                student_number: "11223344",
-                pc_number: 2,
-                game: "CS:GO",
-              })
-              .expect(400)
-              .end((err, res) => {
-                if (err) return done(err);
-                expect(res.text).to.equal(
-                  "Tier 1 members can only sign in once a day.",
-                );
-                done();
-              });
-          });
-      });
-  });
+  //           request(app)
+  //             .post("/api/activity")
+  //             .send({
+  //               student_number: "11223344",
+  //               pc_number: 2,
+  //               game: "CS:GO",
+  //             })
+  //             .expect(400)
+  //             .end((err, res) => {
+  //               if (err) return done(err);
+  //               expect(res.text).to.equal(
+  //                 "Tier 1 members can only sign in once a day.",
+  //               );
+  //               done();
+  //             });
+  //         });
+  //     });
+  // });
 
   it("should allow tier 2 member to check in two times a day", (done) => {
     request(app)
