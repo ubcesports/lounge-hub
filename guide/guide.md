@@ -27,7 +27,7 @@ Here is a [link](https://drive.google.com/file/d/1PYv8OYIQ7sKZhWRhkJRR2GrfvT1rjd
 
 - If a user has a tier 1 membership, the Lounge App will warn you if they are signing in more than once a day. It is up to your discretion if you allow them to continue or not.
 - If they are not a UBC student and do not have a student id, enter `11111111` for the student number.
-- You don't have to select any of the dropdowns for the game.
+- If the game you want to select is not in the dropdown, you can enter a new game's name in.
 
 ## User Sign Up
 
@@ -41,7 +41,7 @@ Here is a [link](https://drive.google.com/file/d/1PYv8OYIQ7sKZhWRhkJRR2GrfvT1rjd
 
 **Notes**
 
-- This form can also be used to update a student's information based on their student number. For example, if you want to add some notes to a student's profile, you can fill in their student number, name, and add some notes about them.
+- This form can also be used to update a student's information based on their student number. For example, if you want to add some notes to a student's profile, you can fill in their student number, name, and add some notes about them. Click on "Add Gamer" to update. 
 
 ## User Sign Out
 
