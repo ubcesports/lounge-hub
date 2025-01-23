@@ -120,17 +120,17 @@ router.post("/activity", async (req, res) => {
       student_number,
       started_at,
     ]);
-    if (tierOneCheckResult.rows.length > 0) {
-      return res
-        .status(400)
-        .send("Tier 1 members can only sign in once a day.");
-    }
     const result = await db.query(query, [
       student_number,
       pc_number,
       game,
       started_at,
     ]);
+    if (tierOneCheckResult.rows.length > 0) {
+      return res
+        .status(400)
+        .send(result.rows[0]);
+    }
     res.status(201).send(result.rows[0]);
   } catch (err) {
     if (err.code === FK_VIOLATION) {
