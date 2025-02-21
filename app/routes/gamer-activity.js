@@ -44,7 +44,7 @@ router.get("/activity/:student_number", async (req, res) => {
  * @api {get} /activity/all/recent Get Gamer Activity
  * @apiName GetGamerActivity
  * @apiGroup Activity
- * 
+ *
  * @apiParam {Number} page Page number.
  * @apiParam {Number} limit Limit Number of results per page.
  * @apiParam {String} search Search query.
