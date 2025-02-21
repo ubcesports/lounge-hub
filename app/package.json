@@ -17,6 +17,7 @@
     "express": "^4.21.2",
     "express-openid-connect": "^2.17.1",
     "moment-timezone": "^0.5.45",
+    "next": "^15.1.7",
     "pg": "^8.12.0"
   },
   "scripts": {
