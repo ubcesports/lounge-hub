@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PC, PCStatus } from "../../interfaces/pc";
+import { getPCStatusMessage, PC, PCStatus } from "../../interfaces/pc";
 
 interface PCStationProps {
   pc: PC;
@@ -88,7 +88,7 @@ const PCStation: React.FC<PCStationProps> = ({
       className={`flex items-center justify-center rounded-md p-4 text-xs ${
         isTimeUp
           ? "border border-white text-white"
-          : PCStatus.getMessage(
+          : getPCStatusMessage(
               pcStatus,
               "bg-[#64CC9F] text-white",
               "bg-[#3A6AAC] text-white",

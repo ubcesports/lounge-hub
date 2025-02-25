@@ -2,7 +2,7 @@ import React from "react";
 import useBoundStore from "../../store/store";
 import { useFetchPCStatus } from "../../services/activity";
 import PCStation from "./pc-station";
-import { PC, PCStatus } from "../../interfaces/pc";
+import { PC } from "../../interfaces/pc";
 import { pcPositions } from "./lounge-layout/lounge-layout";
 
 interface LoungeMapProps {

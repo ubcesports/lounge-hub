@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PCStatus } from "../../interfaces/pc";
+import { getPCStatusMessage, PCStatus } from "../../interfaces/pc";
 import { checkOutGamer } from "../../services/activity";
 import TextField from "../components/text-field";
 import useBoundStore from "../../store/store";
@@ -92,10 +92,10 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber}) => {
         <h1 className="mb-3 text-3xl text-white">Desk {pc.pcNumber}</h1>
         <div className="flex items-center">
           <p
-            className={`text-1xl mb-1 ${PCStatus.getMessage(pcStatus, "text-green-500", 
+            className={`text-1xl mb-1 ${getPCStatusMessage(pcStatus, "text-green-500", 
               "text-[#3A6AAC]", "text-red-500", "text-[#E2DC6A]")}`}
           >
-            {PCStatus.getMessage(pcStatus, "OPEN", "EXEC", "BUSY", "CLOSED")}
+            {getPCStatusMessage(pcStatus, "OPEN", "EXEC", "BUSY", "CLOSED")}
           </p>
           <p className="text-1xl mb-1 ml-2 max-w-xs truncate text-[#62667B]">
             {pcStatus === PCStatus.Busy
