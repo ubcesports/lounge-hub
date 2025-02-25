@@ -96,7 +96,7 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied, pcStatus }) => {
         <div className="flex items-center">
           <p
             className={`text-1xl mb-1 ${PCStatus.getMessage(pcStatus, "text-green-500", 
-              "text-sky-700", "text-red-500", "text-yellow-500")}`}
+              "text-[#3A6AAC]", "text-red-500", "text-[#E2DC6A]")}`}
           >
             {PCStatus.getMessage(pcStatus, "OPEN", "EXEC", "BUSY", "CLOSED")}
           </p>
@@ -118,7 +118,7 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied, pcStatus }) => {
           <>
             <div className="group relative">
               <button
-                className="h-full rounded border border-sky-700 p-2 text-white hover:bg-sky-700 hover:text-white"
+                className="h-full rounded border border-[#3A6AAC] p-2 text-white hover:bg-[#3A6AAC] hover:text-white"
                 onClick={handleExecClick}
               >
                 Executive
@@ -129,7 +129,7 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied, pcStatus }) => {
             </div>
             <div className="group relative">
               <button
-                className="h-full rounded border border-yellow-500 p-2 text-white hover:bg-yellow-500 hover:text-white"
+                className="h-full rounded border border-[#E2DC6A] p-2 text-white hover:bg-[#E2DC6A] hover:text-white"
                 onClick={handleClosedClick}
               >
                 Closed

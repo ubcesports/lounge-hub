@@ -93,7 +93,7 @@ const PCStation: React.FC<PCStationProps> = ({
               "bg-[#64CC9F] text-white",
               "bg-[#3A6AAC] text-white",
               "bg-[#DD4345] text-white",
-              "bg-[#EAB308] text-white", 
+              "bg-[#E2DC6A] text-white", 
             )
       }`}
       style={{
