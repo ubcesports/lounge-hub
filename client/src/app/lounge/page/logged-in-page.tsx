@@ -10,22 +10,18 @@ import AddUser from "../../check-in/add-user";
 import PlaceholderImage from "../placeholder";
 import Button from "../../components/button";
 import { useState } from "react";
-import { PC, PCStatus } from "../../../interfaces/pc";
+import { PC } from "../../../interfaces/pc";
 import Activity from "../activity";
 
 export default function LoggedInPage() {
   const [isAddingNewGamer, setIsAddingNewGamer] = React.useState(true);
   const [selectedPC, setSelectedPC] = useState<PC | null>(null);
-  const [isOccupied, setIsOccupied] = useState<boolean>(false);
-  const [pcStatus, setPCStatus] = useState<PCStatus | null>(null);
   const handleToggleForm = () => {
     setIsAddingNewGamer(!isAddingNewGamer);
   };
 
-  const handlePCClick = (pc: PC, isOccupied: boolean, pcStatus: PCStatus) => {
+  const handlePCClick = (pc: PC) => {
     setSelectedPC(pc);
-    setIsOccupied(isOccupied);
-    setPCStatus(pcStatus);
   };
   return (
     <div className="min-h-screen bg-[#0D0D0E] p-1">
@@ -41,8 +37,6 @@ export default function LoggedInPage() {
           {selectedPC ? (
             <PCInfo
               pc={selectedPC}
-              isOccupied={isOccupied}
-              pcStatus={pcStatus}
             />
           ) : (
             <div className="col-span-3 h-full rounded-md bg-[#20222C] p-4">

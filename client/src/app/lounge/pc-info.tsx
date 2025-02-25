@@ -6,15 +6,14 @@ import useBoundStore from "../../store/store";
 
 interface PCInfoProps {
   pc: PC;
-  isOccupied: boolean;
-  pcStatus: PCStatus;
 }
 
-const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied, pcStatus }) => {
+const PCInfo: React.FC<PCInfoProps> = ({ pc}) => {
   const maxLength = 30;
   const [execName, setExecName] = useState<string>("");
-
-
+  const pcStatus = useBoundStore((state) =>
+    state.PCList.pcs.find((p) => p.pcNumber === pc.pcNumber).pcStatus
+  );
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExecName(e.target.value);
   };
@@ -29,15 +28,13 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied, pcStatus }) => {
   };
   const handleExecClick = () => {
     const store = useBoundStore.getState();
-    store.setPCStatus(pc.pcNumber, pc.pcStatus === PCStatus.Exec ? PCStatus.Open : PCStatus.Exec);
-    window.location.reload();
+    store.setPCStatus(pc.pcNumber, pcStatus === PCStatus.Exec ? PCStatus.Open : PCStatus.Exec);
   };
 
   const handleClosedClick = () => {
     // alert("Broken Button clicked!");
     const store = useBoundStore.getState();
-    store.setPCStatus(pc.pcNumber, pc.pcStatus === PCStatus.Closed ? PCStatus.Open : PCStatus.Closed);
-    window.location.reload();
+    store.setPCStatus(pc.pcNumber, pcStatus === PCStatus.Closed ? PCStatus.Open : PCStatus.Closed);
   };
 
   const truncateName = (
