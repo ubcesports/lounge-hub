@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { PC, PCStatus } from "../../interfaces/pc";
 import { checkOutGamer } from "../../services/activity";
 import TextField from "../components/text-field";
-import { useState } from "react";
+import useBoundStore from "../../store/store";
 
 interface PCInfoProps {
   pc: PC;
@@ -13,6 +13,7 @@ interface PCInfoProps {
 const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied, pcStatus }) => {
   const maxLength = 30;
   const [execName, setExecName] = useState<string>("");
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExecName(e.target.value);
@@ -26,12 +27,17 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied, pcStatus }) => {
     );
     if (success) window.location.reload();
   };
-  const handleExecClick = async () => {
-    alert("Exec button clicked!");
+  const handleExecClick = () => {
+    const store = useBoundStore.getState();
+    store.setPCStatus(pc.pcNumber, pc.pcStatus === PCStatus.Exec ? PCStatus.Open : PCStatus.Exec);
+    window.location.reload();
   };
 
-  const handleBrokenClick = async () => {
-    alert("Broken Button clicked!");
+  const handleClosedClick = () => {
+    // alert("Broken Button clicked!");
+    const store = useBoundStore.getState();
+    store.setPCStatus(pc.pcNumber, pc.pcStatus === PCStatus.Closed ? PCStatus.Open : PCStatus.Closed);
+    window.location.reload();
   };
 
   const truncateName = (
@@ -89,7 +95,8 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied, pcStatus }) => {
         <h1 className="mb-3 text-3xl text-white">Desk {pc.pcNumber}</h1>
         <div className="flex items-center">
           <p
-            className={`text-1xl mb-1 ${PCStatus.getMessage(pcStatus, "text-green-500", "text-yellow-500", "text-red-500", "text-purple-500")}`}
+            className={`text-1xl mb-1 ${PCStatus.getMessage(pcStatus, "text-green-500", 
+              "text-sky-700", "text-red-500", "text-yellow-500")}`}
           >
             {PCStatus.getMessage(pcStatus, "OPEN", "EXEC", "BUSY", "CLOSED")}
           </p>
@@ -105,33 +112,35 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied, pcStatus }) => {
             : ""}
         </p>
       </div>
+      {/*PC Not Busy render broken and exec components*/}
       <div className="flex items-end gap-4 rounded-lg bg-[#20222C] p-4">
         {pcStatus !== PCStatus.Busy && (
           <>
             <div className="group relative">
               <button
-                className="h-full rounded border border-yellow-500 p-2 text-white hover:bg-yellow-500 hover:text-white"
+                className="h-full rounded border border-sky-700 p-2 text-white hover:bg-sky-700 hover:text-white"
                 onClick={handleExecClick}
               >
                 Executive
               </button>
               <div className="absolute bottom-full left-1/2 mb-2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
-                This will mark the PC as being used by an exec.
+                This will mark the PC as being used by an executive.
               </div>
             </div>
             <div className="group relative">
               <button
                 className="h-full rounded border border-yellow-500 p-2 text-white hover:bg-yellow-500 hover:text-white"
-                onClick={handleBrokenClick}
+                onClick={handleClosedClick}
               >
-                Broken
+                Closed
               </button>
               <div className="absolute bottom-full left-1/2 mb-2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
-                This will mark the PC as broken.
+                This will mark the PC as closed.
               </div>
             </div>
           </>
         )}
+        {/*PC Busy render sign out components*/}
         {pcStatus === PCStatus.Busy && (
           <>
             <TextField

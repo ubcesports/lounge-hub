@@ -33,8 +33,8 @@ const LoungeMap: React.FC<LoungeMapProps> = ({ onPCClick }) => {
             <PCStation
               pc={pc}
               isOccupied={!!pc?.studentNumber}
-              pcStatus={!!pc?.studentNumber ? PCStatus.Busy : PCStatus.Open}
-              onClick={() => onPCClick(pc, !!pc?.studentNumber, !!pc?.studentNumber ? PCStatus.Busy : PCStatus.Open)}
+              pcStatus={pc?.pcStatus}
+              onClick={() => onPCClick(pc, !!pc?.studentNumber, pc?.pcStatus)}
             />
           </div>
         );

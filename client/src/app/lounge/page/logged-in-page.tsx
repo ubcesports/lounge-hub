@@ -17,7 +17,7 @@ export default function LoggedInPage() {
   const [isAddingNewGamer, setIsAddingNewGamer] = React.useState(true);
   const [selectedPC, setSelectedPC] = useState<PC | null>(null);
   const [isOccupied, setIsOccupied] = useState<boolean>(false);
-  const [pcStatus, setPCStatus] = useState<PCStatus>(PCStatus.Open);
+  const [pcStatus, setPCStatus] = useState<PCStatus | null>(null);
   const handleToggleForm = () => {
     setIsAddingNewGamer(!isAddingNewGamer);
   };
@@ -27,7 +27,6 @@ export default function LoggedInPage() {
     setIsOccupied(isOccupied);
     setPCStatus(pcStatus);
   };
-
   return (
     <div className="min-h-screen bg-[#0D0D0E] p-1">
       <div className="grid h-full grid-cols-9 gap-1">

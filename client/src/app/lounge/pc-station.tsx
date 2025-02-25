@@ -91,9 +91,9 @@ const PCStation: React.FC<PCStationProps> = ({
           : PCStatus.getMessage(
               pcStatus,
               "bg-[#64CC9F] text-white",
-              "bg-[#EAB308] text-white",
+              "bg-[#3A6AAC] text-white",
               "bg-[#DD4345] text-white",
-              "bg-[#A855F7] text-white",
+              "bg-[#EAB308] text-white", 
             )
       }`}
       style={{

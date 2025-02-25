@@ -11,6 +11,7 @@ export interface PC {
   lastName: string;
   membershipTier: number;
   notes: string;
+  pcStatus: PCStatus;
 }
 
 export enum PCStatus {
