@@ -1,30 +1,30 @@
 import React, { useState } from "react";
-import { PC, PCStatus } from "../../interfaces/pc";
+import { PCStatus } from "../../interfaces/pc";
 import { checkOutGamer } from "../../services/activity";
 import TextField from "../components/text-field";
 import useBoundStore from "../../store/store";
 
 interface PCInfoProps {
-  pc: PC;
+  pcNumber: number;
 }
 
-const PCInfo: React.FC<PCInfoProps> = ({ pc}) => {
+const PCInfo: React.FC<PCInfoProps> = ({ pcNumber}) => {
   const maxLength = 30;
   const [execName, setExecName] = useState<string>("");
-  const pcStatus = useBoundStore((state) =>
-    state.PCList.pcs.find((p) => p.pcNumber === pc.pcNumber).pcStatus
+  const pc = useBoundStore((state) =>
+    state.PCList.pcs.find((p) => p.pcNumber === pcNumber)
   );
+  const pcStatus = pc.pcStatus
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExecName(e.target.value);
   };
 
   const handleSignOutClick = async () => {
-    const success = await checkOutGamer(
+    await checkOutGamer(
       pc.studentNumber,
       pc.pcNumber,
       execName,
     );
-    if (success) window.location.reload();
   };
   const handleExecClick = () => {
     const store = useBoundStore.getState();

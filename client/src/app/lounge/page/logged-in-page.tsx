@@ -36,7 +36,7 @@ export default function LoggedInPage() {
           </div>
           {selectedPC ? (
             <PCInfo
-              pc={selectedPC}
+              pcNumber={selectedPC.pcNumber}
             />
           ) : (
             <div className="col-span-3 h-full rounded-md bg-[#20222C] p-4">
