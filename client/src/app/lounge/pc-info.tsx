@@ -8,33 +8,35 @@ interface PCInfoProps {
   pcNumber: number;
 }
 
-const PCInfo: React.FC<PCInfoProps> = ({ pcNumber}) => {
+const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
   const maxLength = 30;
   const [execName, setExecName] = useState<string>("");
   const pc = useBoundStore((state) =>
-    state.PCList.pcs.find((p) => p.pcNumber === pcNumber)
+    state.PCList.pcs.find((p) => p.pcNumber === pcNumber),
   );
-  const pcStatus = pc.pcStatus
+  const pcStatus = pc.pcStatus;
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExecName(e.target.value);
   };
 
   const handleSignOutClick = async () => {
-    await checkOutGamer(
-      pc.studentNumber,
-      pc.pcNumber,
-      execName,
-    );
+    await checkOutGamer(pc.studentNumber, pc.pcNumber, execName);
   };
   const handleExecClick = () => {
     const store = useBoundStore.getState();
-    store.setPCStatus(pc.pcNumber, pcStatus === PCStatus.Exec ? PCStatus.Open : PCStatus.Exec);
+    store.setPCStatus(
+      pc.pcNumber,
+      pcStatus === PCStatus.Exec ? PCStatus.Open : PCStatus.Exec,
+    );
   };
 
   const handleClosedClick = () => {
     // alert("Broken Button clicked!");
     const store = useBoundStore.getState();
-    store.setPCStatus(pc.pcNumber, pcStatus === PCStatus.Closed ? PCStatus.Open : PCStatus.Closed);
+    store.setPCStatus(
+      pc.pcNumber,
+      pcStatus === PCStatus.Closed ? PCStatus.Open : PCStatus.Closed,
+    );
   };
 
   const truncateName = (
@@ -92,8 +94,13 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber}) => {
         <h1 className="mb-3 text-3xl text-white">Desk {pc.pcNumber}</h1>
         <div className="flex items-center">
           <p
-            className={`text-1xl mb-1 ${getPCStatusMessage(pcStatus, "text-green-500", 
-              "text-[#3A6AAC]", "text-red-500", "text-[#E2DC6A]")}`}
+            className={`text-1xl mb-1 ${getPCStatusMessage(
+              pcStatus,
+              "text-green-500",
+              "text-[#3A6AAC]",
+              "text-red-500",
+              "text-[#E2DC6A]",
+            )}`}
           >
             {getPCStatusMessage(pcStatus, "OPEN", "EXEC", "BUSY", "CLOSED")}
           </p>

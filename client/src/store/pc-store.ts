@@ -72,7 +72,11 @@ const resetPCState = (pcNumber: number, pcList: PCList) => {
   return { pcs: updatedPCList };
 };
 
-const setPCStatus = (pcNumber: number, newPCStatus: PCStatus, pcList: PCList) => {
+const setPCStatus = (
+  pcNumber: number,
+  newPCStatus: PCStatus,
+  pcList: PCList,
+) => {
   const updatedPCList = pcList.pcs.map((pc, index) => {
     if (index === pcNumber - 1) {
       return {
@@ -93,7 +97,11 @@ const setPCStatus = (pcNumber: number, newPCStatus: PCStatus, pcList: PCList) =>
   return { pcs: updatedPCList };
 };
 
-export const createPCSlice: StateCreator<PCSlice, [], [["zustand/persist", PCSlice]]> = persist(
+export const createPCSlice: StateCreator<
+  PCSlice,
+  [],
+  [["zustand/persist", PCSlice]]
+> = persist(
   (set, get) => ({
     PCList: createInitialPCList(),
     setPCList: (payload: ActivePC[]) =>
@@ -107,5 +115,5 @@ export const createPCSlice: StateCreator<PCSlice, [], [["zustand/persist", PCSli
   {
     name: "pc-store", // Key for localStorage
     getStorage: () => localStorage, // Use localStorage for persistence
-  }
+  },
 );

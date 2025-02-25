@@ -35,9 +35,7 @@ export default function LoggedInPage() {
             <Map onPCClick={handlePCClick} />
           </div>
           {selectedPC ? (
-            <PCInfo
-              pcNumber={selectedPC.pcNumber}
-            />
+            <PCInfo pcNumber={selectedPC.pcNumber} />
           ) : (
             <div className="col-span-3 h-full rounded-md bg-[#20222C] p-4">
               <PlaceholderImage />

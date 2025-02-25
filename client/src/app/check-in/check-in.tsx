@@ -2,7 +2,11 @@ import React, { ChangeEvent, useState } from "react";
 import Button from "../components/button";
 import TextField from "../components/text-field";
 import { Activity } from "../../interfaces/activity";
-import { checkInGamer, fetchActivities, fetchPCStatus } from "../../services/activity";
+import {
+  checkInGamer,
+  fetchActivities,
+  fetchPCStatus,
+} from "../../services/activity";
 import { getGamerProfile } from "../../services/gamer-profile";
 import useBoundStore from "../../store/store";
 import games from "../../../public/games/games.js";
@@ -59,17 +63,21 @@ const CheckIn = () => {
       return;
     }
     if (
-      pcList.pcs.find((pc) =>
-        String(pc.pcNumber) === checkInData.pcNumber &&
-        pc.pcStatus === PCStatus.Exec)
+      pcList.pcs.find(
+        (pc) =>
+          String(pc.pcNumber) === checkInData.pcNumber &&
+          pc.pcStatus === PCStatus.Exec,
+      )
     ) {
       alert("This PC is occupied by an executive.");
       return;
     }
     if (
-      pcList.pcs.find((pc) =>
-        String(pc.pcNumber) === checkInData.pcNumber &&
-        pc.pcStatus === PCStatus.Closed)
+      pcList.pcs.find(
+        (pc) =>
+          String(pc.pcNumber) === checkInData.pcNumber &&
+          pc.pcStatus === PCStatus.Closed,
+      )
     ) {
       alert("This PC is closed");
       return;
@@ -87,7 +95,6 @@ const CheckIn = () => {
     }
     try {
       await checkInGamer(checkInData);
-
     } catch (error) {
       alert(error.message);
       return;
