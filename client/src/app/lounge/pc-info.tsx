@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { getPCStatusMessage, PCStatus } from "../../interfaces/pc";
-import { checkOutGamer } from "../../services/activity";
+import { checkOutGamer, fetchActivities } from "../../services/activity";
 import TextField from "../components/text-field";
 import useBoundStore from "../../store/store";
 
@@ -21,6 +21,7 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
 
   const handleSignOutClick = async () => {
     await checkOutGamer(pc.studentNumber, pc.pcNumber, execName);
+    fetchActivities();
   };
   const handleExecClick = () => {
     const store = useBoundStore.getState();
