@@ -94,11 +94,15 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
         <h1 className="mb-3 text-3xl text-white">Desk {pc.pcNumber}</h1>
         <div className="flex items-center">
           <p
-            className={`text-1xl mb-1 
-            ${pcStatus === PCStatus.Open ? "text-green-500" : 
-              pcStatus === PCStatus.Exec ? "text-[#3A6AAC]" : 
-                pcStatus === PCStatus.Busy ? "text-red-500" : 
-                  "text-[#E2DC6A]"}`}
+            className={`text-1xl mb-1 ${
+              pcStatus === PCStatus.Open
+                ? "text-green-500"
+                : pcStatus === PCStatus.Exec
+                  ? "text-[#3A6AAC]"
+                  : pcStatus === PCStatus.Busy
+                    ? "text-red-500"
+                    : "text-[#E2DC6A]"
+            }`}
           >
             {pcStatus}
           </p>
