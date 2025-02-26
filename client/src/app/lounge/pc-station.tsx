@@ -3,22 +3,11 @@ import { PC, PCStatus } from "../../interfaces/pc";
 
 interface PCStationProps {
   pc: PC;
-  isOccupied: boolean;
   pcStatus: PCStatus;
-  onClick: (
-    pc: PC,
-    timeRemaining: string,
-    isOccupied: boolean,
-    pcStatus: PCStatus,
-  ) => void;
+  onClick: (pc: PC, timeRemaining: string, pcStatus: PCStatus) => void;
 }
 
-const PCStation: React.FC<PCStationProps> = ({
-  pc,
-  isOccupied,
-  pcStatus,
-  onClick,
-}) => {
+const PCStation: React.FC<PCStationProps> = ({ pc, pcStatus, onClick }) => {
   const [timeRemaining, setTimeRemaining] = useState<string>("");
 
   const calculateTimeRemaining = (
@@ -84,7 +73,7 @@ const PCStation: React.FC<PCStationProps> = ({
 
   return (
     <button
-      onClick={() => onClick(pc, timeRemaining, isOccupied, pcStatus)}
+      onClick={() => onClick(pc, timeRemaining, pcStatus)}
       className={`flex items-center justify-center rounded-md p-4 text-xs ${
         isTimeUp
           ? "border border-white"
