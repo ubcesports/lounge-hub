@@ -32,7 +32,6 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
   };
 
   const handleClosedClick = () => {
-    // alert("Broken Button clicked!");
     const store = useBoundStore.getState();
     store.setPCStatus(
       pc.pcNumber,
