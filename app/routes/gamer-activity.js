@@ -84,7 +84,7 @@ router.get("/activity/all/recent", async (req, res) => {
            OR ${schema}.gamer_activity.exec_name % $3
            OR TO_CHAR(${schema}.gamer_activity.started_at, 'YYYY-MM-DD') % $3
       `;
-      queryParams.unshift(`%${search}%`);
+      queryParams.push(`%${search}%`);
     }
 
     query += `
