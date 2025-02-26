@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getPCStatusMessage, PC, PCStatus } from "../../interfaces/pc";
+import { PC, PCStatus } from "../../interfaces/pc";
 
 interface PCStationProps {
   pc: PC;
@@ -85,17 +85,13 @@ const PCStation: React.FC<PCStationProps> = ({
   return (
     <button
       onClick={() => onClick(pc, timeRemaining, isOccupied, pcStatus)}
-      className={`flex items-center justify-center rounded-md p-4 text-xs ${
-        isTimeUp
-          ? "border border-white text-white"
-          : getPCStatusMessage(
-              pcStatus,
-              "bg-[#64CC9F] text-white",
-              "bg-[#3A6AAC] text-white",
-              "bg-[#DD4345] text-white",
-              "bg-[#E2DC6A] text-white",
-            )
-      }`}
+      className={`flex items-center justify-center rounded-md p-4 text-xs 
+      ${isTimeUp ? "border border-white" :
+        pcStatus === PCStatus.Open ? "bg-[#64CC9F]" :
+          pcStatus === PCStatus.Exec ? "bg-[#3A6AAC]" :
+            pcStatus === PCStatus.Busy ? "bg-[#DD4345]" :
+              "bg-[#E2DC6A]"}
+               text-white`}
       style={{
         height: isDoubleHeight ? "148px" : "70px", // Double height PCs
         width: "70px",
