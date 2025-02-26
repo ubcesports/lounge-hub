@@ -48,7 +48,7 @@ export default function LoggedInPage() {
             <Button
               onClick={handleToggleForm}
               label={isAddingNewGamer ? "Add New" : "Check In"}
-              className="flex items-center text-green-400 hover:text-green-300"
+              className="flex items-center text-green-400 hover:brightness-75"
             />
           </div>
           <div className="max-h-[300px] flex-grow rounded-md bg-[#20222C] p-4">
