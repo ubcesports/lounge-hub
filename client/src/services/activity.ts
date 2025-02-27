@@ -19,13 +19,13 @@ export const checkInGamer = async (activity: Activity) => {
     toastNotify.warning(
       "This tier 1 member has already signed in today. Tier 1 members should only be able to check in once a day. If you wish to proceed, do nothing. Otherwise, please sign the user out normally.",
       {
-        autoClose: 15000
-      }
+        autoClose: 15000,
+      },
     );
   } else if (response.status === 404) {
     throw new Error("Student not found.");
   } else {
-    toastNotify.success("User Checked In!")
+    toastNotify.success("User Checked In!");
   }
   return data;
 };
@@ -57,7 +57,7 @@ export const checkOutGamer = async (
     await fetch(url, settings);
     const store = useBoundStore.getState();
     store.resetPCState(pcNumber);
-    toastNotify.success("User Checked Out!")
+    toastNotify.success("User Checked Out!");
     return true;
   } catch (error) {
     console.error("Error checking out gamer:", error);
