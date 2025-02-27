@@ -1,4 +1,5 @@
 import { GamerProfile } from "../interfaces/gamer-profile";
+import toastNotify from "../app/toast/toastNotifications";
 
 export const addGamerProfile = async (gamerProfile: GamerProfile) => {
   const url = `/api/gamer`;
@@ -28,6 +29,6 @@ export const getGamerProfile = async (studentNumber: string) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    alert(`Gamer not found. ${error}`);
+    toastNotify.error(`Gamer not found. ${error}`);
   }
 };
