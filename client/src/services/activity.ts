@@ -76,8 +76,8 @@ export const fetchPCStatus = async () => {
   }
 };
 
-export const getRecentActivity = async () => {
-  const url = `/api/activity/all/recent`;
+export const getRecentActivity = async (page: number, search: string) => {
+  const url = `/api/activity/all/recent?page=${page}&limit=10&search=${search}`;
   const settings = {
     method: "GET",
     headers: {
@@ -95,16 +95,10 @@ export const getRecentActivity = async () => {
   }
 };
 
-export const useFetchActivities = () => {
-  useEffect(() => {
-    fetchActivities();
-  }, []);
-};
-
-export const fetchActivities = async () => {
+export const fetchActivities = async (page: number, search: string) => {
   try {
     const store = useBoundStore.getState();
-    const activities = await getRecentActivity();
+    const activities = await getRecentActivity(page, search);
     store.setLogList(activities);
   } catch (error) {
     console.error(error);

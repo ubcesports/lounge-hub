@@ -109,7 +109,7 @@ const CheckIn = () => {
       notes: addedProfile.notes,
     });
     await fetchPCStatus();
-    fetchActivities();
+    fetchActivities(1, "");
   };
 
   return (
