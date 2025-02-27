@@ -1,6 +1,7 @@
 import { Activity } from "../interfaces/activity";
 import { useEffect } from "react";
 import useBoundStore from "../store/store";
+import toastNotify from "../app/toast/toastNotifications";
 
 export const checkInGamer = async (activity: Activity) => {
   const url = `/api/activity`;
@@ -15,11 +16,16 @@ export const checkInGamer = async (activity: Activity) => {
   const response = await fetch(url, settings);
   const data = await response.json();
   if (response.status === 400) {
-    alert(
-      "Tier 1 members should only be able to check in once a day. If you wish to proceed, do nothing. Otherwise, please just sign the user out normally.",
+    toastNotify.warning(
+      "This tier 1 member has already signed in today. Tier 1 members should only be able to check in once a day. If you wish to proceed, do nothing. Otherwise, please sign the user out normally.",
+      {
+        autoClose: 15000
+      }
     );
   } else if (response.status === 404) {
     throw new Error("Student not found.");
+  } else {
+    toastNotify.success("User Checked In!")
   }
   return data;
 };
@@ -30,11 +36,11 @@ export const checkOutGamer = async (
   execName: string,
 ): Promise<boolean> => {
   if (!studentNumber) {
-    alert("This table is not occupied.");
+    toastNotify.error("This table is not occupied.");
     return false;
   }
   if (!execName) {
-    alert("Please enter your name.");
+    toastNotify.error("Please enter your name.");
     return false;
   }
   const url = `/api/activity/update/${studentNumber}`;
@@ -51,6 +57,7 @@ export const checkOutGamer = async (
     await fetch(url, settings);
     const store = useBoundStore.getState();
     store.resetPCState(pcNumber);
+    toastNotify.success("User Checked Out!")
     return true;
   } catch (error) {
     console.error("Error checking out gamer:", error);

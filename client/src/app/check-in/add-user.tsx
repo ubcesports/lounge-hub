@@ -4,6 +4,7 @@ import TextField from "../components/text-field";
 import DropdownField from "../components/dropdown";
 import { GamerProfile } from "../../interfaces/gamer-profile";
 import { addGamerProfile } from "../../services/gamer-profile";
+import toastNotify from "../toast/toastNotifications";
 
 const AddUser = () => {
   const [addGamerData, setAddGamerData] = useState<GamerProfile>({
@@ -16,7 +17,7 @@ const AddUser = () => {
 
   const submitData = async (data: GamerProfile) => {
     addGamerProfile(data);
-    alert("Gamer added successfully!"); // TODO: Check if someone is already added
+    toastNotify.success("Gamer added successfully!"); // TODO: Check if someone is already added
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
