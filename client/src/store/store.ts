@@ -8,7 +8,6 @@ const useStore = create<GamerProfileSlice & PCSlice & LogsSlice>()((...a) => ({
   ...createGamerProfileSlice(...a),
   ...persist(createPCSlice, {
     name: "pc-store",
-    getStorage: () => localStorage,
   })(...a),
   ...createLogsSlice(...a),
 }));
