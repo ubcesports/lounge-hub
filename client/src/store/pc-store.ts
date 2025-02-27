@@ -114,6 +114,5 @@ export const createPCSlice: StateCreator<
   }),
   {
     name: "pc-store", // Key for localStorage
-    getStorage: () => localStorage, // Use localStorage for persistence
   },
 );
