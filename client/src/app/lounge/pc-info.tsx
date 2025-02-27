@@ -1,30 +1,42 @@
-import React from "react";
-import { PC } from "../../interfaces/pc";
-import { checkOutGamer } from "../../services/activity";
+import React, { useState } from "react";
+import { PCStatus } from "../../interfaces/pc";
+import { checkOutGamer, fetchActivities } from "../../services/activity";
 import TextField from "../components/text-field";
-import { useState } from "react";
+import useBoundStore from "../../store/store";
 
 interface PCInfoProps {
-  pc: PC;
-  isOccupied: boolean;
+  pcNumber: number;
 }
 
-const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied }) => {
+const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
   const maxLength = 30;
-
   const [execName, setExecName] = useState<string>("");
-
+  const pc = useBoundStore((state) =>
+    state.PCList.pcs.find((p) => p.pcNumber === pcNumber),
+  );
+  const pcStatus = pc.pcStatus;
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExecName(e.target.value);
   };
 
-  const handleClick = async () => {
-    const success = await checkOutGamer(
-      pc.studentNumber,
+  const handleSignOutClick = async () => {
+    await checkOutGamer(pc.studentNumber, pc.pcNumber, execName);
+    fetchActivities();
+  };
+  const handleExecClick = () => {
+    const store = useBoundStore.getState();
+    store.setPCStatus(
       pc.pcNumber,
-      execName,
+      pcStatus === PCStatus.Exec ? PCStatus.Open : PCStatus.Exec,
     );
-    if (success) window.location.reload();
+  };
+
+  const handleClosedClick = () => {
+    const store = useBoundStore.getState();
+    store.setPCStatus(
+      pc.pcNumber,
+      pcStatus === PCStatus.Closed ? PCStatus.Open : PCStatus.Closed,
+    );
   };
 
   const truncateName = (
@@ -82,41 +94,81 @@ const PCInfo: React.FC<PCInfoProps> = ({ pc, isOccupied }) => {
         <h1 className="mb-3 text-3xl text-white">Desk {pc.pcNumber}</h1>
         <div className="flex items-center">
           <p
-            className={`text-1xl mb-1 ${isOccupied ? "text-red-500" : "text-green-500"}`}
+            className={`text-1xl mb-1 ${
+              pcStatus === PCStatus.Open
+                ? "text-green-500"
+                : pcStatus === PCStatus.Exec
+                  ? "text-[#3A6AAC]"
+                  : pcStatus === PCStatus.Busy
+                    ? "text-red-500"
+                    : "text-[#E2DC6A]"
+            }`}
           >
-            {isOccupied ? "BUSY" : "OPEN"}
+            {pcStatus}
           </p>
           <p className="text-1xl mb-1 ml-2 max-w-xs truncate text-[#62667B]">
-            {isOccupied
+            {pcStatus === PCStatus.Busy
               ? `- ${truncateName(pc.firstName, pc.lastName, pc.studentNumber, maxLength)}`
               : ""}
           </p>
         </div>
         <p className="mb-1 text-xs text-[#62667B]">
-          {isOccupied
+          {pcStatus === PCStatus.Busy
             ? `${formatTime(pc.startedAt, pc.game, pc.membershipTier)}`
             : ""}
         </p>
       </div>
+      {/*PC Not Busy render broken and exec components*/}
       <div className="flex items-end gap-4 rounded-lg bg-[#20222C] p-4">
-        <TextField
-          label="Exec Name"
-          name="execName"
-          value={execName}
-          onChange={handleInputChange}
-          className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
-        />
-        <div className="group relative">
-          <button
-            className="h-full rounded border border-red-500 p-2 text-white hover:bg-red-500 hover:text-white"
-            onClick={handleClick}
-          >
-            Close
-          </button>
-          <div className="absolute bottom-full left-1/2 mb-2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
-            This sign out will be associated with the provided exec name.
-          </div>
-        </div>
+        {pcStatus !== PCStatus.Busy && (
+          <>
+            <div className="group relative">
+              <button
+                className="h-full rounded border border-[#3A6AAC] p-2 text-white hover:bg-[#3A6AAC] hover:text-white"
+                onClick={handleExecClick}
+              >
+                Executive
+              </button>
+              <div className="absolute bottom-full left-1/2 mb-2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
+                This will mark the PC as being used by an executive.
+              </div>
+            </div>
+            <div className="group relative">
+              <button
+                className="h-full rounded border border-[#E2DC6A] p-2 text-white hover:bg-[#E2DC6A] hover:text-white"
+                onClick={handleClosedClick}
+              >
+                Closed
+              </button>
+              <div className="absolute bottom-full left-1/2 mb-2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
+                This will mark the PC as closed.
+              </div>
+            </div>
+          </>
+        )}
+        {/*PC Busy render sign out components*/}
+        {pcStatus === PCStatus.Busy && (
+          <>
+            <TextField
+              label="Exec Name"
+              name="execName"
+              value={execName}
+              onChange={handleInputChange}
+              className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
+            />
+            <div className="group relative">
+              <button
+                className="h-full rounded border border-red-500 p-2 text-white hover:bg-red-500 hover:text-white"
+                onClick={handleSignOutClick}
+              >
+                Close
+              </button>
+              <div className="absolute bottom-full left-1/2 mb-2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
+                This sign out will be associated with the provided exec name.
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

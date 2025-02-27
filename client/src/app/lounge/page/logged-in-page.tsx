@@ -16,17 +16,13 @@ import Activity from "../activity";
 export default function LoggedInPage() {
   const [isAddingNewGamer, setIsAddingNewGamer] = React.useState(true);
   const [selectedPC, setSelectedPC] = useState<PC | null>(null);
-  const [isOccupied, setIsOccupied] = useState<boolean>(false);
-
   const handleToggleForm = () => {
     setIsAddingNewGamer(!isAddingNewGamer);
   };
 
-  const handlePCClick = (pc: PC, isOccupied: boolean) => {
+  const handlePCClick = (pc: PC) => {
     setSelectedPC(pc);
-    setIsOccupied(isOccupied);
   };
-
   return (
     <div className="min-h-screen bg-[#0D0D0E] p-1">
       <div className="grid h-full grid-cols-9 gap-1">
@@ -39,7 +35,7 @@ export default function LoggedInPage() {
             <Map onPCClick={handlePCClick} />
           </div>
           {selectedPC ? (
-            <PCInfo pc={selectedPC} isOccupied={isOccupied} />
+            <PCInfo pcNumber={selectedPC.pcNumber} />
           ) : (
             <div className="col-span-3 h-full rounded-md bg-[#20222C] p-4">
               <PlaceholderImage />

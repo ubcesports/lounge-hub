@@ -9,7 +9,9 @@
 
 Create a `.env` file in the `/app` directory following the `.env.example` file. Ask your development directors for the values.
 
-> Note: The app will not run correctly unless you have the `.env` file in your `/app` directory. 3. Run the following in the root directory
+> Note: The app will not run correctly unless you have the `.env` file in your `/app` directory.
+
+3. Run the following in the root directory
 
 ```
 docker compose up -d --build
