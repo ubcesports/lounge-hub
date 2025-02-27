@@ -84,7 +84,7 @@ const PCStation: React.FC<PCStationProps> = ({ pc, pcStatus, onClick }) => {
               : pcStatus === PCStatus.Busy
                 ? "bg-[#DD4345]"
                 : "bg-[#E2DC6A]"
-      } text-white`}
+      } text-white hover:brightness-75`}
       style={{
         height: isDoubleHeight ? "148px" : "70px", // Double height PCs
         width: "70px",

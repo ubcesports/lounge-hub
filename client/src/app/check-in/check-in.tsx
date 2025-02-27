@@ -160,7 +160,7 @@ const CheckIn = () => {
         <Button
           onClick={handleSubmit}
           label="Check in"
-          className="max-w-[100px] rounded bg-[#3A6AAC] px-4 py-2 text-[#DEE7EC] hover:bg-blue-500"
+          className="max-w-[100px] rounded bg-[#3A6AAC] px-4 py-2 text-[#DEE7EC] hover:brightness-75"
         />
       </form>
     </div>
