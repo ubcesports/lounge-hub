@@ -12,6 +12,7 @@ import Button from "../../components/button";
 import { useState } from "react";
 import { PC } from "../../../interfaces/pc";
 import Activity from "../activity";
+import { ToastContainer } from "react-toastify";
 
 export default function LoggedInPage() {
   const [isAddingNewGamer, setIsAddingNewGamer] = React.useState(true);
@@ -25,6 +26,7 @@ export default function LoggedInPage() {
   };
   return (
     <div className="min-h-screen bg-[#0D0D0E] p-1">
+      <ToastContainer />
       <div className="grid h-full grid-cols-9 gap-1">
         {/* left buffer */}
         <div className="col-span-1"></div>
