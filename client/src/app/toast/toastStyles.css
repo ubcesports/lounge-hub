@@ -1,8 +1,8 @@
 /*Manually set progress bar colours for error and warning to see easier*/
 .toast-progress-error {
-    background-color: #DD4345 !important;
+  background-color: #dd4345 !important;
 }
 
 .toast-progress-warning {
-    background-color: #eab308 !important;
+  background-color: #eab308 !important;
 }
