@@ -13,6 +13,7 @@ const useStore = create<GamerProfileSlice & PCSlice & LogsSlice>()(
     }),
     {
       name: "pc-store",
+      version: 1,
       partialize: (state) => ({ PCList: state.PCList }), // Persist only PCList
       storage: {
         getItem: (name) => {
