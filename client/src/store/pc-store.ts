@@ -1,5 +1,4 @@
 import { StateCreator } from "zustand";
-import { persist } from "zustand/middleware";
 import { PCList, PCStatus } from "../interfaces/pc";
 import { ActivePC } from "../interfaces/active-pc";
 
@@ -98,11 +97,7 @@ const setPCStatus = (
 };
 
 export const createPCSlice: StateCreator<
-  PCSlice,
-  [],
-  [["zustand/persist", PCSlice]]
-> = persist(
-  (set, get) => ({
+  PCSlice> = (set, get) => ({
     PCList: createInitialPCList(),
     setPCList: (payload: ActivePC[]) =>
       set({ PCList: updatePCList(get().PCList, payload) }),
@@ -111,8 +106,5 @@ export const createPCSlice: StateCreator<
     setPCStatus: (pcNumber: number, pcStatus: PCStatus) =>
       set({ PCList: setPCStatus(pcNumber, pcStatus, get().PCList) }),
     removePCList: () => set({ PCList: createInitialPCList() }),
-  }),
-  {
-    name: "pc-store", // Key for localStorage
-  },
-);
+  });
+
