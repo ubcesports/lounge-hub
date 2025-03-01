@@ -59,11 +59,7 @@ const CheckIn = () => {
         game.toLowerCase().includes(value.toLowerCase()),
       );
       setSuggestions(filteredSuggestions);
-      setSelectedSuggestionIndex((prevIndex) =>
-        filteredSuggestions.length === 0
-          ? -1
-          : Math.min(prevIndex, filteredSuggestions.length - 1, 6),
-      );
+      setSelectedSuggestionIndex(0);
     }
   };
 
