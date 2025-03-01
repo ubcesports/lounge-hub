@@ -58,35 +58,30 @@ const CheckIn = () => {
       return;
     }
     if (
-      pcList.pcs.some((pc) => pc.studentNumber === checkInData.studentNumber)
+      Array.from(pcList.pcs.values()).some(
+        (pc) => pc.studentNumber === checkInData.studentNumber,
+      )
     ) {
       toastNotify.error("This student is already checked in.");
       return;
     }
-    if (
-      pcList.pcs.find(
-        (pc) =>
-          String(pc.pcNumber) === checkInData.pcNumber &&
-          pc.pcStatus === PCStatus.Exec,
-      )
-    ) {
+    const pcNumber = Number(checkInData.pcNumber);
+    if (isNaN(pcNumber)) {
+      toastNotify.error("Please enter a valid PC number");
+      return;
+    } else if (!pcList.pcs.has(pcNumber)) {
+      toastNotify.error("PC number " + pcNumber + " does not exist");
+      return;
+    }
+    if (pcList.pcs.get(pcNumber).pcStatus === PCStatus.Exec) {
       toastNotify.error("This PC is occupied by an executive.");
       return;
     }
-    if (
-      pcList.pcs.find(
-        (pc) =>
-          String(pc.pcNumber) === checkInData.pcNumber &&
-          pc.pcStatus === PCStatus.Closed,
-      )
-    ) {
-      toastNotify.error("This PC is closed");
+    if (pcList.pcs.get(pcNumber).pcStatus === PCStatus.Closed) {
+      toastNotify.error("This PC is closed.");
       return;
     }
-    if (
-      pcList.pcs.find((pc) => String(pc.pcNumber) === checkInData.pcNumber)
-        .studentNumber
-    ) {
+    if (pcList.pcs.get(pcNumber).studentNumber) {
       toastNotify.error("This PC is already occupied.");
       return;
     }
