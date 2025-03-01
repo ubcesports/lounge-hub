@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, KeyboardEvent, useState } from "react";
 import Button from "../components/button";
 import TextField from "../components/text-field";
 import { Activity } from "../../interfaces/activity";
@@ -22,7 +22,31 @@ const CheckIn = () => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [checkInButtonIsDisabled, setCheckInButtonIsDisabled] =
     useState<boolean>(false);
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] =
+    useState<number>(0);
 
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (suggestions.length === 0) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setSelectedSuggestionIndex((prevIndex) =>
+        Math.min(
+          prevIndex < suggestions.length - 1 ? prevIndex + 1 : prevIndex,
+          6,
+        ),
+      );
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setSelectedSuggestionIndex((prevIndex) =>
+        0 < prevIndex ? prevIndex - 1 : prevIndex,
+      );
+    } else if (e.key === "Enter" && 0 <= selectedSuggestionIndex) {
+      e.preventDefault();
+      const selectedGame = suggestions[selectedSuggestionIndex];
+      handleSuggestionClick(selectedGame);
+    }
+  };
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setCheckInData({
@@ -35,6 +59,11 @@ const CheckIn = () => {
         game.toLowerCase().includes(value.toLowerCase()),
       );
       setSuggestions(filteredSuggestions);
+      setSelectedSuggestionIndex((prevIndex) =>
+        filteredSuggestions.length === 0
+          ? -1
+          : Math.min(prevIndex, filteredSuggestions.length - 1, 6),
+      );
     }
   };
 
@@ -139,6 +168,7 @@ const CheckIn = () => {
             value={checkInData.game}
             onChange={handleInputChange}
             onBlur={() => setTimeout(() => setSuggestions([]), 100)}
+            onKeyDown={handleKeyPress}
             className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
           />
           <div className="relative">
@@ -147,7 +177,13 @@ const CheckIn = () => {
                 {suggestions.slice(0, 7).map((suggestion, index) => (
                   <li
                     key={index}
-                    className="cursor-pointer p-2 hover:bg-gray-200"
+                    onMouseEnter={() => setSelectedSuggestionIndex(index)}
+                    onMouseLeave={() => setSelectedSuggestionIndex(-1)}
+                    className={`cursor-pointer p-2 ${
+                      index === selectedSuggestionIndex
+                        ? "bg-blue-500 text-white"
+                        : ""
+                    }`}
                     onClick={() => handleSuggestionClick(suggestion)}
                   >
                     {suggestion}
