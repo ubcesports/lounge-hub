@@ -144,6 +144,11 @@ const CheckIn = () => {
       membershipTier: addedProfile.membership_tier,
       notes: addedProfile.notes,
     });
+    setCheckInData({
+      studentNumber: "",
+      game: "",
+      pcNumber: "",
+    });
     await fetchPCStatus();
     fetchActivities(1, "");
   };
