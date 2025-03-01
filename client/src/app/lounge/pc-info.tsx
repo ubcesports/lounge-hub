@@ -11,9 +11,7 @@ interface PCInfoProps {
 const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
   const maxLength = 30;
   const [execName, setExecName] = useState<string>("");
-  const pc = useBoundStore((state) =>
-    state.PCList.pcs.find((p) => p.pcNumber === pcNumber),
-  );
+  const pc = useBoundStore((state) => state.PCList.pcs.get(pcNumber));
   const pcStatus = pc.pcStatus;
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExecName(e.target.value);

@@ -1,5 +1,5 @@
 export interface PCList {
-  pcs: PC[];
+  pcs: Map<number, PC>;
 }
 
 export interface PC {
