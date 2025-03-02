@@ -3,20 +3,20 @@ import React, { FormEvent } from "react";
 interface HoverButtonProps {
   onClick: (e: FormEvent) => void;
   label: string;
-  color: string;
   toolTip: string;
+  className: string;
 }
 
 const HoverButton: React.FC<HoverButtonProps> = ({
   onClick,
   label,
-  color,
   toolTip,
+  className,
 }) => {
   return (
     <div className="group relative">
       <button
-        className={`h-full rounded border border-${color} p-2 text-white hover:bg-${color} hover:text-white`}
+        className={`h-full rounded border p-2 text-white hover:text-white ${className}`}
         onClick={onClick}
       >
         {label}

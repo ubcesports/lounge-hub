@@ -123,15 +123,15 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
           <>
             <HoverButton
               onClick={handleExecClick}
-              label={"Executive"}
-              color={"[#3A6AAC]"}
-              toolTip={"This will mark the PC as being used by an executive."}
+              label="Executive"
+              toolTip="This will mark the PC as being used by an executive."
+              className="border-[#3A6AAC] hover:bg-[#3A6AAC]"
             />
             <HoverButton
               onClick={handleClosedClick}
-              label={"Closed"}
-              color={"[#E2DC6A]"}
-              toolTip={"This will mark the PC as closed."}
+              label="Closed"
+              toolTip="This will mark the PC as closed."
+              className="border-[#E2DC6A] hover:bg-[#E2DC6A]"
             />
           </>
         )}
@@ -147,11 +147,9 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
             />
             <HoverButton
               onClick={handleSignOutClick}
-              label={"Check out"}
-              color={"red-500"}
-              toolTip={
-                "This sign out will be associated with the provided exec name."
-              }
+              label="Check out"
+              toolTip="This sign out will be associated with the provided exec name."
+              className="border-red-500 hover:bg-red-500"
             />
           </>
         )}
