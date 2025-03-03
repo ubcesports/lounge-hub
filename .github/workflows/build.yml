@@ -23,10 +23,9 @@ jobs:
         run: cd client
 
       - name: Build image
-        env:
         run: |
           docker build -t test --target prod .
-      
+
       - name: Delete Image
         run: |
           docker rmi test
@@ -48,10 +47,9 @@ jobs:
         run: cd client
 
       - name: Build image
-        env:
         run: |
           docker build -t test --target prod .
-      
+
       - name: Delete Image
         run: |
           docker rmi test
