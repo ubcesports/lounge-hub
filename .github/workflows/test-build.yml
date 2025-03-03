@@ -1,4 +1,4 @@
-name: Build Images
+name: Test - Build Images
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-frontend:
-    name: Build Frontend Docker Image
+    name: Test Build Frontend Docker Image
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +26,7 @@ jobs:
           docker rmi test
 
   build-backend:
-    name: Build Backend Docker Image
+    name: Test Build Backend Docker Image
     runs-on: ubuntu-latest
 
     steps:
