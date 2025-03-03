@@ -20,6 +20,7 @@ const CheckIn = () => {
     pcNumber: "",
   });
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -95,11 +96,18 @@ const CheckIn = () => {
       return;
     }
     try {
+      setIsDisabled(true);
       await checkInGamer(checkInData);
     } catch (error) {
-      toastNotify.error(error.message);
+      if (error.message === "Check in cancelled.") {
+        toastNotify.info(error.message);
+      } else {
+        toastNotify.error(error.message);
+      }
+      setIsDisabled(false);
       return;
     }
+    setIsDisabled(false);
     const addedProfile = await getGamerProfile(checkInData.studentNumber);
     store.setGamerProfile({
       ...addedProfile,
@@ -161,7 +169,9 @@ const CheckIn = () => {
         <Button
           onClick={handleSubmit}
           label="Check in"
-          className="max-w-[100px] rounded bg-[#3A6AAC] px-4 py-2 text-[#DEE7EC] hover:brightness-75"
+          className={`max-w-[100px] rounded bg-[#3A6AAC] px-4 py-2 text-[#DEE7EC] 
+          ${isDisabled ? "opacity-50 cursor-not-allowed" : "hover:brightness-75"}`}
+          disabled={isDisabled}
         />
       </form>
     </div>

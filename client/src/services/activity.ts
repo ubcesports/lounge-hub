@@ -2,8 +2,37 @@ import { Activity } from "../interfaces/activity";
 import { useEffect } from "react";
 import useBoundStore from "../store/store";
 import toastNotify from "../app/toast/toastNotifications";
+import { toast } from "react-toastify";
 
 export const checkInGamer = async (activity: Activity) => {
+  const continueCheckIn = async (): Promise<boolean> => {
+    return new Promise((resolve) => {
+        toastNotify.buttonWarning(
+          "This tier 1 member has already checked in today. Tier 1 members are only allowed to check in once a day. How would you like to proceed?",
+          "Complete check in",
+          "Cancel check in",
+          () => {resolve(true)},
+          () => {resolve(false)}
+        );
+      }
+    )
+  };
+  const tierOneCheckurl = `/api/activity/today/${activity.studentNumber}`;
+  const tierOneCheckSettings = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+  const tierOneCheckResponse = await fetch(tierOneCheckurl, tierOneCheckSettings);
+  const tierOneCheckData = await tierOneCheckResponse.json();
+  if (tierOneCheckData.length > 0) {
+      const continueCheckInProcess = await continueCheckIn();
+      if (!continueCheckInProcess) {
+        throw new Error("Check in cancelled.")
+      }
+  }
   const url = `/api/activity`;
   const settings = {
     method: "POST",
@@ -15,18 +44,10 @@ export const checkInGamer = async (activity: Activity) => {
   };
   const response = await fetch(url, settings);
   const data = await response.json();
-  if (response.status === 400) {
-    toastNotify.warning(
-      "This tier 1 member has already signed in today. Tier 1 members should only be able to check in once a day. If you wish to proceed, do nothing. Otherwise, please sign the user out normally.",
-      {
-        autoClose: 15000,
-      },
-    );
-  } else if (response.status === 404) {
+  if (response.status === 404) {
     throw new Error("Student not found.");
-  } else {
-    toastNotify.success("User Checked In!");
   }
+  toastNotify.success("User Checked In!");
   return data;
 };
 

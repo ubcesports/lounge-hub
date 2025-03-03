@@ -41,6 +41,48 @@ router.get("/activity/:student_number", async (req, res) => {
 });
 
 /**
+ * @api {get} /activity/today/:student_number Get Gamer Tier One Member Activity today for specific student
+ * @apiName GetGamerActivityByTierOneStudentToday
+ * @apiGroup Activity
+ *
+ * @apiParam {String} student_number Student's unique number.
+ *
+ * @apiSuccess {Object} gamer_activity Gamer activity object.
+ * @apiSuccess {String} gamer_activity.student_number Student number, 8 digit integer.
+ * @apiSuccess {Number} gamer_activity.pc_number PC number.
+ * @apiSuccess {String} gamer_activity.game Game name.
+ * @apiSuccess {String} gamer_activity.started_at Datetime when the activity started.
+ * @apiSuccess {String} gamer_activity.ended_at Datetime when the activity ended.
+ * @apiSuccess {string} gamer_activity.exec_name Exec that ended the activity.
+ *
+ * @apiError {String} 500 Server error.
+ */
+router.get("/activity/today/:student_number", async (req, res) => {
+  const { student_number } = req.params;
+  const started_at = moment()
+    .tz("America/Los_Angeles")
+    .format("YYYY-MM-DD HH:mm");
+  const tierOneCheckQuery = `
+    SELECT ga.*
+    FROM ${schema}.gamer_activity ga
+    JOIN ${schema}.gamer_profile gp ON ga.student_number = gp.student_number
+    WHERE ga.student_number = $1
+    AND gp.membership_tier = 1
+    AND DATE(ga.started_at::timestamp) = DATE($2::timestamp)
+  `;
+  try {
+    const result = await db.query(tierOneCheckQuery, [
+      student_number,
+      started_at,
+    ]);
+    return res.status(200).send(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(`Error checking Tier one member sign in: ${err}`);
+  }
+});
+
+/**
  * @api {get} /activity/all/recent Get Gamer Activity
  * @apiName GetGamerActivity
  * @apiGroup Activity
@@ -119,41 +161,24 @@ router.get("/activity/all/recent", async (req, res) => {
  *
  * @apiError {String} 500 Server error.
  * @apiError {String} 404 Foreign key not found.
- * @apiError {String} 400 Tier 1 members can only book one PC per day.
  */
 router.post("/activity", async (req, res) => {
   const { student_number, pc_number, game } = req.body;
   const started_at = moment()
     .tz("America/Los_Angeles")
     .format("YYYY-MM-DD HH:mm");
-
-  const tierOneCheckQuery = `
-    SELECT ga.*
-    FROM ${schema}.gamer_activity ga
-    JOIN ${schema}.gamer_profile gp ON ga.student_number = gp.student_number
-    WHERE ga.student_number = $1
-    AND gp.membership_tier = 1
-    AND DATE(ga.started_at::timestamp) = DATE($2::timestamp)
-  `;
   const query = `INSERT INTO ${schema}.gamer_activity 
         (student_number, pc_number, game, started_at) 
         VALUES ($1, $2, $3, $4) 
         RETURNING *`;
 
   try {
-    const tierOneCheckResult = await db.query(tierOneCheckQuery, [
-      student_number,
-      started_at,
-    ]);
     const result = await db.query(query, [
       student_number,
       pc_number,
       game,
       started_at,
     ]);
-    if (tierOneCheckResult.rows.length > 0) {
-      return res.status(400).send(result.rows[0]);
-    }
     res.status(201).send(result.rows[0]);
   } catch (err) {
     if (err.code === FK_VIOLATION) {
