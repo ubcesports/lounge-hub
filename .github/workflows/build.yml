@@ -21,6 +21,9 @@ jobs:
 
       - name: Navigate to app directory
         run: cd client
+      
+      - name: ls
+        run: ls
 
       - name: Build image
         run: |
