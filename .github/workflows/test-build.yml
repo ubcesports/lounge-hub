@@ -1,0 +1,45 @@
+name: Test - Build Images
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-frontend:
+    name: Test Build Frontend Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 20.4.0
+
+      - name: Build image
+        run: |
+          cd client
+          docker build -t test --target prod .
+          docker rmi test
+
+  build-backend:
+    name: Test Build Backend Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 20.4.0
+
+      - name: Build image
+        run: |
+          cd app
+          docker build -t test --target prod .
+          docker rmi test
