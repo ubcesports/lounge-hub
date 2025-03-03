@@ -19,8 +19,8 @@ const ToastWithButtons = ({
   <div>
     <div className="flex items-center gap-3">
       <svg
-        height="22%"
-        width="22%"
+        height="26%"
+        width="26%"
         viewBox="0 0 24 24"
         fill="#f1c40f"
         xmlns="http://www.w3.org/2000/svg"
