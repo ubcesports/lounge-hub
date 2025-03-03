@@ -1,4 +1,15 @@
 import React from "react";
+
+interface ToastWithButtonsProps {
+  message: string;
+  buttonColorClassName: string;
+  buttonOneText: string;
+  buttonTwoText: string;
+  buttonOneClick: () => void;
+  buttonTwoClick: () => void;
+  closeToast: () => void;
+}
+
 const ToastWithButtons = ({
   message,
   buttonColorClassName, // ex border-yellow-400  hover:bg-yellow-400
@@ -7,15 +18,7 @@ const ToastWithButtons = ({
   buttonOneClick,
   buttonTwoClick,
   closeToast,
-}: {
-  message: string;
-  buttonColorClassName: string;
-  buttonOneText: string;
-  buttonTwoText: string;
-  buttonOneClick: () => void;
-  buttonTwoClick: () => void;
-  closeToast: () => void;
-}) => (
+}: Partial<ToastWithButtonsProps>) => (
   <div>
     <div className="flex items-center gap-3">
       <svg
