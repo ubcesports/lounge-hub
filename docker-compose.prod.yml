@@ -6,7 +6,7 @@ services:
     environment:
       - TZ=America/Los_Angeles
     env_file:
-      - .env
+      - ./app/.env
     platform: linux/amd64
 
   client:
