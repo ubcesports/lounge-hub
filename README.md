@@ -6,10 +6,8 @@
 
 1. Install docker desktop
 2. Add environment variables
-
-Create a `.env` file in the `/app` directory following the `/app/.env.example` file. Ask your development directors for the values.
-
-> Note: The app will not run correctly unless you have the `.env` file in your `/app` directory.
+   Create a `.env` file in the `/app` directory following the `/app/.env.example` file. Ask your development directors for the values.
+   > Note: The app will not run correctly unless you have the `.env` file in your `/app` directory.
 3. Create another `.env` file in the `/client` directory following the `/client/.env.example`. Ask your development directors for the values.
 4. Run the following in the root directory
 
