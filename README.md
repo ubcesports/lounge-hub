@@ -7,18 +7,18 @@
 1. Install docker desktop
 2. Add environment variables
 
-Create a `.env` file in the `/app` directory following the `.env.example` file. Ask your development directors for the values.
+Create a `.env` file in the `/app` directory following the `/app/.env.example` file. Ask your development directors for the values.
 
 > Note: The app will not run correctly unless you have the `.env` file in your `/app` directory.
-
-3. Run the following in the root directory
+3. Create another `.env` file in the `/client` directory following the `/client/.env.example`. Ask your development directors for the values.
+4. Run the following in the root directory
 
 ```
 docker compose up -d --build
 ```
 
-4. Go to `localhost:3000` to see the app. Changes on the backend and frontend will hot reload.
-5. To stop containers run,
+5. Go to `localhost:3000` to see the app. Changes on the backend and frontend will hot reload.
+6. To stop containers run,
 
 ```
 docker compose down
