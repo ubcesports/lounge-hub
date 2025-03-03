@@ -19,20 +19,12 @@ jobs:
         with:
           node-version: 20.4.0
 
-      - name: Navigate to app directory
-        run: cd client
-      
-      - name: ls
-        run: ls
-
       - name: Build image
         run: |
+          cd client
           docker build -t test --target prod .
-
-      - name: Delete Image
-        run: |
           docker rmi test
-
+          
   build-backend:
     name: Build Backend Docker Image
     runs-on: ubuntu-latest
@@ -46,13 +38,8 @@ jobs:
         with:
           node-version: 20.4.0
 
-      - name: Navigate to app directory
-        run: cd client
-
       - name: Build image
         run: |
+          cd app
           docker build -t test --target prod .
-
-      - name: Delete Image
-        run: |
           docker rmi test
