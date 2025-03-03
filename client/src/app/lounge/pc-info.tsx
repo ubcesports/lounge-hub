@@ -21,7 +21,7 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
 
   const handleSignOutClick = async () => {
     await checkOutGamer(pc.studentNumber, pc.pcNumber, execName);
-    fetchActivities();
+    fetchActivities(1, "");
   };
   const handleExecClick = () => {
     const store = useBoundStore.getState();

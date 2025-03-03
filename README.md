@@ -117,3 +117,28 @@ You can use any database development platform with PostgreSQL but we recommend p
    6. Click `save`
 
 You should now be connected to the database on pgAdmin. If you have any issues, please contact your development directors.
+
+## Local Production Setup
+
+To mimic a production environment locally, switch `nginx/Dockerfile` to the following:
+
+```
+FROM nginx AS prod
+COPY dev-default.conf /etc/nginx/conf.d/default.conf
+```
+
+Then run
+
+```
+docker compose -f "docker-compose.prod.yml" up --build -d
+```
+
+Go to `localhost` to see the app.
+
+To stop the containers, run
+
+```
+docker compose -f "docker-compose.prod.yml" down
+```
+
+Make sure you switch back `nginx/Dockerfile` before merging to main.

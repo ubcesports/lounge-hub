@@ -45,6 +45,10 @@ router.get("/activity/:student_number", async (req, res) => {
  * @apiName GetGamerActivity
  * @apiGroup Activity
  *
+ * @apiParam {Number} page Page number.
+ * @apiParam {Number} limit Limit Number of results per page.
+ * @apiParam {String} search Search query.
+ *
  * @apiSuccess {Object} gamer_activity Gamer activity object.
  * @apiSuccess {String} gamer_activity.student_number Student number, 8 digit integer.
  * @apiSuccess {Number} gamer_activity.pc_number PC number.
@@ -56,18 +60,39 @@ router.get("/activity/:student_number", async (req, res) => {
  * @apiError {String} 500 Server error.
  */
 router.get("/activity/all/recent", async (req, res) => {
+  const { page = 1, limit = 10, search = "" } = req.query;
+  const offset = (page - 1) * limit;
+
   try {
-    const query = `
-        SELECT ${schema}.gamer_activity.*, 
-              ${schema}.gamer_profile.first_name, 
-              ${schema}.gamer_profile.last_name 
-        FROM ${schema}.gamer_activity
-        JOIN ${schema}.gamer_profile 
-        ON ${schema}.gamer_activity.student_number = ${schema}.gamer_profile.student_number
-        ORDER BY ${schema}.gamer_activity.started_at DESC NULLS LAST 
-        LIMIT 20;
-`;
-    const result = await db.query(query);
+    let query = `
+      SELECT ${schema}.gamer_activity.*, 
+             ${schema}.gamer_profile.first_name, 
+             ${schema}.gamer_profile.last_name 
+      FROM ${schema}.gamer_activity
+      JOIN ${schema}.gamer_profile 
+      ON ${schema}.gamer_activity.student_number = ${schema}.gamer_profile.student_number
+    `;
+
+    const queryParams = [limit, offset];
+
+    if (search) {
+      query += `
+        WHERE ${schema}.gamer_activity.student_number % $3
+           OR ${schema}.gamer_profile.first_name % $3
+           OR ${schema}.gamer_profile.last_name % $3
+           OR ${schema}.gamer_activity.game % $3
+           OR ${schema}.gamer_activity.exec_name % $3
+           OR TO_CHAR(${schema}.gamer_activity.started_at, 'YYYY-MM-DD') % $3
+      `;
+      queryParams.push(`%${search}%`);
+    }
+
+    query += `
+      ORDER BY ${schema}.gamer_activity.started_at DESC NULLS LAST 
+      LIMIT $1 OFFSET $2;
+    `;
+
+    const result = await db.query(query, queryParams);
 
     res.json(result.rows);
   } catch (err) {

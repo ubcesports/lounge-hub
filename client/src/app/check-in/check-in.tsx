@@ -11,6 +11,7 @@ import { getGamerProfile } from "../../services/gamer-profile";
 import useBoundStore from "../../store/store";
 import games from "../../../public/games/games.js";
 import { PCStatus } from "../../interfaces/pc";
+import toastNotify from "../toast/toastNotifications";
 
 const CheckIn = () => {
   const [checkInData, setCheckInData] = useState<Activity>({
@@ -53,13 +54,13 @@ const CheckIn = () => {
       !checkInData.game ||
       !checkInData.pcNumber
     ) {
-      alert("Please fill out all fields.");
+      toastNotify.error("Please fill out all fields.");
       return;
     }
     if (
       pcList.pcs.some((pc) => pc.studentNumber === checkInData.studentNumber)
     ) {
-      alert("This student is already checked in.");
+      toastNotify.error("This student is already checked in.");
       return;
     }
     if (
@@ -69,7 +70,7 @@ const CheckIn = () => {
           pc.pcStatus === PCStatus.Exec,
       )
     ) {
-      alert("This PC is occupied by an executive.");
+      toastNotify.error("This PC is occupied by an executive.");
       return;
     }
     if (
@@ -79,24 +80,24 @@ const CheckIn = () => {
           pc.pcStatus === PCStatus.Closed,
       )
     ) {
-      alert("This PC is closed");
+      toastNotify.error("This PC is closed");
       return;
     }
     if (
       pcList.pcs.find((pc) => String(pc.pcNumber) === checkInData.pcNumber)
         .studentNumber
     ) {
-      alert("This PC is already occupied.");
+      toastNotify.error("This PC is already occupied.");
       return;
     }
     if (checkInData.pcNumber === "20") {
-      alert("This is the check in PC.");
+      toastNotify.error("This is the check in PC.");
       return;
     }
     try {
       await checkInGamer(checkInData);
     } catch (error) {
-      alert(error.message);
+      toastNotify.error(error.message);
       return;
     }
     const addedProfile = await getGamerProfile(checkInData.studentNumber);
@@ -109,7 +110,7 @@ const CheckIn = () => {
       notes: addedProfile.notes,
     });
     await fetchPCStatus();
-    fetchActivities();
+    fetchActivities(1, "");
   };
 
   return (
