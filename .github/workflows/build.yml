@@ -24,7 +24,7 @@ jobs:
           cd client
           docker build -t test --target prod .
           docker rmi test
-          
+
   build-backend:
     name: Build Backend Docker Image
     runs-on: ubuntu-latest
