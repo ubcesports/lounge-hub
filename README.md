@@ -127,7 +127,7 @@ FROM nginx AS prod
 COPY dev-default.conf /etc/nginx/conf.d/default.conf
 ```
 
-Then move your existing .env file from `/app` to the root of the project
+Then move your existing .env file from `/app` to the root of the project.
 
 Then run
 
