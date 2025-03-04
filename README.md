@@ -127,6 +127,8 @@ FROM nginx AS prod
 COPY dev-default.conf /etc/nginx/conf.d/default.conf
 ```
 
+Then move your existing .env file from `/app` to the root of the project.
+
 Then run
 
 ```
@@ -141,4 +143,4 @@ To stop the containers, run
 docker compose -f "docker-compose.prod.yml" down
 ```
 
-Make sure you switch back `nginx/Dockerfile` before merging to main.
+Make sure you switch back `nginx/Dockerfile` before merging to main and move your `.env` back to `/app` to run locally.
