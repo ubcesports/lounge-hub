@@ -27,16 +27,23 @@ export const checkInGamer = async (activity: Activity) => {
       "Content-Type": "application/json",
     },
   };
-  const tierOneCheckResponse = await fetch(
-    tierOneCheckurl,
-    tierOneCheckSettings,
-  );
-  const tierOneCheckData = await tierOneCheckResponse.json();
-  if (tierOneCheckData.length > 0) {
-    const continueCheckInProcess = await continueCheckIn();
-    if (!continueCheckInProcess) {
-      throw new Error("Check in cancelled.");
+  try {
+    const tierOneCheckResponse = await fetch(
+      tierOneCheckurl,
+      tierOneCheckSettings,
+    );
+    if (tierOneCheckResponse.status === 404) {
+      await Promise.reject("Student not found.");
     }
+    const tierOneCheckData = await tierOneCheckResponse.json();
+    if (tierOneCheckData.length > 0) {
+      const continueCheckInProcess = await continueCheckIn();
+      if (!continueCheckInProcess) {
+        await Promise.reject("Check in cancelled.");
+      }
+    }
+  } catch (error) {
+    throw new Error(error);
   }
   const url = `/api/activity`;
   const settings = {
@@ -47,13 +54,17 @@ export const checkInGamer = async (activity: Activity) => {
     },
     body: JSON.stringify(activity),
   };
-  const response = await fetch(url, settings);
-  const data = await response.json();
-  if (response.status === 404) {
-    throw new Error("Student not found.");
+  try {
+    const response = await fetch(url, settings);
+    if (response.status === 404) {
+      await Promise.reject("Student not found.");
+    }
+    const data = await response.json();
+    toastNotify.success("User Checked In!");
+    return data;
+  } catch (error) {
+    throw new Error(error);
   }
-  toastNotify.success("User Checked In!");
-  return data;
 };
 
 export const checkOutGamer = async (
