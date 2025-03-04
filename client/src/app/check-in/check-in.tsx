@@ -20,7 +20,8 @@ const CheckIn = () => {
     pcNumber: "",
   });
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [checkInButtonIsDisabled, setCheckInButtonIsDisabled] = useState<boolean>(false);
+  const [checkInButtonIsDisabled, setCheckInButtonIsDisabled] =
+    useState<boolean>(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
