@@ -1,6 +1,7 @@
 import { toast, ToastOptions } from "react-toastify";
 import "./toastStyles.css";
-
+import ToastWithButtons from "./toastWithButtons";
+import React from "react";
 const defaultOptions: ToastOptions = {
   position: "top-right",
   // default time of 5s, however if different time is desired specify autoClose: time in the options inside toastNotify call and that will take precedence
@@ -50,6 +51,35 @@ const toastNotify = {
     }),
   custom: (message: string, options?: ToastOptions) =>
     toast(message, { ...options }),
+  buttonWarning: (
+    message: string,
+    buttonOneText: string,
+    buttonTwoText: string,
+    buttonOneClick,
+    buttonTwoClick,
+    options?: ToastOptions,
+  ) =>
+    toast.warning(
+      <ToastWithButtons
+        message={message}
+        buttonColorClassName="border-yellow-400  hover:bg-yellow-400"
+        buttonOneText={buttonOneText}
+        buttonTwoText={buttonTwoText}
+        buttonOneClick={buttonOneClick}
+        buttonTwoClick={buttonTwoClick}
+      />,
+      {
+        position: "top-right",
+        autoClose: false,
+        icon: false,
+        closeButton: false,
+        style: {
+          backgroundColor: "#E2DC6A",
+          color: "black",
+        },
+        ...options,
+      },
+    ),
 };
 
 export default toastNotify;
