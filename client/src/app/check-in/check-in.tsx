@@ -180,7 +180,7 @@ const CheckIn = () => {
                     key={index}
                     onMouseEnter={() => setSelectedSuggestionIndex(index)}
                     onMouseLeave={() => setSelectedSuggestionIndex(-1)}
-                    className={`cursor-pointer p-2 ${
+                    className={`cursor-pointer p-2 rounded-md ${
                       index === selectedSuggestionIndex
                         ? "bg-blue-500 text-white"
                         : ""
