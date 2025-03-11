@@ -4,6 +4,47 @@ import useBoundStore from "../store/store";
 import toastNotify from "../app/toast/toastNotifications";
 
 export const checkInGamer = async (activity: Activity) => {
+  const continueCheckIn = async (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      toastNotify.buttonWarning(
+        "This tier 1 member has already checked in today. Tier 1 members are only allowed to check in once a day. How would you like to proceed?",
+        "Complete check in",
+        "Cancel check in",
+        () => {
+          resolve(true);
+        },
+        () => {
+          resolve(false);
+        },
+      );
+    });
+  };
+  const tierOneCheckurl = `/api/activity/today/${activity.studentNumber}`;
+  const tierOneCheckSettings = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const tierOneCheckResponse = await fetch(
+      tierOneCheckurl,
+      tierOneCheckSettings,
+    );
+    if (tierOneCheckResponse.status === 404) {
+      await Promise.reject("Student not found.");
+    }
+    const tierOneCheckData = await tierOneCheckResponse.json();
+    if (tierOneCheckData.length > 0) {
+      const continueCheckInProcess = await continueCheckIn();
+      if (!continueCheckInProcess) {
+        await Promise.reject("Check in cancelled.");
+      }
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
   const url = `/api/activity`;
   const settings = {
     method: "POST",
@@ -13,21 +54,17 @@ export const checkInGamer = async (activity: Activity) => {
     },
     body: JSON.stringify(activity),
   };
-  const response = await fetch(url, settings);
-  const data = await response.json();
-  if (response.status === 400) {
-    toastNotify.warning(
-      "This tier 1 member has already signed in today. Tier 1 members should only be able to check in once a day. If you wish to proceed, do nothing. Otherwise, please sign the user out normally.",
-      {
-        autoClose: 15000,
-      },
-    );
-  } else if (response.status === 404) {
-    throw new Error("Student not found.");
-  } else {
+  try {
+    const response = await fetch(url, settings);
+    if (response.status === 404) {
+      await Promise.reject("Student not found.");
+    }
+    const data = await response.json();
     toastNotify.success("User Checked In!");
+    return data;
+  } catch (error) {
+    throw new Error(error);
   }
-  return data;
 };
 
 export const checkOutGamer = async (

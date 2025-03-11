@@ -180,47 +180,91 @@ describe("Activity API", () => {
       });
   });
 
-  // Commented out because we have temporarily changed behavior - we will revisit once we redo the tier 1 check-in logic
-  // it("should throw 400 error if tier 1 member tries to check in more than once a day", (done) => {
-  //   request(app)
-  //     .post("/api/activity")
-  //     .send({
-  //       student_number: "11223344",
-  //       pc_number: 1,
-  //       game: "Valorant",
-  //     })
-  //     .expect(201)
-  //     .end((err, res) => {
-  //       if (err) return done(err);
-  //       expect(res.body).to.have.property("student_number", "11223344");
-  //       expect(res.body).to.have.property("pc_number", 1);
-  //       expect(res.body).to.have.property("game", "Valorant");
+  it("should get no activity from today for tier 1 before signing someone themselves in, and one result after signing themselves in", (done) => {
+    request(app)
+      .get("/api/activity/today/11223344")
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body.length).to.equal(0);
+        request(app)
+          .post("/api/activity")
+          .send({
+            student_number: "11223344",
+            pc_number: 2,
+            game: "Valorant",
+          })
+          .expect(201)
+          .end((err) => {
+            if (err) return done(err);
 
-  //       request(app)
-  //         .patch("/api/activity/update/11223344")
-  //         .send({ exec_name: "John" })
-  //         .expect(201)
-  //         .end((err) => {
-  //           if (err) return done(err);
+            request(app)
+              .patch("/api/activity/update/11223344")
+              .send({ exec_name: "John" })
+              .expect(201)
+              .end((err) => {
+                if (err) return done(err);
 
-  //           request(app)
-  //             .post("/api/activity")
-  //             .send({
-  //               student_number: "11223344",
-  //               pc_number: 2,
-  //               game: "CS:GO",
-  //             })
-  //             .expect(400)
-  //             .end((err, res) => {
-  //               if (err) return done(err);
-  //               expect(res.text).to.equal(
-  //                 "Tier 1 members can only sign in once a day.",
-  //               );
-  //               done();
-  //             });
-  //         });
-  //     });
-  // });
+                request(app)
+                  .get("/api/activity/today/11223344")
+                  .expect(200)
+                  .end((err, res) => {
+                    if (err) return done(err);
+                    expect(res.body).to.have.length(1);
+                    expect(res.body[0]).to.have.property(
+                      "student_number",
+                      "11223344",
+                    );
+                    expect(res.body[0]).to.have.property("pc_number", 2);
+                    expect(res.body[0]).to.have.property("game", "Valorant");
+                    expect(res.body[0])
+                      .to.have.property("ended_at")
+                      .and.not.equal(null);
+                    expect(res.body[0]).to.have.property("exec_name", "John");
+                    done();
+                  });
+              });
+          });
+      });
+  });
+
+  it("should get no activity from today if we have a tier 2 member checking in", (done) => {
+    request(app)
+      .get("/api/activity/today/11223344")
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body.length).to.equal(0);
+        request(app)
+          .post("/api/activity")
+          .send({
+            student_number: "87654321",
+            pc_number: 2,
+            game: "Valorant",
+          })
+          .expect(201)
+          .end((err) => {
+            if (err) return done(err);
+
+            request(app)
+              .patch("/api/activity/update/87654321")
+              .send({ exec_name: "John" })
+              .expect(201)
+              .end((err) => {
+                if (err) return done(err);
+
+                request(app)
+                  .get("/api/activity/today/87654321")
+                  .expect(200)
+                  .end((err, res) => {
+                    if (err) return done(err);
+                    expect(res.body).to.have.length(0);
+                    done();
+                  });
+              });
+          });
+      });
+  });
 
   it("should allow tier 2 member to check in two times a day", (done) => {
     request(app)
