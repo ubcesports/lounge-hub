@@ -10,7 +10,7 @@ import {
 import { getGamerProfile } from "../../services/gamer-profile";
 import useBoundStore from "../../store/store";
 import games from "../../../public/games/games.js";
-import { PCStatus } from "../../interfaces/pc";
+import { PCList, PCStatus } from "../../interfaces/pc";
 import toastNotify from "../toast/toastNotifications";
 
 const CheckIn = () => {
@@ -38,6 +38,44 @@ const CheckIn = () => {
     }
   };
 
+  const validateCheckInData = (checkInData: Activity, pcList: PCList) => {
+    if (
+      !checkInData.studentNumber ||
+      !checkInData.game ||
+      !checkInData.pcNumber
+    ) {
+      return "Please fill out all fields.";
+    }
+    if (
+      Array.from(pcList.pcs.values()).some(
+        (pc) => pc.studentNumber === checkInData.studentNumber,
+      )
+    ) {
+      return "This student is already checked in.";
+    }
+    const pcNumber = Number(checkInData.pcNumber);
+    if (isNaN(pcNumber)) {
+      return "Please enter a valid PC number.";
+    }
+    if (!pcList.pcs.has(pcNumber)) {
+      return `PC number ${pcNumber} does not exist.`;
+    }
+    const pc = pcList.pcs.get(pcNumber);
+    if (pc.pcStatus === PCStatus.Exec) {
+      return "This PC is occupied by an executive.";
+    }
+    if (pc.pcStatus === PCStatus.Closed) {
+      return "This PC is closed.";
+    }
+    if (pc.studentNumber) {
+      return "This PC is already occupied.";
+    }
+    if (pcNumber === 20) {
+      return "This is the check-in PC.";
+    }
+    return null;
+  };
+
   const handleSuggestionClick = (suggestion: string) => {
     setCheckInData({
       ...checkInData,
@@ -50,50 +88,9 @@ const CheckIn = () => {
     e.preventDefault();
     const store = useBoundStore.getState();
     const pcList = store.PCList;
-
-    if (
-      !checkInData.studentNumber ||
-      !checkInData.game ||
-      !checkInData.pcNumber
-    ) {
-      toastNotify.error("Please fill out all fields.");
-      return;
-    }
-    if (
-      pcList.pcs.some((pc) => pc.studentNumber === checkInData.studentNumber)
-    ) {
-      toastNotify.error("This student is already checked in.");
-      return;
-    }
-    if (
-      pcList.pcs.find(
-        (pc) =>
-          String(pc.pcNumber) === checkInData.pcNumber &&
-          pc.pcStatus === PCStatus.Exec,
-      )
-    ) {
-      toastNotify.error("This PC is occupied by an executive.");
-      return;
-    }
-    if (
-      pcList.pcs.find(
-        (pc) =>
-          String(pc.pcNumber) === checkInData.pcNumber &&
-          pc.pcStatus === PCStatus.Closed,
-      )
-    ) {
-      toastNotify.error("This PC is closed");
-      return;
-    }
-    if (
-      pcList.pcs.find((pc) => String(pc.pcNumber) === checkInData.pcNumber)
-        .studentNumber
-    ) {
-      toastNotify.error("This PC is already occupied.");
-      return;
-    }
-    if (checkInData.pcNumber === "20") {
-      toastNotify.error("This is the check in PC.");
+    const errorMessage = validateCheckInData(checkInData, pcList);
+    if (errorMessage) {
+      toastNotify.error(errorMessage);
       return;
     }
     try {

@@ -3,6 +3,7 @@ import { PCStatus } from "../../interfaces/pc";
 import { checkOutGamer, fetchActivities } from "../../services/activity";
 import TextField from "../components/text-field";
 import useBoundStore from "../../store/store";
+import HoverButton from "../components/hoverButton";
 
 interface PCInfoProps {
   pcNumber: number;
@@ -11,9 +12,7 @@ interface PCInfoProps {
 const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
   const maxLength = 30;
   const [execName, setExecName] = useState<string>("");
-  const pc = useBoundStore((state) =>
-    state.PCList.pcs.find((p) => p.pcNumber === pcNumber),
-  );
+  const pc = useBoundStore((state) => state.PCList.pcs.get(pcNumber));
   const pcStatus = pc.pcStatus;
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExecName(e.target.value);
@@ -122,28 +121,18 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
       <div className="flex items-end gap-4 rounded-lg bg-[#20222C] p-4">
         {pcStatus !== PCStatus.Busy && (
           <>
-            <div className="group relative">
-              <button
-                className="h-full rounded border border-[#3A6AAC] p-2 text-white hover:bg-[#3A6AAC] hover:text-white"
-                onClick={handleExecClick}
-              >
-                Executive
-              </button>
-              <div className="absolute bottom-full left-1/2 mb-2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
-                This will mark the PC as being used by an executive.
-              </div>
-            </div>
-            <div className="group relative">
-              <button
-                className="h-full rounded border border-[#E2DC6A] p-2 text-white hover:bg-[#E2DC6A] hover:text-white"
-                onClick={handleClosedClick}
-              >
-                Closed
-              </button>
-              <div className="absolute bottom-full left-1/2 mb-2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
-                This will mark the PC as closed.
-              </div>
-            </div>
+            <HoverButton
+              onClick={handleExecClick}
+              label="Executive"
+              toolTip="This will mark the PC as being used by an executive."
+              className="border-[#3A6AAC] hover:bg-[#3A6AAC]"
+            />
+            <HoverButton
+              onClick={handleClosedClick}
+              label="Closed"
+              toolTip="This will mark the PC as closed."
+              className="border-[#E2DC6A] hover:bg-[#E2DC6A]"
+            />
           </>
         )}
         {/*PC Busy render sign out components*/}
@@ -156,17 +145,12 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
               onChange={handleInputChange}
               className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
             />
-            <div className="group relative">
-              <button
-                className="h-full rounded border border-red-500 p-2 text-white hover:bg-red-500 hover:text-white"
-                onClick={handleSignOutClick}
-              >
-                Close
-              </button>
-              <div className="absolute bottom-full left-1/2 mb-2 mt-2 hidden w-32 -translate-x-1/2 transform rounded bg-gray-100 p-2 text-center text-xs text-black group-hover:block">
-                This sign out will be associated with the provided exec name.
-              </div>
-            </div>
+            <HoverButton
+              onClick={handleSignOutClick}
+              label="Check out"
+              toolTip="This sign out will be associated with the provided exec name."
+              className="border-red-500 hover:bg-red-500"
+            />
           </>
         )}
       </div>
