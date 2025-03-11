@@ -9,7 +9,7 @@ interface TextFieldProps {
   onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
-  textAutoCompleteEnabled?: string; // Whether to disable default browser autocomplete
+  textAutoCompleteEnabled?: string; // Whether to disable default browser autocomplete, either "on" or "off
 }
 const TextField: React.FC<TextFieldProps> = ({
   label,
