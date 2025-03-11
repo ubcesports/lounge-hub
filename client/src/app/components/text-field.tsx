@@ -9,6 +9,7 @@ interface TextFieldProps {
   onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
+  textAutoCompleteEnabled?: string; // Whether to disable default browser autocomplete
 }
 const TextField: React.FC<TextFieldProps> = ({
   label,
@@ -19,6 +20,7 @@ const TextField: React.FC<TextFieldProps> = ({
   onBlur,
   onKeyDown,
   className = "",
+  textAutoCompleteEnabled,
 }) => {
   return (
     <div className="flex flex-col">
@@ -32,6 +34,7 @@ const TextField: React.FC<TextFieldProps> = ({
         onBlur={onBlur}
         onKeyDown={onKeyDown}
         className={`rounded bg-gray-700 p-2 text-white ${className}`} // Merge default and custom classes
+        autoComplete={textAutoCompleteEnabled}
       />
     </div>
   );

@@ -161,6 +161,7 @@ const CheckIn = () => {
           value={checkInData.studentNumber}
           onChange={handleInputChange}
           className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
+          textAutoCompleteEnabled="off"
         />
         <div>
           <TextField
@@ -171,6 +172,7 @@ const CheckIn = () => {
             onBlur={() => setTimeout(() => setSuggestions([]), 100)}
             onKeyDown={handleKeyPress}
             className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
+            textAutoCompleteEnabled="off"
           />
           <div className="relative">
             {suggestions.length > 0 && (
@@ -180,7 +182,7 @@ const CheckIn = () => {
                     key={index}
                     onMouseEnter={() => setSelectedSuggestionIndex(index)}
                     onMouseLeave={() => setSelectedSuggestionIndex(-1)}
-                    className={`cursor-pointer p-2 rounded-md ${
+                    className={`cursor-pointer rounded-md p-2 ${
                       index === selectedSuggestionIndex
                         ? "bg-blue-500 text-white"
                         : ""
@@ -200,6 +202,7 @@ const CheckIn = () => {
           value={checkInData.pcNumber}
           onChange={handleInputChange}
           className="rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
+          textAutoCompleteEnabled="off"
         />
         <Button
           onClick={handleSubmit}
