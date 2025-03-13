@@ -52,6 +52,7 @@ const games = [
   "Warframe",
   "World of Horror",
   "Yu-Gi-Oh DUEL LINKS",
+  "Marvel Rivals",
 ];
 
 export default games;

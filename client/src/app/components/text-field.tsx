@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, KeyboardEvent } from "react";
 
 interface TextFieldProps {
   label: string;
@@ -7,7 +7,9 @@ interface TextFieldProps {
   type?: "text" | "password" | "email" | "number" | "date" | "time" | "search";
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
+  textAutoCompleteEnabled?: string; // Whether to disable default browser autocomplete, either "on" or "off
 }
 const TextField: React.FC<TextFieldProps> = ({
   label,
@@ -16,7 +18,9 @@ const TextField: React.FC<TextFieldProps> = ({
   type,
   onChange,
   onBlur,
+  onKeyDown,
   className = "",
+  textAutoCompleteEnabled,
 }) => {
   return (
     <div className="flex flex-col">
@@ -28,7 +32,9 @@ const TextField: React.FC<TextFieldProps> = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
+        onKeyDown={onKeyDown}
         className={`rounded bg-gray-700 p-2 text-white ${className}`} // Merge default and custom classes
+        autoComplete={textAutoCompleteEnabled}
       />
     </div>
   );
