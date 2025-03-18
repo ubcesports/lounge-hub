@@ -73,7 +73,9 @@ const CheckIn = () => {
     }
     if (
       Array.from(pcList.pcs.values()).some(
-        (pc) => pc.studentNumber === checkInData.studentNumber && checkInData.studentNumber != "11111111",
+        (pc) =>
+          pc.studentNumber === checkInData.studentNumber &&
+          checkInData.studentNumber != "11111111",
       )
     ) {
       return "This student is already checked in.";

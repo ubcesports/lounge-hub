@@ -220,7 +220,12 @@ router.patch("/activity/update/:student_number", async (req, res) => {
                    RETURNING *`;
 
   try {
-    const result = await db.query(query, [ended_at, student_number, pc_number, exec_name]);
+    const result = await db.query(query, [
+      ended_at,
+      student_number,
+      pc_number,
+      exec_name,
+    ]);
     if (result.rows.length === 0) {
       return res.status(404).send("Student not active.");
     }
