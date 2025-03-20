@@ -87,7 +87,7 @@ export const checkOutGamer = async (
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ execName }),
+    body: JSON.stringify({ pc_number: pcNumber, exec_name: execName }),
   };
 
   try {
