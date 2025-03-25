@@ -7,7 +7,11 @@ interface PCStationProps {
   onClick: (pc: PC, timeRemaining: string, pcStatus: PCStatus) => void;
 }
 
-const PCStation: React.FC<PCStationProps> = ({ pc, pcStatus, onClick }) => {
+const PCStation: React.FC<PCStationProps> = ({
+  pc,
+  pcStatus,
+  onClick,
+}) => {
   const [timeRemaining, setTimeRemaining] = useState<string>("");
 
   const calculateTimeRemaining = (
