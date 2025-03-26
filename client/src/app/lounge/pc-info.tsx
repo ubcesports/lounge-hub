@@ -76,13 +76,13 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
     const hours = Math.floor(timeDiff / (1000 * 60 * 60));
     const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
 
-    const formattedHours = hours.toString();
-    const formattedMinutes = minutes.toString().padStart(2, "0");
+    const formattedHours = Math.abs(hours).toString();
+    const formattedMinutes = Math.abs(minutes).toString().padStart(2, "0");
 
     const timeLeft =
       timeDiff >= 0
         ? `${formattedHours}h ${formattedMinutes}m left`
-        : "Time up";
+        : `Time exceeded ${formattedHours}h ${formattedMinutes}m`;
 
     return `Started ${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")} \u00B7 ${game} \u00B7 ${timeLeft}`;
   };
@@ -107,7 +107,7 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
           </p>
           <p className="text-1xl mb-1 ml-2 max-w-xs truncate text-[#62667B]">
             {pcStatus === PCStatus.Busy
-              ? `- ${truncateName(pc.firstName, pc.lastName, pc.studentNumber, maxLength)}`
+              ? `- ${truncateName(pc.firstName, pc.lastName, pc.studentNumber, maxLength)} - Tier ${pc.membershipTier}`
               : ""}
           </p>
         </div>
