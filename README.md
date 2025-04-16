@@ -1,6 +1,6 @@
 # UBC Esports Association (UBCEA) Lounge Hub
 
-## Dev Environment
+## Dev Environment and Setup Instructions
 
 ### Docker Compose (recommended)
 
