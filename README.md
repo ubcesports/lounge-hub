@@ -1,4 +1,4 @@
-# UBCEA Lounge Hub
+# UBC Esports Association (UBCEA) Lounge Hub
 
 ## Dev Environment
 
