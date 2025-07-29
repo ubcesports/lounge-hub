@@ -73,7 +73,7 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
     }
 
     const timeDiff = endTime.getTime() - currentTime.getTime();
-    
+
     if (timeDiff >= 0) {
       const hours = Math.floor(timeDiff / (1000 * 60 * 60));
       const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
@@ -83,11 +83,12 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
 
       const timeLeft = `${formattedHours}h ${formattedMinutes}m left`;
       return `Started ${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")} \u00B7 ${game} \u00B7 ${timeLeft}`;
-
     } else {
       const exceededTime = currentTime.getTime() - endTime.getTime();
       const hours = Math.floor(exceededTime / (1000 * 60 * 60));
-      const minutes = Math.floor((exceededTime % (1000 * 60 * 60)) / (1000 * 60));
+      const minutes = Math.floor(
+        (exceededTime % (1000 * 60 * 60)) / (1000 * 60),
+      );
 
       const formattedHours = hours.toString();
       const formattedMinutes = minutes.toString().padStart(2, "0");
