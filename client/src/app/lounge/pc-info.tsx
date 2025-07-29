@@ -73,18 +73,28 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
     }
 
     const timeDiff = endTime.getTime() - currentTime.getTime();
-    const hours = Math.floor(timeDiff / (1000 * 60 * 60));
-    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    
+    if (timeDiff >= 0) {
+      const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
 
-    const formattedHours = Math.abs(hours).toString();
-    const formattedMinutes = Math.abs(minutes).toString().padStart(2, "0");
+      const formattedHours = hours.toString();
+      const formattedMinutes = minutes.toString().padStart(2, "0");
 
-    const timeLeft =
-      timeDiff >= 0
-        ? `${formattedHours}h ${formattedMinutes}m left`
-        : `Time exceeded ${formattedHours}h ${formattedMinutes}m`;
+      const timeLeft = `${formattedHours}h ${formattedMinutes}m left`;
+      return `Started ${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")} \u00B7 ${game} \u00B7 ${timeLeft}`;
 
-    return `Started ${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")} \u00B7 ${game} \u00B7 ${timeLeft}`;
+    } else {
+      const exceededTime = currentTime.getTime() - endTime.getTime();
+      const hours = Math.floor(exceededTime / (1000 * 60 * 60));
+      const minutes = Math.floor((exceededTime % (1000 * 60 * 60)) / (1000 * 60));
+
+      const formattedHours = hours.toString();
+      const formattedMinutes = minutes.toString().padStart(2, "0");
+
+      const timeLeft = `Time exceeded ${formattedHours}h ${formattedMinutes}m`;
+      return `Started ${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")} \u00B7 ${game} \u00B7 ${timeLeft}`;
+    }
   };
 
   return (
