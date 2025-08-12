@@ -1,5 +1,7 @@
 # UBC Esports Association - Software Development Portfolio
 
+Hello! This is the lounge portal project for our UBC Esports Development team. This README.md covers the tech stack, key decision designs, the project's impact, and what we learned throughout the process.
+
 ## :gear: Key Technologies
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://github.com/ubcesports/lounge-hub)
 [![Go](https://img.shields.io/badge/Go-00ADD8?style=flat-square&logo=go&logoColor=white)](https://github.com/ubcesports/lounge-portal)
