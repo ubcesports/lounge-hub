@@ -33,7 +33,7 @@ With this project, we...
 
 Our design approach focused on creating an intuitive, modular interface that prioritizes usability for our team. Taking inspiration from the Tesla Model 3's clean, functional UI, we developed a system where each section controls distinct functionality while maintaining visual cohesion.
 
-<img src="./assets/ui.gif" alt="UBC Esports Lounge App Demo" width="600" />
+<img src="./assets/ui.gif" alt="UBC Esports Lounge App Demo" width="800" />
 
 ### **Design Principles**
 - **Modular Interface**: Each UI section has clear, distinct functionality - just like the Tesla Model 3's segmented control areas
