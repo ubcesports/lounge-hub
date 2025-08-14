@@ -1,4 +1,5 @@
 # UBC Esports Association - Software Development Portfolio
+![UBC Esports Lounge](./assets/lounge-banner.png)
 
 Hello! This is the lounge portal project for our UBC Esports Development team. This README.md covers the tech stack, key decision designs, the project's impact, and what we learned throughout the process.
 
