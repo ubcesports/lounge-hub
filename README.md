@@ -2,7 +2,6 @@
 
 <img src="./assets/ubc-esports-logo.webp" alt="UBC Esports Lounge" width="150" />
 <br>
-<br>
 Hello! This is the lounge portal project for our UBC Esports Development team. This README.md covers the tech stack, key decision designs, the project's impact, and what we learned throughout the process.
 
 ## :gear: Key Technologies
