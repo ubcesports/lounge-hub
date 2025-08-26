@@ -177,17 +177,23 @@ router.post("/activity", async (req, res) => {
   `;
 
   try {
-    const membershipResult = await db.query(membershipCheckQuery, [student_number]);
-    
+    const membershipResult = await db.query(membershipCheckQuery, [
+      student_number,
+    ]);
+
     if (membershipResult.rows.length === 0) {
       return res.status(404).send(`Student ${student_number} not found.`);
     }
 
     const { membership_expiry_date } = membershipResult.rows[0];
-    const today = moment().tz("America/Los_Angeles").startOf('day');
-    const expiryDate = moment(membership_expiry_date).startOf('day');
+    const today = moment().tz("America/Los_Angeles").startOf("day");
+    const expiryDate = moment(membership_expiry_date).startOf("day");
     if (today.isAfter(expiryDate)) {
-      return res.status(403).send(`Membership expired on ${expiryDate.format('YYYY-MM-DD')}. Please ask the user to purchase a new membership. If the member has already purchased a new membership for this year please verify via Showpass then  create a new profile for them.`);
+      return res
+        .status(403)
+        .send(
+          `Membership expired on ${expiryDate.format("YYYY-MM-DD")}. Please ask the user to purchase a new membership. If the member has already purchased a new membership for this year please verify via Showpass then  create a new profile for them.`,
+        );
     }
 
     const query = `INSERT INTO ${schema}.gamer_activity 

@@ -80,17 +80,17 @@ router.post("/gamer", async (req, res) => {
   const getNextMayFirst = () => {
     const now = moment().tz("America/Los_Angeles");
     let year = now.year();
-    
+
     // If we're past May 1st of this year, set to next year
     if (now.month() >= 4) {
       year++;
     }
-    return moment.tz(`${year}-05-01`, "America/Los_Angeles").format("YYYY-MM-DD");
+    return moment
+      .tz(`${year}-05-01`, "America/Los_Angeles")
+      .format("YYYY-MM-DD");
   };
 
-
   let membership_expiry_date = getNextMayFirst();
-
 
   const query = `INSERT INTO ${schema}.gamer_profile 
         (first_name, last_name, student_number, membership_tier, banned, notes, created_at, membership_expiry_date) 
