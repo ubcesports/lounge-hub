@@ -40,7 +40,13 @@ export default function StudentInfo() {
             </div>
             <div>
               <h3 className="text-[#DEE7EC]">Membership Expiry Date</h3>
-              <p className="text-[#62667B]">{gamer.membershipExpiryDate ? new Date(gamer.membershipExpiryDate).toLocaleDateString('en-US') : 'N/A'}</p>
+              <p className="text-[#62667B]">
+                {gamer.membershipExpiryDate
+                  ? new Date(gamer.membershipExpiryDate).toLocaleDateString(
+                      "en-US",
+                    )
+                  : "N/A"}
+              </p>
             </div>
           </div>
           <div>
