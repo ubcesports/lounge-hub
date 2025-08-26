@@ -4,4 +4,5 @@ export interface GamerProfile {
   lastName: string;
   membershipTier: number;
   notes: string;
+  membershipExpiryDate?: string
 }

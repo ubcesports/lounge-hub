@@ -126,6 +126,9 @@ const CheckIn = () => {
     } catch (error) {
       if (error.message === "Check in cancelled.") {
         toastNotify.info(error.message);
+      } else if (error.message.toLowerCase().includes("expired")) {
+        // For expired membership errors, show a longer-lasting toast
+        toastNotify.error(error.message, { autoClose: 15000 }); // 10 seconds
       } else {
         toastNotify.error(error.message);
       }
