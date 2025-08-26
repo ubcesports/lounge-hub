@@ -16,7 +16,7 @@ const LoungeMap: React.FC<LoungeMapProps> = ({ onPCClick }) => {
 
   return (
     <div
-      className="grid max-h-[700px] max-w-[370px] grid-cols-5 grid-rows-8 gap-4"
+      className="grid-rows-8 grid max-h-[700px] max-w-[370px] grid-cols-5 gap-4"
       style={{ margin: "auto" }}
     >
       {Array.from(pcList.pcs.values()).map((pc, index) => {
