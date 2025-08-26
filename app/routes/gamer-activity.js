@@ -5,8 +5,6 @@ import { schema } from "../config.js";
 
 const router = express.Router();
 
-const FK_VIOLATION = "23503";
-
 /**
  * @api {get} /activity/:student_number Get Gamer Activity for specific student
  * @apiName GetGamerActivityByStudent
