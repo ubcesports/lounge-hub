@@ -180,7 +180,7 @@ router.post("/activity", async (req, res) => {
     ]);
 
     if (membershipResult.rows.length === 0) {
-      return res.status(404).send(`Student ${student_number} not found.`);
+      return res.status(404).send(`Foreign key ${student_number} not found.`);
     }
 
     const { membership_expiry_date } = membershipResult.rows[0];
