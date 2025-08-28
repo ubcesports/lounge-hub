@@ -66,6 +66,18 @@ router.get("/gamer/:student_number", async (req, res) => {
  * @apiError {String} 500 Server error.
  */
 
+function getNextMayFirst() {
+  const now = moment().tz("America/Los_Angeles");
+  let year = now.year();
+  // If we're past May 1st of this year, set to next year
+  if (now.month() >= 4) {
+    year++;
+  }
+  return moment
+      .tz(`${year}-05-01`, "America/Los_Angeles")
+      .format("YYYY-MM-DD");
+}
+
 router.post("/gamer", async (req, res) => {
   const {
     first_name,
@@ -77,18 +89,6 @@ router.post("/gamer", async (req, res) => {
   } = req.body;
   const created_at = moment().tz("America/Los_Angeles").format("YYYY-MM-DD");
 
-  const getNextMayFirst = () => {
-    const now = moment().tz("America/Los_Angeles");
-    let year = now.year();
-
-    // If we're past May 1st of this year, set to next year
-    if (now.month() >= 4) {
-      year++;
-    }
-    return moment
-      .tz(`${year}-05-01`, "America/Los_Angeles")
-      .format("YYYY-MM-DD");
-  };
 
   let membership_expiry_date = getNextMayFirst();
 

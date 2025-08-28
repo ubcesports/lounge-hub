@@ -190,7 +190,7 @@ router.post("/activity", async (req, res) => {
       return res
         .status(403)
         .send(
-          `Membership expired on ${expiryDate.format("YYYY-MM-DD")}. Please ask the user to purchase a new membership. If the member has already purchased a new membership for this year please verify via Showpass then  create a new profile for them.`,
+          `Membership expired on ${expiryDate.format("YYYY-MM-DD")}. Please ask the user to purchase a new membership. If the member has already purchased a new membership for this year please verify via Showpass then create a new profile for them.`,
         );
     }
 
