@@ -59,6 +59,10 @@ export const checkInGamer = async (activity: Activity) => {
     if (response.status === 404) {
       await Promise.reject("Student not found.");
     }
+    if (response.status === 403) {
+      const responseText = await response.text();
+      await Promise.reject(responseText);
+    }
     const data = await response.json();
     toastNotify.success("User Checked In!");
     return data;

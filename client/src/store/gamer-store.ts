@@ -13,6 +13,7 @@ export const initialGamerState: GamerProfile = {
   lastName: "",
   membershipTier: 0,
   notes: "",
+  membershipExpiryDate: "",
 };
 
 export const createGamerProfileSlice: StateCreator<GamerProfileSlice> = (

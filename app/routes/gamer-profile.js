@@ -62,9 +62,20 @@ router.get("/gamer/:student_number", async (req, res) => {
  * @apiSuccess {Boolean} gamer_profile.banned Whether the gamer is banned.
  * @apiSuccess {String} gamer_profile.notes Additional notes.
  * @apiSuccess {String} gamer_profile.created_at Date when the profile was created.
- *
+ * @apiSuccess {String} gamer_profile.membership_expiry_date Date when the membership expires.
  * @apiError {String} 500 Server error.
  */
+
+function getNextMayFirst() {
+  const now = moment().tz("America/Los_Angeles");
+  let year = now.year();
+  // If we're past May 1st of this year, set to next year
+  if (now.month() >= 4) {
+    year++;
+  }
+  return moment.tz(`${year}-05-01`, "America/Los_Angeles").format("YYYY-MM-DD");
+}
+
 router.post("/gamer", async (req, res) => {
   const {
     first_name,
@@ -76,9 +87,11 @@ router.post("/gamer", async (req, res) => {
   } = req.body;
   const created_at = moment().tz("America/Los_Angeles").format("YYYY-MM-DD");
 
+  let membership_expiry_date = getNextMayFirst();
+
   const query = `INSERT INTO ${schema}.gamer_profile 
-        (first_name, last_name, student_number, membership_tier, banned, notes, created_at) 
-        VALUES ($1, $2, $3, $4, $5, $6, $7) 
+        (first_name, last_name, student_number, membership_tier, banned, notes, created_at, membership_expiry_date) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
         ON CONFLICT (student_number) 
         DO UPDATE SET 
           first_name = EXCLUDED.first_name,
@@ -86,7 +99,8 @@ router.post("/gamer", async (req, res) => {
           membership_tier = EXCLUDED.membership_tier,
           banned = EXCLUDED.banned,
           notes = EXCLUDED.notes,
-          created_at = EXCLUDED.created_at
+          created_at = EXCLUDED.created_at,
+          membership_expiry_date = $8
         RETURNING *`;
 
   try {
@@ -98,6 +112,7 @@ router.post("/gamer", async (req, res) => {
       banned,
       notes,
       created_at,
+      membership_expiry_date,
     ]);
     res.status(201).send(result.rows[0]);
   } catch (err) {

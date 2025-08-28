@@ -126,6 +126,9 @@ const CheckIn = () => {
     } catch (error) {
       if (error.message === "Check in cancelled.") {
         toastNotify.info(error.message);
+      } else if (error.message.toLowerCase().includes("expired")) {
+        // For expired membership errors, show a longer-lasting toast
+        toastNotify.error(error.message, { autoClose: 15000 });
       } else {
         toastNotify.error(error.message);
       }
@@ -141,6 +144,7 @@ const CheckIn = () => {
       lastName: addedProfile.last_name,
       membershipTier: addedProfile.membership_tier,
       notes: addedProfile.notes,
+      membershipExpiryDate: addedProfile.membership_expiry_date,
     });
     setCheckInData({
       studentNumber: "",

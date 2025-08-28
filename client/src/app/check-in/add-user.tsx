@@ -13,6 +13,7 @@ const AddUser = () => {
     lastName: "",
     membershipTier: 1,
     notes: "",
+    membershipExpiryDate: "",
   });
 
   const submitData = async (data: GamerProfile) => {
