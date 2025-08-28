@@ -73,9 +73,7 @@ function getNextMayFirst() {
   if (now.month() >= 4) {
     year++;
   }
-  return moment
-      .tz(`${year}-05-01`, "America/Los_Angeles")
-      .format("YYYY-MM-DD");
+  return moment.tz(`${year}-05-01`, "America/Los_Angeles").format("YYYY-MM-DD");
 }
 
 router.post("/gamer", async (req, res) => {
@@ -88,7 +86,6 @@ router.post("/gamer", async (req, res) => {
     notes,
   } = req.body;
   const created_at = moment().tz("America/Los_Angeles").format("YYYY-MM-DD");
-
 
   let membership_expiry_date = getNextMayFirst();
 
