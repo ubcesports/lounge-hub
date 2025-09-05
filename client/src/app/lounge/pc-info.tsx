@@ -4,7 +4,10 @@ import { checkOutGamer, fetchActivities } from "../../services/activity";
 import TextField from "../components/text-field";
 import useBoundStore from "../../store/store";
 import HoverButton from "../components/hoverButton";
-import { calculateHoursAndMinutes, formatTimeString } from "../../utils/timeUtils";
+import {
+  calculateHoursAndMinutes,
+  formatTimeString,
+} from "../../utils/timeUtils";
 
 interface PCInfoProps {
   pcNumber: number;
