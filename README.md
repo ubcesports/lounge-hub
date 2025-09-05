@@ -1,146 +1,152 @@
-# UBCEA Lounge Hub
+# UBC Esports Association - Software Development Portfolio
 
-## Dev Environment
+<img src="./assets/ubc-esports-logo.webp" alt="UBC Esports Lounge" width="150" />
 
-### Docker Compose (recommended)
+Hello! This is the lounge portal project for our UBC Esports Development team. This README.md covers the tech stack, key decision designs, the project's impact, and what we learned throughout the process.
 
-1. Install docker desktop
-2. Add environment variables
+## :gear: Key Technologies
 
-Create a `.env` file in the `/app` directory following the `.env.example` file. Ask your development directors for the values.
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://github.com/ubcesports/lounge-hub)
+[![Go](https://img.shields.io/badge/Go-00ADD8?style=flat-square&logo=go&logoColor=white)](https://github.com/ubcesports/lounge-portal)
+[![Rust](https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white)](https://github.com/ubcesports/sched)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)]()
+[![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazon-aws&logoColor=white)]()
 
-> Note: The app will not run correctly unless you have the `.env` file in your `/app` directory.
+## 🏆 Impact & Results
 
-3. Run the following in the root directory
+With this project, we...
 
-```
-docker compose up -d --build
-```
+- **reduced sign-in time by 90%** by overhauling a manual Google Sheets process
+- **built a fully automated** CI/CD pipeline with zero-downtime deployments
+- focused on the details by establishing **production-grade** infrastructure enhancing developer experience
+- developed in a **multi-language** ecosystem to become better developers!
+- won the award for **UBCEA's Best Internal Department**
 
-4. Go to `localhost:3000` to see the app. Changes on the backend and frontend will hot reload.
-5. To stop containers run,
+<!-- ### Key Applications
 
-```
-docker compose down
-```
+| Repository | Technology | Purpose | Impact |
+|------------|------------|---------|---------|
+| **[lounge-hub](https://github.com/ubcesports/lounge-hub)** | TypeScript | Primary gaming lounge management application | 90% faster check-ins |
+| **[lounge-portal](https://github.com/ubcesports/lounge-portal)** | Go | Member-facing portal for lounge information | Enhanced user experience |
+| **[sched](https://github.com/ubcesports/sched)** | Rust | Executive shift scheduling system | Automated workforce management |
+| **[echo-base](https://github.com/ubcesports/echo-base)** | Backend API | Core backend services | Centralized data management | -->
 
-### Local Machine
+## 🎨 Design Philosophy
 
-If you wish to run the app on your local machine instead, please follow these instructions.
+Our design approach focused on creating an intuitive, modular interface that prioritizes usability for our team. Taking inspiration from the Tesla Model 3's clean, functional UI, we developed a system where each section controls distinct functionality while maintaining visual cohesion.
 
-Install node version `20.4.0`
+<img src="./assets/ui.gif" alt="UBC Esports Lounge App Demo" width="800" />
 
-Verify node installation by running `node -v` and `npm -v`
+### **Design Principles**
 
-### Install Dependencies and Running Services
+- **Modular Interface**: Each UI section has clear, distinct functionality - just like the Tesla Model 3's segmented control areas
+- **Intuitive Navigation**: Self-explanatory layout that requires minimal onboarding for new executives
+- **Keyboard-First**: Full keyboard navigation support for power users and accessibility
+- **Functional Aesthetics**: Clean, distraction-free design that enhances workflow efficiency
 
-The lounge-hub repo is a mono repo separated into two parts:
+### **Tesla Model 3 Inspiration**
 
-- app: express API backend
-- client: next.js React frontend
-  You'll need to install two separate node modules to get all the dependencies and run two seperate servers for the backend and the frontend.
+We drew heavily from Tesla's approach to dashboard design, where every element serves a purpose and complex functionality is organized into digestible, modular sections.
 
-#### Backend
+<img src="./assets/inspo.webp" alt="Tesla Model 3 UI Inspiration" width="500" />
 
-To install backend dependencies, in the root directory, run
+### **Key Design Decisions**
 
-```
-cd app
-npm install
-```
+- **Consistent Visual Language**: Unified color scheme and typography across all modules
+- **Consistent, Scalable Map**: The interactive desk map is the core of our app, and reflects the real layout in our lounge
+- **Progressive Disclosure**: Advanced features are accessible but don't clutter the primary interface
+- **User-Centric Flow**: Designed based on actual executive workflows and pain points from the previous manual system
 
-#### Frontend
+## 🛠 Technical Architecture
 
-To install frontend dependencies, in the root directory, run:
+Below are languages, components, design decisions, and infrastructure we've set up for our project.
 
-```
-cd client
-npm install
-```
+### Tech Stack
 
-#### Root
+- **Frontend**: TypeScript, React, containerized development environment
+- **Backend**: Node.js, PostgreSQL, RESTful API architecture
+- **Infrastructure**: Docker, Nginx reverse proxy, AWS EC2
+- **Additional Services (outside lounge-hub)**: Go microservices, Rust scheduling system
 
-You'll also need to install node module dependencies in the root directory for development and deployment dependencies. Run `npm install` in the root directory.
+### DevOps & CI/CD Pipeline
 
-### Run the app
+Our custom-built CI/CD pipeline demonstrates enterprise-level engineering practices. For more information, [we wrote this article](https://medium.com/@jadenhums51/building-a-custom-ci-cd-pipeline-from-scratch-for-a-university-gaming-club-083b57b4ea9c)!
 
-In the root directory run
+### **Automated Testing & Quality Assurance**
 
-```
-./start.sh
-```
+- **Unit Testing**: Mocha and Jest test suites with mandatory PR validation
+- **Code Quality**: ESLint integration with blocking requirements
+- **Environment Consistency**: Docker containerization across development and production
 
-View `start.sh` to see the separate commands that are run if you wish to run the backend and frontend separately.
+### **Deployment Infrastructure**
 
-### Tests
+- **Cloud Hosting**: AWS EC2 with automated image management via ECR
+- **Reverse Proxy**: Nginx configuration for HTTPS and request routing
+- **Security**: Let's Encrypt SSL certificates with automatic renewal
+- **Monitoring**: AWS Systems Manager for deployment status tracking
 
-The tests are separated by backend, frontend and integration tests.
+### **Release Process**
 
-Run backend tests by running `cd app` and then `npm test`.
-
-### Linting
-
-The repo uses the Prettier formatter. Run prettier locally by running `npm run format` in the root directory.
-
-## Local Database Setup
-
-The lounge hub uses a PostgreSQL database hosted on a AWS EC2 instance. You can login into the AWS account using dev@ubcesports.ca. The password for AWS is saved in the google password manager. If you need access to the gmail of dev@ubcesports.ca, please contact your development directors.
-
-### Navigating to the AWS EC2 instance
-
-1. Login to AWS and search for EC2.
-2. Go to `Instances` and click on the `ubcea-1` instance. You should be able to see all the information for the instance here.
-3. [See below](#logging-into-the-database-locally) for how to connect to the instance locally.
-
-### Logging into the database locally
-
-The EC2 instance uses SSH to connect to your local machine.
-
-1. Ask your development directors for the `augmnt.pem` file.
-   > [IMPORTANT]: Do NOT share this file with anyone.
-2. Move the downloaded `augmnt.pem` to a secure folder. This file is usually placed under your users `.ssh` folder found under `/Users/<USER>/.ssh/`.
-3. Run `ssh -i "<path to your augmnt.pem>" ubuntu@ec2-54-245-134-32.us-west-2.compute.amazonaws.com`
-4. You can now login to the database using `sudo -u postgres psql`
-
-#### pgAdmin 4
-
-You can use any database development platform with PostgreSQL but we recommend pgAdmin. Here is a quick guide on how to connect to [pgAdmin](https://www.pgadmin.org/).
-
-1. Open pgAdmin and click "Add New Server"
-2. Add a server name (this can be anything)
-3. Click on the connection tab and enter:
-   1. Host name: `54.245.134.32` - this is the EC2 instance public IP address.
-   2. Post: `5432` - this is the port to connect to postgre
-   3. Maintenance db: `loungehub`
-   4. Username: `admin`
-   5. Password: contact your development directors for the password
-   6. Click `save`
-
-You should now be connected to the database on pgAdmin. If you have any issues, please contact your development directors.
-
-## Local Production Setup
-
-To mimic a production environment locally, switch `nginx/Dockerfile` to the following:
-
-```
-FROM nginx AS prod
-COPY dev-default.conf /etc/nginx/conf.d/default.conf
+```mermaid
+graph LR
+    A[Pull Request] --> B[Automated Tests]
+    B --> C[Code Review]
+    C --> D[Merge to Main]
+    D --> E[Docker Build]
+    E --> F[ECR Push]
+    F --> G[EC2 Deployment]
+    G --> H[Live Production]
 ```
 
-Then move your existing .env file from `/app` to the root of the project.
+**Deployment Speed**: ~90 seconds from merge to production
 
-Then run
+## 💼 Professional Highlights
 
-```
-docker compose -f "docker-compose.prod.yml" up --build -d
-```
+Alongside how we've grown technically, we've developed several soft skills working together in a software development team.
 
-Go to `localhost` to see the app.
+<!-- ### **Enterprise-Grade Practices**
+- **Microservices Architecture**: We're exploring multi-language services with clear separation of concerns
+- **Infrastructure as Code**: Dockerized environments with production parity
+- **Automated Quality Gates**: Comprehensive testing and linting requirements
+- **Zero-Downtime Deployments**: Rolling updates with health checks -->
 
-To stop the containers, run
+### **Technical Leadership**
 
-```
-docker compose -f "docker-compose.prod.yml" down
-```
+- **Cross-Functional Collaboration**: Led software development team while actively supporting club operations, socials, and events
+- **Stakeholder Management**: Delivered measurable improvements to executive workflows
+- **Documentation**: Comprehensive technical documentation and knowledge sharing
 
-Make sure you switch back `nginx/Dockerfile` before merging to main and move your `.env` back to `/app` to run locally.
+### **Innovation & Problem Solving**
+
+- **Custom Solutions**: Built tailored CI/CD pipeline instead of using off-the-shelf tools, diverting budget towards providing quality events
+- **Performance Optimization**: Achieved 90% performance improvement in core user flows
+- **Scalability**: Designed systems to handle growing university gaming community
+
+## 🔧 Development Experience
+
+### Local Development Setup
+
+View [`setup/setup.md`](/setup/setup.md) for further instructions on how to set up the project!
+
+### Production Architecture
+
+- **Containerized Deployment**: Docker Compose orchestration
+- **Load Balancing**: Nginx reverse proxy with SSL termination
+- **Database**: PostgreSQL with persistent storage
+- **Monitoring**: AWS CloudWatch integration
+
+## 📊 Technical Achievements
+
+For our team, we're all UBC students looking to grow, build our technical toolkit, and build value with tech! Here's a snapshot of what we've learned through building this app:
+
+- **Multi-Language Proficiency**: We successfully deployed our TypeScript app, and working on a new app with Go
+- **Cloud Infrastructure**: We gained hands-on AWS experience with EC2, ECR, and Systems Manager
+- **DevOps Automation**: We banded together to create a custom CI/CD pipeline reducing deployment friction
+- **Security Implementation**: We learned about security practices like HTTPS, SSL certificates, and API Authentication
+
+## 🔗 Connect & Learn More
+
+- **Live Application**: [ubcea-lounge.ca](https://ubcea-lounge.ca) (a client-facing page is in the works!)
+- **Technical Deep Dive**: [Building a Custom CI/CD Pipeline](https://medium.com/@jadenhums51/building-a-custom-ci-cd-pipeline-from-scratch-for-a-university-gaming-club-083b57b4ea9c)
+- **GitHub Organization**: [@ubcesports](https://github.com/ubcesports)
+- **UBCEA Website**: [ubcesports.ca](https://www.ubcesports.ca/)

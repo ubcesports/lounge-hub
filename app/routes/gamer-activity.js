@@ -5,8 +5,6 @@ import { schema } from "../config.js";
 
 const router = express.Router();
 
-const FK_VIOLATION = "23503";
-
 /**
  * @api {get} /activity/:student_number Get Gamer Activity for specific student
  * @apiName GetGamerActivityByStudent
@@ -161,18 +159,46 @@ router.get("/activity/all/recent", async (req, res) => {
  *
  * @apiError {String} 500 Server error.
  * @apiError {String} 404 Foreign key not found.
+ * @apiError {String} 403 Membership expired.
  */
+
 router.post("/activity", async (req, res) => {
   const { student_number, pc_number, game } = req.body;
   const started_at = moment()
     .tz("America/Los_Angeles")
     .format("YYYY-MM-DD HH:mm");
-  const query = `INSERT INTO ${schema}.gamer_activity 
-        (student_number, pc_number, game, started_at) 
-        VALUES ($1, $2, $3, $4) 
-        RETURNING *`;
+
+  const membershipCheckQuery = `
+    SELECT membership_expiry_date, membership_tier 
+    FROM ${schema}.gamer_profile 
+    WHERE student_number = $1
+  `;
 
   try {
+    const membershipResult = await db.query(membershipCheckQuery, [
+      student_number,
+    ]);
+
+    if (membershipResult.rows.length === 0) {
+      return res.status(404).send(`Foreign key ${student_number} not found.`);
+    }
+
+    const { membership_expiry_date } = membershipResult.rows[0];
+    const today = moment().tz("America/Los_Angeles").startOf("day");
+    const expiryDate = moment(membership_expiry_date).startOf("day");
+    if (today.isAfter(expiryDate)) {
+      return res
+        .status(403)
+        .send(
+          `Membership expired on ${expiryDate.format("YYYY-MM-DD")}. Please ask the user to purchase a new membership. If the member has already purchased a new membership for this year please verify via Showpass then create a new profile for them.`,
+        );
+    }
+
+    const query = `INSERT INTO ${schema}.gamer_activity 
+          (student_number, pc_number, game, started_at) 
+          VALUES ($1, $2, $3, $4) 
+          RETURNING *`;
+
     const result = await db.query(query, [
       student_number,
       pc_number,
@@ -181,9 +207,6 @@ router.post("/activity", async (req, res) => {
     ]);
     res.status(201).send(result.rows[0]);
   } catch (err) {
-    if (err.code === FK_VIOLATION) {
-      return res.status(404).send(`Foreign key ${student_number} not found.`);
-    }
     res.status(500).send(`Error creating activity: ${err}`);
   }
 });
