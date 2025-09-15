@@ -4,6 +4,7 @@ import { checkOutGamer, fetchActivities } from "../../services/activity";
 import TextField from "../components/text-field";
 import useBoundStore from "../../store/store";
 import HoverButton from "../components/hoverButton";
+import { formatTimeLeft, formatTimeExceeded } from "../../utils/time-helpers";
 
 interface PCInfoProps {
   pcNumber: number;
@@ -75,25 +76,11 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
     const timeDiff = endTime.getTime() - currentTime.getTime();
 
     if (timeDiff >= 0) {
-      const hours = Math.floor(timeDiff / (1000 * 60 * 60));
-      const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-
-      const formattedHours = hours.toString();
-      const formattedMinutes = minutes.toString().padStart(2, "0");
-
-      const timeLeft = `${formattedHours}h ${formattedMinutes}m left`;
+      const timeLeft = formatTimeLeft(timeDiff);
       return `Started ${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")} \u00B7 ${game} \u00B7 ${timeLeft}`;
     } else {
       const exceededTime = currentTime.getTime() - endTime.getTime();
-      const hours = Math.floor(exceededTime / (1000 * 60 * 60));
-      const minutes = Math.floor(
-        (exceededTime % (1000 * 60 * 60)) / (1000 * 60),
-      );
-
-      const formattedHours = hours.toString();
-      const formattedMinutes = minutes.toString().padStart(2, "0");
-
-      const timeLeft = `Time exceeded ${formattedHours}h ${formattedMinutes}m`;
+      const timeLeft = formatTimeExceeded(exceededTime);
       return `Started ${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")} \u00B7 ${game} \u00B7 ${timeLeft}`;
     }
   };

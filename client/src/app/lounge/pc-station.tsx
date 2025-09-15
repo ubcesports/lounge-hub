@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { PC, PCStatus } from "../../interfaces/pc";
+import { formatTimeRemaining } from "../../utils/time-helpers";
 
 interface PCStationProps {
   pc: PC;
@@ -24,14 +25,7 @@ const PCStation: React.FC<PCStationProps> = ({ pc, pcStatus, onClick }) => {
       return "Time Up";
     }
 
-    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-    const hours = Math.floor(timeDiff / (1000 * 60 * 60));
-
-    if (hours === 0) {
-      return `${minutes.toString().padStart(2, "0")}m`;
-    }
-
-    return `${hours}h ${minutes.toString().padStart(2, "0")}m`;
+    return formatTimeRemaining(timeDiff);
   };
 
   useEffect(() => {
