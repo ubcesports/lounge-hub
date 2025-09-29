@@ -23,7 +23,16 @@ jobs:
         run: |
           TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
           echo "Latest tag: $TAG"
-          echo "RELEASE_TAG=$TAG" >> $GITHUB_ENV
+          # Remove 'v' and split into components
+          VERSION=${TAG#v}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+
+          # Bump the minor version and reset patch to 0
+          NEW_MINOR=$((MINOR + 1))
+          NEW_VERSION="v$MAJOR.$NEW_MINOR.0"
+
+          echo "OLD_VERSION=$TAG" >> $GITHUB_ENV
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
       # - name: Get release tag
       #   id: get_tag
@@ -35,15 +44,15 @@ jobs:
         run: |
           FILE="client/src/app/page.tsx"
           OLD_VERSION_LINE=$(grep -Eo 'v[0-9]+\.[0-9]+\.[0-9]+' "$FILE")
-          echo "Old version: $OLD_VERSION_LINE"
-          sed -i "s/$OLD_VERSION_LINE/${RELEASE_TAG}/" "$FILE"
-          echo "Updated $FILE with tag ${RELEASE_TAG}"
+
+          echo "Replacing: $OLD_VERSION_LINE, with: $NEW_VERSION"
+          sed -i "s/$OLD_VERSION_LINE/$NEW_VERSION/" "$FILE"
 
       - name: Print branch info
         run: |
           echo "Ref: ${{ github.ref }}"
           echo "Branch name: ${{ github.ref_name }}"
-          
+
       - name: Commit and push changes
         run: |
           git config user.name "github-actions"
