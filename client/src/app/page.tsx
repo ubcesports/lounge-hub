@@ -19,7 +19,7 @@ export default function Page() {
       {/* If authenticated, display LoggedInPage (regular lounge app). If not, display LoggedOutPage component */}
       {isAuthenticated ? <LoggedInPage /> : <LoggedOutPage />}
       <div className="fixed right-0 bottom-0 m-4 rounded bg-[#0D0D0E] p-2 text-gray-400 shadow">
-        v1.4.0
+        v1.1.0
       </div>
     </div>
   );

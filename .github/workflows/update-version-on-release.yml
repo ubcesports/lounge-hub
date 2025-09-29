@@ -34,12 +34,6 @@ jobs:
           echo "OLD_VERSION=$TAG" >> $GITHUB_ENV
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
-      # - name: Get release tag
-      #   id: get_tag
-      #   run: |
-      #     echo "RELEASE_TAG=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
-      #     echo "Release tag: ${{ github.event.release.tag_name }}"
-
       - name: Update version in page.tsx
         run: |
           FILE="client/src/app/page.tsx"
@@ -48,15 +42,10 @@ jobs:
           echo "Replacing: $OLD_VERSION_LINE, with: $NEW_VERSION"
           sed -i "s/$OLD_VERSION_LINE/$NEW_VERSION/" "$FILE"
 
-      - name: Print branch info
-        run: |
-          echo "Ref: ${{ github.ref }}"
-          echo "Branch name: ${{ github.ref_name }}"
-
       - name: Commit and push changes
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add client/src/app/page.tsx
           git commit -m "chore: update version on page to ${RELEASE_TAG}"
-          git push
+          git push origin HEAD:"Add-version-to-page-(#102)"
