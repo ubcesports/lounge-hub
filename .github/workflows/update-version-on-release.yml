@@ -47,5 +47,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add client/src/app/page.tsx
-          git commit -m "chore: update version on page to ${RELEASE_TAG}"
+          git commit -m "chore: update version on page to $NEW_VERSION"
           git push origin HEAD:"Add-version-to-page-(#102)"
