@@ -10,7 +10,7 @@ import LoggedInPage from "./lounge/page/logged-in-page";
 import LoggedOutPage from "./lounge/page/logged-out-page";
 
 export default function Page() {
-  // Auth contexts  
+  // Auth contexts 
   const { isAuthenticated } = useAuth0();
 
   return (
