@@ -1,0 +1,53 @@
+name: Update Version in page.tsx on Release
+
+on:
+  push:
+    branches: 
+      - Add-version-to-page-(#102)
+
+permissions:
+  contents: write  # Required to commit and push changes
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get latest Git tag
+        id: get_tag
+        run: |
+          TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "Latest tag: $TAG"
+          echo "RELEASE_TAG=$TAG" >> $GITHUB_ENV
+
+      # - name: Get release tag
+      #   id: get_tag
+      #   run: |
+      #     echo "RELEASE_TAG=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+      #     echo "Release tag: ${{ github.event.release.tag_name }}"
+
+      - name: Update version in page.tsx
+        run: |
+          FILE="client/src/app/page.tsx"
+          OLD_VERSION_LINE=$(grep -Eo 'v[0-9]+\.[0-9]+\.[0-9]+' "$FILE")
+          echo "Old version: $OLD_VERSION_LINE"
+          sed -i "s/$OLD_VERSION_LINE/${RELEASE_TAG}/" "$FILE"
+          echo "Updated $FILE with tag ${RELEASE_TAG}"
+
+      - name: Print branch info
+        run: |
+          echo "Ref: ${{ github.ref }}"
+          echo "Branch name: ${{ github.ref_name }}"
+          
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add client/src/app/page.tsx
+          git commit -m "chore: update version on page to ${RELEASE_TAG}"
+          git push
