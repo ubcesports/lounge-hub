@@ -2,6 +2,7 @@ import express from "express";
 import db from "../db.js";
 import moment from "moment-timezone";
 import { schema } from "../config.js";
+import TierFactory from "../models/TierFactory.js";
 
 const router = express.Router();
 
@@ -20,6 +21,7 @@ const router = express.Router();
  *                                                  0 = No membership
  *                                                  1 = Tier 1
  *                                                  2 = Tier 2
+ *                                                  3 = Premier
  * @apiSuccess {Boolean} gamer_profile.banned Whether the gamer is banned.
  * @apiSuccess {String} gamer_profile.notes Additional notes.
  * @apiSuccess {String} gamer_profile.created_at Date when the profile was created.
@@ -66,15 +68,6 @@ router.get("/gamer/:student_number", async (req, res) => {
  * @apiError {String} 500 Server error.
  */
 
-function getNextMayFirst() {
-  const now = moment().tz("America/Los_Angeles");
-  let year = now.year();
-  // If we're past May 1st of this year, set to next year
-  if (now.month() >= 4) {
-    year++;
-  }
-  return moment.tz(`${year}-05-01`, "America/Los_Angeles").format("YYYY-MM-DD");
-}
 
 router.post("/gamer", async (req, res) => {
   const {
@@ -87,13 +80,15 @@ router.post("/gamer", async (req, res) => {
   } = req.body;
   const created_at = moment().tz("America/Los_Angeles").format("YYYY-MM-DD");
 
-  let membership_expiry_date = getNextMayFirst();
+  try {
+    const tier = TierFactory.create(Number(membership_tier));
+    let membership_expiry_date = tier.getExpiryDate();
 
-  const query = `INSERT INTO ${schema}.gamer_profile 
-        (first_name, last_name, student_number, membership_tier, banned, notes, created_at, membership_expiry_date) 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
-        ON CONFLICT (student_number) 
-        DO UPDATE SET 
+    const query = `INSERT INTO ${schema}.gamer_profile
+        (first_name, last_name, student_number, membership_tier, banned, notes, created_at, membership_expiry_date)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        ON CONFLICT (student_number)
+        DO UPDATE SET
           first_name = EXCLUDED.first_name,
           last_name = EXCLUDED.last_name,
           membership_tier = EXCLUDED.membership_tier,
@@ -103,7 +98,6 @@ router.post("/gamer", async (req, res) => {
           membership_expiry_date = $8
         RETURNING *`;
 
-  try {
     const result = await db.query(query, [
       first_name,
       last_name,

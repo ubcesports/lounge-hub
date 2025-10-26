@@ -88,7 +88,7 @@ describe("Gamer API", () => {
         first_name: "Alice",
         last_name: "Smith",
         student_number: "11223344",
-        membership_tier: 3,
+        membership_tier: 1,
         banned: false,
         notes: "Initial notes",
       })
@@ -102,7 +102,7 @@ describe("Gamer API", () => {
             first_name: "Alice",
             last_name: "Smith",
             student_number: "11223344",
-            membership_tier: 4,
+            membership_tier: 3,
             banned: true,
             notes: "Updated notes",
           })
@@ -112,7 +112,7 @@ describe("Gamer API", () => {
             expect(res.body).to.have.property("first_name", "Alice");
             expect(res.body).to.have.property("last_name", "Smith");
             expect(res.body).to.have.property("student_number", "11223344");
-            expect(res.body).to.have.property("membership_tier", 4);
+            expect(res.body).to.have.property("membership_tier", 3);
             expect(res.body).to.have.property("banned", true);
             expect(res.body).to.have.property("notes", "Updated notes");
             done();
