@@ -1,5 +1,5 @@
 import moment from "moment-timezone";
-import MembershipTier from '../MembershipTier.js';
+import MembershipTier from "../MembershipTier.js";
 
 export default class PremierTier extends MembershipTier {
   getName() {
@@ -30,6 +30,8 @@ export default class PremierTier extends MembershipTier {
     if (now.month() >= 4) {
       year++;
     }
-    return moment.tz(`${year}-05-01`, "America/Los_Angeles").format("YYYY-MM-DD");
+    return moment
+      .tz(`${year}-05-01`, "America/Los_Angeles")
+      .format("YYYY-MM-DD");
   }
 }

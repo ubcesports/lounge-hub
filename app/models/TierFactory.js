@@ -1,7 +1,7 @@
-import NoMembership from './tiers/NoMembership.js';
-import Tier1 from './tiers/Tier1.js';
-import Tier2 from './tiers/Tier2.js';
-import PremierTier from './tiers/PremierTier.js';
+import NoMembership from "./tiers/NoMembership.js";
+import Tier1 from "./tiers/Tier1.js";
+import Tier2 from "./tiers/Tier2.js";
+import PremierTier from "./tiers/PremierTier.js";
 
 export default class TierFactory {
   static create(tierNumber) {
@@ -24,7 +24,7 @@ export default class TierFactory {
       0: new NoMembership(),
       1: new Tier1(),
       2: new Tier2(),
-      3: new PremierTier()
+      3: new PremierTier(),
     };
   }
 
