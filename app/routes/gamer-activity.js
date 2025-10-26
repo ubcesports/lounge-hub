@@ -2,6 +2,7 @@ import express from "express";
 import db from "../db.js";
 import moment from "moment-timezone";
 import { schema } from "../config.js";
+import TierFactory from "../models/TierFactory.js";
 
 const router = express.Router();
 
@@ -183,14 +184,18 @@ router.post("/activity", async (req, res) => {
       return res.status(404).send(`Foreign key ${student_number} not found.`);
     }
 
-    const { membership_expiry_date } = membershipResult.rows[0];
-    const today = moment().tz("America/Los_Angeles").startOf("day");
-    const expiryDate = moment(membership_expiry_date).startOf("day");
-    if (today.isAfter(expiryDate)) {
+    const { membership_expiry_date, membership_tier } = membershipResult.rows[0];
+    const tier = TierFactory.create(Number(membership_tier));
+    
+    const isExpired = tier.isExpired(membership_expiry_date);
+    
+    if (isExpired) {
+      const tierName = tier.getName();
+      const expiryDate = moment(membership_expiry_date);
       return res
         .status(403)
         .send(
-          `Membership expired on ${expiryDate.format("YYYY-MM-DD")}. Please ask the user to purchase a new membership. If the member has already purchased a new membership for this year please verify via Showpass then create a new profile for them.`,
+          `${tierName} membership expired on ${expiryDate.format("YYYY-MM-DD")}. Please ask the user to purchase a new membership. If the member has already purchased a new membership for this year please verify via Showpass then create a new profile for them.`,
         );
     }
 
