@@ -13,7 +13,10 @@ const PCStation: React.FC<PCStationProps> = ({ pc, pcStatus, onClick }) => {
 
   useEffect(() => {
     const updateRemainingTime = () => {
-      const { formatted } = calculateTimeRemaining(pc.startedAt, pc.membershipTier);
+      const { formatted } = calculateTimeRemaining(
+        pc.startedAt,
+        pc.membershipTier,
+      );
       setTimeRemaining(formatted);
     };
     updateRemainingTime(); // Initial call

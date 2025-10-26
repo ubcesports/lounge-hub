@@ -62,7 +62,6 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
     return `${truncatedFirstName} ${lastNameInitial} ${studentNumber}`;
   };
 
-
   return (
     <div className="flex items-center justify-between rounded-lg bg-[#20222C] p-4">
       <div>
