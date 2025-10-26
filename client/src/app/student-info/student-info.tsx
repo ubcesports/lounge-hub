@@ -33,7 +33,9 @@ export default function StudentInfo() {
             </div>
             <div>
               <h3 className="text-[#DEE7EC]">Membership Level</h3>
-              <p className="text-[#62667B]">{TierFactory.create(gamer.membershipTier).getName()}</p>
+              <p className="text-[#62667B]">
+                {TierFactory.create(gamer.membershipTier).getName()}
+              </p>
             </div>
             <div>
               <h3 className="text-[#DEE7EC]">Student Number</h3>
