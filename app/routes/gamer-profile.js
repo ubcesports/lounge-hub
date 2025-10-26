@@ -68,7 +68,6 @@ router.get("/gamer/:student_number", async (req, res) => {
  * @apiError {String} 500 Server error.
  */
 
-
 router.post("/gamer", async (req, res) => {
   const {
     first_name,

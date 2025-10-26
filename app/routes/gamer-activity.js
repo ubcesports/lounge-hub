@@ -184,11 +184,12 @@ router.post("/activity", async (req, res) => {
       return res.status(404).send(`Foreign key ${student_number} not found.`);
     }
 
-    const { membership_expiry_date, membership_tier } = membershipResult.rows[0];
+    const { membership_expiry_date, membership_tier } =
+      membershipResult.rows[0];
     const tier = TierFactory.create(Number(membership_tier));
-    
+
     const isExpired = tier.isExpired(membership_expiry_date);
-    
+
     if (isExpired) {
       const tierName = tier.getName();
       const expiryDate = moment(membership_expiry_date);
