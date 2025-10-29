@@ -19,7 +19,7 @@ app.use("/api", gamerActivity);
 
 const port = 8000;
 
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== "test") {
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
   });

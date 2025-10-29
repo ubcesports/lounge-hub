@@ -1,4 +1,4 @@
-import MembershipTier from '../MembershipTier.js';
+import MembershipTier from "../MembershipTier.js";
 
 export default class NoMembership extends MembershipTier {
   getName() {
