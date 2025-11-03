@@ -12,14 +12,15 @@ import LoggedOutPage from "./lounge/page/logged-out-page";
 export default function Page() {
   // Auth contexts
   const { isAuthenticated } = useAuth0();
-
+  const version = process.env.NEXT_PUBLIC_APP_VERSION || "1.0.0";
+  
   return (
     <div className="min-h-screen bg-[#0D0D0E] p-1">
       <AuthStatus />
       {/* If authenticated, display LoggedInPage (regular lounge app). If not, display LoggedOutPage component */}
       {isAuthenticated ? <LoggedInPage /> : <LoggedOutPage />}
       <div className="fixed right-0 bottom-0 m-4 rounded bg-[#0D0D0E] p-2 text-gray-400 shadow">
-        v1.4.0
+        {version}
       </div>
     </div>
   );
