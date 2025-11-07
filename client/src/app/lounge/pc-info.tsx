@@ -4,6 +4,7 @@ import { checkOutGamer, fetchActivities } from "../../services/activity";
 import TextField from "../components/text-field";
 import useBoundStore from "../../store/store";
 import HoverButton from "../components/hoverButton";
+import { formatSessionInfo } from "../../utils/time-calculation-helpers";
 
 interface PCInfoProps {
   pcNumber: number;
@@ -61,43 +62,6 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
     return `${truncatedFirstName} ${lastNameInitial} ${studentNumber}`;
   };
 
-  const formatTime = (time: string, game: string, membershipTier: number) => {
-    const date = new Date(time);
-    const currentTime = new Date();
-    const endTime = new Date(date);
-
-    if (membershipTier === 1) {
-      endTime.setHours(date.getHours() + 1);
-    } else if (membershipTier === 2) {
-      endTime.setHours(date.getHours() + 2);
-    }
-
-    const timeDiff = endTime.getTime() - currentTime.getTime();
-
-    if (timeDiff >= 0) {
-      const hours = Math.floor(timeDiff / (1000 * 60 * 60));
-      const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-
-      const formattedHours = hours.toString();
-      const formattedMinutes = minutes.toString().padStart(2, "0");
-
-      const timeLeft = `${formattedHours}h ${formattedMinutes}m left`;
-      return `Started ${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")} \u00B7 ${game} \u00B7 ${timeLeft}`;
-    } else {
-      const exceededTime = currentTime.getTime() - endTime.getTime();
-      const hours = Math.floor(exceededTime / (1000 * 60 * 60));
-      const minutes = Math.floor(
-        (exceededTime % (1000 * 60 * 60)) / (1000 * 60),
-      );
-
-      const formattedHours = hours.toString();
-      const formattedMinutes = minutes.toString().padStart(2, "0");
-
-      const timeLeft = `Time exceeded ${formattedHours}h ${formattedMinutes}m`;
-      return `Started ${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")} \u00B7 ${game} \u00B7 ${timeLeft}`;
-    }
-  };
-
   return (
     <div className="flex items-center justify-between rounded-lg bg-[#20222C] p-4">
       <div>
@@ -124,7 +88,7 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
         </div>
         <p className="mb-1 text-xs text-[#62667B]">
           {pcStatus === PCStatus.Busy
-            ? `${formatTime(pc.startedAt, pc.game, pc.membershipTier)}`
+            ? formatSessionInfo(pc.startedAt, pc.game, pc.membershipTier)
             : ""}
         </p>
       </div>
