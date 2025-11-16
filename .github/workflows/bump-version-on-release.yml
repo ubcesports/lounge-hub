@@ -22,13 +22,30 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+      
+      - name: Get latest Git tag and increment minor version
+        id: get_tag
+        run: |
+          TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "Latest tag: $TAG"
+
+          # Remove 'v' and split into components
+          VERSION=${TAG#v}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+
+          # Bump the minor version and reset patch to 0
+          NEW_MINOR=$((MINOR + 1))
+          NEW_VERSION="$MAJOR.$NEW_MINOR.0"
+
+          echo "OLD_VERSION=$TAG" >> $GITHUB_ENV
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Update version, commit and push changes
         working-directory: ./client
         run: |
           git config user.name github-actions[bot]
           git config user.email github-actions[bot]@users.noreply.github.com
-          npm version patch --no-git-tag-version
+          npm version $NEW_VERSION --no-git-tag-version
           git add package.json
-          git commit -m "chore: update version on push"
+          git commit -m "chore: update version on release"
           git push -o ci.skip
