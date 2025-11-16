@@ -16,6 +16,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: main
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -47,4 +48,4 @@ jobs:
           npm version $NEW_VERSION --no-git-tag-version
           git add package.json
           git commit -m "chore: update version on release"
-          git push origin HEAD:"Add-version-to-page-(#102)" -o ci.skip
+          git push origin HEAD:"main" -o ci.skip
