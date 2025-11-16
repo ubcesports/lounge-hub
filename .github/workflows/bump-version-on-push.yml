@@ -3,7 +3,7 @@ name: Bump Version on Push
 on:
   push:
     branches:
-      - Add-version-to-page-(#102)
+      - main
 
 permissions:
   contents: write  # Required to commit and push changes

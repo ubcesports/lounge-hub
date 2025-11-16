@@ -1,9 +1,8 @@
 name: Bump Version on Release
 
 on:
-  pull_request:
-    branches:
-      - Add-version-to-page-(#102)
+  release:
+    types: [published]
 
 permissions:
   contents: write  # Required to commit and push changes
