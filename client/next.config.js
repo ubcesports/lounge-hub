@@ -1,7 +1,8 @@
 const API_URL = process.env.API_URL;
-const { version } = require('./package.json');
+import pkg from './package.json' assert { type: 'json' };
+export const { version } = pkg;
 
-module.exports = {
+const nextConfig = {
   async rewrites() {
     return [
       {
@@ -15,3 +16,5 @@ module.exports = {
     NEXT_PUBLIC_APP_VERSION: version,
   },
 };
+
+export default nextConfig;
