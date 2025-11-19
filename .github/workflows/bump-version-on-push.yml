@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: write  # Required to commit and push changes
+  contents: write # Required to commit and push changes
 
 jobs:
   update-version:
@@ -21,7 +21,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Update version, commit and push changes
         working-directory: ./client
