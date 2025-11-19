@@ -1,0 +1,47 @@
+name: Bump Version on Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write # Required to commit and push changes
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: "main"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Get latest Git tag
+        id: get_tag
+        run: |
+          TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "Latest tag: $TAG"
+
+          # Remove 'v' and split into components
+          VERSION=${TAG#v}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+
+          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+      - name: Update version, commit and push changes
+        working-directory: ./client
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+          npm version $NEW_VERSION --no-git-tag-version
+          git add package.json
+          git commit -m "chore: update version on release"
+          git push origin HEAD:"main" -o ci.skip

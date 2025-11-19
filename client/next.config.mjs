@@ -1,6 +1,8 @@
 const API_URL = process.env.API_URL;
+import pkg from "./package.json" assert { type: "json" };
+export const { version } = pkg;
 
-module.exports = {
+export default {
   async rewrites() {
     return [
       {
@@ -10,4 +12,7 @@ module.exports = {
     ];
   },
   output: "standalone",
+  env: {
+    NEXT_PUBLIC_APP_VERSION: version,
+  },
 };
