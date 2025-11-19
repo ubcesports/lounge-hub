@@ -2,6 +2,7 @@ import React from "react";
 import useBoundStore from "../../store/store";
 import { initialGamerState } from "../../store/gamer-store";
 import PlaceholderImage from "../lounge/placeholder";
+import TierFactory from "@models/TierFactory";
 
 export default function StudentInfo() {
   const gamer = useBoundStore((state) => state.GamerProfile);
@@ -32,7 +33,9 @@ export default function StudentInfo() {
             </div>
             <div>
               <h3 className="text-[#DEE7EC]">Membership Level</h3>
-              <p className="text-[#62667B]">{gamer.membershipTier}</p>
+              <p className="text-[#62667B]">
+                {TierFactory.create(gamer.membershipTier).getName()}
+              </p>
             </div>
             <div>
               <h3 className="text-[#DEE7EC]">Student Number</h3>
