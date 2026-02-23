@@ -32,7 +32,6 @@ EXPOSE 3000
 CMD ["npm", "run", "start"]
 
 FROM node:20.4.0-alpine3.18 AS dev
-ENV API_URL=http://app:8000
 WORKDIR /client
 
 COPY package.json package-lock.json ./

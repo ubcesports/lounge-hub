@@ -1,0 +1,20 @@
+services:
+  client:
+    build:
+      context: ./client
+      target: dev
+    restart: always
+    volumes:
+      - /client/node_modules
+      - ./client:/client
+      - ./app/models:/app/models:ro
+      - ./app/node_modules:/app/node_modules:ro
+      - /app/.next
+    environment:
+      - TZ=America/Los_Angeles
+      - WATCHPACK_POLLING=true
+      - NODE_PATH=/app/node_modules:/client/node_modules
+      - API_URL=http://host.docker.internal:8080
+      - API_KEY=${API_KEY}
+    ports:
+      - "3000:3000"
