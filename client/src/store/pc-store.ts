@@ -35,7 +35,6 @@ const updatePCList = (pcList: PCList, data: ActivePC[]) => {
   const updatedPCs = new Map(pcList.pcs);
   data.forEach((activePC) => {
     if (updatedPCs.has(activePC.pc_number)) {
-      console.log(activePC);
       updatedPCs.set(activePC.pc_number, {
         ...updatedPCs.get(activePC.pc_number),
         studentNumber: activePC.student_number,

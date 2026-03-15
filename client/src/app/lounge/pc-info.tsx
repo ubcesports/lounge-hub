@@ -64,12 +64,9 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
   const formatTime = (time: string, game: string, membershipTier: number) => {
     const date = new Date(time);
     const currentTime = new Date();
-    // Tier duration mapping for consistency
     const tierDurations: { [key: number]: number } = {
       1: 60 * 60 * 1000, // 1 hour
       2: 2 * 60 * 60 * 1000, // 2 hours
-      3: 3 * 60 * 60 * 1000, // etc.
-      4: 4 * 60 * 60 * 1000,
     };
     const defaultDuration = 60 * 60 * 1000; // Fallback—1 hour
     const duration = tierDurations[membershipTier] || defaultDuration;
