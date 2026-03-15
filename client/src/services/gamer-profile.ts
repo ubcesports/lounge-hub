@@ -22,7 +22,6 @@ export const addGamerProfile = async (gamerProfile: GamerProfile) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log("here");
     return error;
   }
 };
