@@ -7,7 +7,7 @@ async function proxyRequest(req: NextRequest) {
   const url = new URL(req.url);
   const path = url.pathname;
   const search = url.search;
-  const destination = `${API_URL}/v1/${path}${search}`;
+  const destination = `${API_URL}/v1${path}${search}`;
 
   const headers = new Headers();
   headers.set("Accept", "application/json");

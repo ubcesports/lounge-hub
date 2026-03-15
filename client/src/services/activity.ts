@@ -52,7 +52,11 @@ export const checkInGamer = async (activity: Activity) => {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(activity),
+    body: JSON.stringify({
+      student_number: activity.studentNumber,
+      game: activity.game,
+      pc_number: parseInt(activity.pcNumber),
+    }),
   };
   try {
     const response = await fetch(url, settings);

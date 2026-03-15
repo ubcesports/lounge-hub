@@ -9,7 +9,6 @@ RUN npm install
 COPY . .
 
 FROM node:20.4.0-alpine3.18 AS build
-ENV API_URL=http://app:8000
 WORKDIR /client
 COPY --from=base /client ./
 RUN npm run build

@@ -1,17 +1,4 @@
 services:
-  app:
-    build:
-      context: ./app
-      target: dev
-    restart: always
-    volumes:
-      - /app/node_modules
-      - ./app:/app
-    environment:
-      - TZ=America/Los_Angeles
-    ports:
-      - "8000:8000"
-
   client:
     build:
       context: ./client
