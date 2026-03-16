@@ -5,6 +5,7 @@ import DropdownField from "../components/dropdown";
 import { GamerProfile } from "../../interfaces/gamer-profile";
 import { addGamerProfile } from "../../services/gamer-profile";
 import toastNotify from "../toast/toastNotifications";
+import TierFactory from "@models/TierFactory";
 
 const AddUser = () => {
   const [addGamerData, setAddGamerData] = useState<GamerProfile>({
@@ -74,8 +75,9 @@ const AddUser = () => {
           className="col-span-1 rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
           onChange={handleDropdownChange}
           options={[
-            { value: "1", label: "Tier 1" },
-            { value: "2", label: "Tier 2" },
+            { value: "1", label: TierFactory.create(1).getName() },
+            { value: "2", label: TierFactory.create(2).getName() },
+            { value: "3", label: TierFactory.create(3).getName() },
           ]}
         />
         <div className="group relative">
