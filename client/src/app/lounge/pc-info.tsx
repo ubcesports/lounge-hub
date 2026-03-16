@@ -64,13 +64,13 @@ const PCInfo: React.FC<PCInfoProps> = ({ pcNumber }) => {
   const formatTime = (time: string, game: string, membershipTier: number) => {
     const date = new Date(time);
     const currentTime = new Date();
-    const endTime = new Date(date);
-
-    if (membershipTier === 1) {
-      endTime.setHours(date.getHours() + 1);
-    } else if (membershipTier === 2) {
-      endTime.setHours(date.getHours() + 2);
-    }
+    const tierDurations: { [key: number]: number } = {
+      1: 60 * 60 * 1000, // 1 hour
+      2: 2 * 60 * 60 * 1000, // 2 hours
+    };
+    const defaultDuration = 60 * 60 * 1000; // Fallback—1 hour
+    const duration = tierDurations[membershipTier] || defaultDuration;
+    const endTime = new Date(date.getTime() + duration);
 
     const timeDiff = endTime.getTime() - currentTime.getTime();
 

@@ -9,7 +9,12 @@ export const addGamerProfile = async (gamerProfile: GamerProfile) => {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(gamerProfile),
+    body: JSON.stringify({
+      student_number: gamerProfile.studentNumber,
+      first_name: gamerProfile.firstName,
+      last_name: gamerProfile.lastName,
+      membership_tier: gamerProfile.membershipTier,
+    }),
   };
 
   try {
