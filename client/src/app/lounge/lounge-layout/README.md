@@ -4,7 +4,7 @@
 
 The lounge map is represented by a 9x5 grid, where each cell may be a PC. For extra long PCs (ie PCs 9 and 14) their coordinates are based on the location of the upper half of the rendered component. For example, PC 9 is at location [3, 6].
 
-![alt text](./images/lounge-actual.png)
+![alt text](./images/Lounge-Actual.png)
 ![alt text](./images/lounge-grid.png)
 
 Below is a table representation of each PC's coordinates, and should be updated if we ever change the layout.
