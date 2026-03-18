@@ -17,6 +17,6 @@ Below is a table representation of each PC's coordinates, and should be updated 
 | 4   | PC12 | PC13 |      |     |     |
 | 5   |      |      |      |     | PC1 |
 | 6   | PC11 | PC10 | PC9  |     | PC2 |
-| 7   | PC7  | PC8  |      |     | PC3 |
-| 8   |      |      |      |     | PC4 |
-| 9   | PC6  | PC5  |      |     | Cab |
+| 7   | PC6  | PC7  | PC8  |     | PC3 |
+| 8   |      |      |      |     | Cab |
+| 9   | PC5  | PC4  |      |     | Cab |

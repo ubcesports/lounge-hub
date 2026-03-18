@@ -45,11 +45,11 @@ const PCStation: React.FC<PCStationProps> = ({ pc, pcStatus, onClick }) => {
 
   const isTimeUp = timeRemaining === "Time Up";
 
-  // This following block defines "special" renderings for certain PCs. Double height PCs
-  // are PCs 9 and 14, the cab is PC 21, and the admin (exec) PC is PC 20.
+  // This block defines special renderings for certain desks.
+  // Double height PC is PC 14, cab desks are 21 and 22, and the admin (exec) desk is 20.
   // ========================================
-  const isDoubleHeight = pc.pcNumber === 9 || pc.pcNumber === 14;
-  const isCab = pc.pcNumber === 21;
+  const isDoubleHeight = pc.pcNumber === 14;
+  const isCab = pc.pcNumber === 21 || pc.pcNumber === 22;
   const isAdmin = pc.pcNumber === 20;
   // ========================================
 

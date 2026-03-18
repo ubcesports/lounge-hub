@@ -2,7 +2,7 @@ import { StateCreator } from "zustand";
 import { PCList, PCStatus } from "../interfaces/pc";
 import { ActivePC } from "../interfaces/active-pc";
 
-const NUM_PCS = 21;
+const NUM_PCS = 22;
 
 export interface PCSlice {
   PCList: PCList;
