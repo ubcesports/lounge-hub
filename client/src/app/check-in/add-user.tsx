@@ -17,6 +17,7 @@ const AddUser = () => {
   });
 
   const submitData = async (data: GamerProfile) => {
+    console.log(data);
     addGamerProfile(data);
     toastNotify.success("Gamer added successfully!"); // TODO: Check if someone is already added
   };
@@ -31,7 +32,7 @@ const AddUser = () => {
   const handleDropdownChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setAddGamerData({
       ...addGamerData,
-      [e.target.name]: e.target.value,
+      [e.target.name]: parseInt(e.target.value, 10),
     });
   };
 
@@ -74,8 +75,8 @@ const AddUser = () => {
           className="col-span-1 rounded border border-[#62667B] bg-[#20222C] p-2 text-[#DEE7EC]"
           onChange={handleDropdownChange}
           options={[
-            { value: "1", label: "Tier 1" },
-            { value: "2", label: "Tier 2" },
+            { value: 1, label: "Tier 1" },
+            { value: 2, label: "Tier 2" },
           ]}
         />
         <div className="group relative">
