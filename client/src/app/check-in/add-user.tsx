@@ -17,7 +17,6 @@ const AddUser = () => {
   });
 
   const submitData = async (data: GamerProfile) => {
-    console.log(data);
     addGamerProfile(data);
     toastNotify.success("Gamer added successfully!"); // TODO: Check if someone is already added
   };
