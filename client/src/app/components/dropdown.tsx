@@ -4,7 +4,7 @@ interface DropdownFieldProps {
   label: string;
   name: string;
   value: string | number | readonly string[];
-  options: { value: string; label: string }[];
+  options: { value: string | number; label: string }[];
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   className?: string;
 }
