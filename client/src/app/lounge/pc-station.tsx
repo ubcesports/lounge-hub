@@ -49,8 +49,13 @@ const PCStation: React.FC<PCStationProps> = ({ pc, pcStatus, onClick }) => {
   // Double height PC is PC 14, cab desks are 21 and 22, and the admin (exec) desk is 20.
   // ========================================
   const isDoubleHeight = pc.pcNumber === 14;
-  const isCab = pc.pcNumber === 21 || pc.pcNumber === 22;
   const isAdmin = pc.pcNumber === 20;
+  const stationLabel =
+    pc.pcNumber === 21
+      ? "C1"
+      : pc.pcNumber === 22
+        ? "C2"
+        : pc.pcNumber.toString().padStart(2, "0");
   // ========================================
 
   if (isAdmin) {
@@ -92,9 +97,7 @@ const PCStation: React.FC<PCStationProps> = ({ pc, pcStatus, onClick }) => {
       }}
     >
       <div className="text-center">
-        <p className="text-2xl">
-          {isCab ? "Cab" : pc.pcNumber.toString().padStart(2, "0")}
-        </p>
+        <p className="text-2xl">{stationLabel}</p>
         {pcStatus === PCStatus.Busy && (
           <p className="text-xs">{timeRemaining}</p>
         )}
