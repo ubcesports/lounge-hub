@@ -18,6 +18,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "concurrently": "^9.0.1"
+    "concurrently": "^9.0.1",
+    "react-toastify": "^11.0.5"
   }
 }
