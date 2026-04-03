@@ -1,4 +1,8 @@
 import { Activity } from "../interfaces/activity";
+import {
+  APILeaderboardEntry,
+  LeaderboardEntry,
+} from "../interfaces/leaderboard";
 import { useEffect } from "react";
 import useBoundStore from "../store/store";
 import toastNotify from "../app/toast/toastNotifications";
@@ -155,4 +159,30 @@ export const fetchActivities = async (page: number, search: string) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const getLeaderboard = async (): Promise<LeaderboardEntry[]> => {
+  const url = `/api/activity/all/leaderboard`;
+  const settings = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+
+  const response = await fetch(url, settings);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch leaderboard data.");
+  }
+
+  const data: APILeaderboardEntry[] = await response.json();
+
+  return data
+    .map((entry) => ({
+      execName: entry.exec_name,
+      signoutCount: entry.signout_count,
+    }))
+    .sort((a, b) => b.signoutCount - a.signoutCount);
 };
