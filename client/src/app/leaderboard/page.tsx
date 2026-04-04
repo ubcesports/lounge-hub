@@ -7,8 +7,6 @@ import LoggedOutPage from "../lounge/page/logged-out-page";
 import { getLeaderboard } from "../../services/activity";
 import { LeaderboardEntry } from "../../interfaces/leaderboard";
 
-const POLL_INTERVAL_MS = 30000;
-
 export default function LeaderboardPage() {
   const { isAuthenticated } = useAuth0();
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
@@ -36,12 +34,6 @@ export default function LeaderboardPage() {
     };
 
     refreshLeaderboard();
-
-    const intervalId = setInterval(() => {
-      refreshLeaderboard();
-    }, POLL_INTERVAL_MS);
-
-    return () => clearInterval(intervalId);
   }, [isAuthenticated]);
 
   const formattedLastUpdated = useMemo(() => {
