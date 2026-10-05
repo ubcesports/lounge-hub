@@ -28,7 +28,7 @@ const PlaceholderImage: React.FC = () => {
 
   return (
     <div className="flex h-full items-center justify-center">
-      <img src={randomImage} className="rounded-lg" />
+      {randomImage && <img src={randomImage} className="rounded-lg" alt="" />}
     </div>
   );
 };

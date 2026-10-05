@@ -11,11 +11,18 @@ export default function Activity() {
   const debouncedSearch = useDebounce(search, 500);
   const logList = useBoundStore((state) => state.logList);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const fetchActivitiesData = async (page: number, search: string) => {
     setIsLoading(true);
     try {
-      fetchActivities(page, search);
+      await fetchActivities(page, search);
+      setErrorMessage("");
+    } catch (error) {
+      console.error(error);
+      setErrorMessage(
+        error instanceof Error ? error.message : "Unable to load activity.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -70,6 +77,14 @@ export default function Activity() {
           className="rounded border border-transparent bg-[#20222C] p-4 text-white focus:border-gray-300"
         />
       </div>
+      {errorMessage && (
+        <div
+          role="alert"
+          className="mx-4 mb-2 rounded border border-red-300/40 bg-red-500/10 p-3 text-sm text-red-200"
+        >
+          {errorMessage}
+        </div>
+      )}
       {isLoading ? (
         <div className="flex h-96 items-center justify-center">
           <Spinner />

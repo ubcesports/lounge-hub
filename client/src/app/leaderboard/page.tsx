@@ -1,24 +1,17 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import AuthStatus from "../components/authStatus";
-import { useAuth0 } from "@auth0/auth0-react";
-import LoggedOutPage from "../lounge/page/logged-out-page";
+import Navigation from "../components/navigation";
 import { getLeaderboard } from "../../services/activity";
 import { LeaderboardEntry } from "../../interfaces/leaderboard";
 
 export default function LeaderboardPage() {
-  const { isAuthenticated } = useAuth0();
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      return;
-    }
-
     const refreshLeaderboard = async () => {
       try {
         const data = await getLeaderboard();
@@ -34,7 +27,7 @@ export default function LeaderboardPage() {
     };
 
     refreshLeaderboard();
-  }, [isAuthenticated]);
+  }, []);
 
   const formattedLastUpdated = useMemo(() => {
     if (!lastUpdated) {
@@ -48,13 +41,9 @@ export default function LeaderboardPage() {
     });
   }, [lastUpdated]);
 
-  if (!isAuthenticated) {
-    return <LoggedOutPage />;
-  }
-
   return (
     <div className="flex min-h-screen bg-[#0D0D0E]">
-      <AuthStatus />
+      <Navigation />
       <main className="flex flex-1 p-4">
         <div className="w-full rounded-md bg-[#20222C] p-8">
           <div className="mb-6 flex items-center justify-between">

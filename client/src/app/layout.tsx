@@ -1,5 +1,4 @@
 import React from "react";
-import AuthContext from "./contexts/AuthContext";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -14,9 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <AuthContext>{children}</AuthContext>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

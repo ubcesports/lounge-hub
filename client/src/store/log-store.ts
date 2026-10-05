@@ -10,6 +10,10 @@ export interface LogsSlice {
 const initialLogState: Log[] = [];
 
 const updateLogList = (data: APILog[]) => {
+  if (!Array.isArray(data)) {
+    return initialLogState;
+  }
+
   const updatedLogList = data.map((log) => {
     return {
       firstName: log.first_name,

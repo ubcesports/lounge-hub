@@ -1,4 +1,6 @@
 import { Activity } from "../interfaces/activity";
+import { ActivePC } from "../interfaces/active-pc";
+import { APILog } from "../interfaces/log";
 import {
   APILeaderboardEntry,
   LeaderboardEntry,
@@ -6,6 +8,32 @@ import {
 import { useEffect } from "react";
 import useBoundStore from "../store/store";
 import toastNotify from "../app/toast/toastNotifications";
+
+const readArrayResponse = async <T>(
+  response: Response,
+  errorMessage: string,
+): Promise<T[]> => {
+  const payload: unknown = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    throw new Error(`${errorMessage} (HTTP ${response.status})`);
+  }
+
+  if (Array.isArray(payload)) {
+    return payload as T[];
+  }
+
+  if (
+    payload &&
+    typeof payload === "object" &&
+    "data" in payload &&
+    Array.isArray(payload.data)
+  ) {
+    return payload.data as T[];
+  }
+
+  throw new Error(`${errorMessage} The server returned an unexpected format.`);
+};
 
 export const checkInGamer = async (activity: Activity) => {
   const continueCheckIn = async (): Promise<boolean> => {
@@ -124,15 +152,22 @@ export const fetchPCStatus = async () => {
   const url = `/api/activity/all/get-active-pcs`;
   try {
     const response = await fetch(url);
-    const data = await response.json();
+    const data = await readArrayResponse<ActivePC>(
+      response,
+      "Unable to load active PCs.",
+    );
     const store = useBoundStore.getState();
     store.setPCList(data);
   } catch (error) {
+    console.error(error);
     return error;
   }
 };
 
-export const getRecentActivity = async (page: number, search: string) => {
+export const getRecentActivity = async (
+  page: number,
+  search: string,
+): Promise<APILog[]> => {
   const url = `/api/activity/all/recent?page=${page}&limit=10&search=${search}`;
   const settings = {
     method: "GET",
@@ -142,23 +177,14 @@ export const getRecentActivity = async (page: number, search: string) => {
     },
   };
 
-  try {
-    const response = await fetch(url, settings);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    return error;
-  }
+  const response = await fetch(url, settings);
+  return readArrayResponse<APILog>(response, "Unable to load activity.");
 };
 
 export const fetchActivities = async (page: number, search: string) => {
-  try {
-    const store = useBoundStore.getState();
-    const activities = await getRecentActivity(page, search);
-    store.setLogList(activities);
-  } catch (error) {
-    console.error(error);
-  }
+  const store = useBoundStore.getState();
+  const activities = await getRecentActivity(page, search);
+  store.setLogList(activities);
 };
 
 export const getLeaderboard = async (): Promise<LeaderboardEntry[]> => {
@@ -172,12 +198,10 @@ export const getLeaderboard = async (): Promise<LeaderboardEntry[]> => {
   };
 
   const response = await fetch(url, settings);
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch leaderboard data.");
-  }
-
-  const data: APILeaderboardEntry[] = await response.json();
+  const data = await readArrayResponse<APILeaderboardEntry>(
+    response,
+    "Failed to fetch leaderboard data.",
+  );
 
   return data
     .map((entry) => ({

@@ -13,9 +13,9 @@ import { useState } from "react";
 import { PC } from "../../../interfaces/pc";
 import Activity from "../activity";
 import { ToastContainer } from "react-toastify";
-import AuthStatus from "../../components/authStatus";
+import Navigation from "../../components/navigation";
 
-export default function LoggedInPage() {
+export default function LoungeDashboard() {
   const [isAddingNewGamer, setIsAddingNewGamer] = React.useState(true);
   const [selectedPC, setSelectedPC] = useState<PC | null>(null);
   const handleToggleForm = () => {
@@ -27,8 +27,8 @@ export default function LoggedInPage() {
   };
   return (
     <div className="flex min-h-screen bg-[#0D0D0E]">
-      <ToastContainer aria-label={"Logged In"} />
-      <AuthStatus />
+      <ToastContainer aria-label="Notifications" />
+      <Navigation />
       <main className="flex-1 p-1">
         <div className="grid h-full grid-cols-9 gap-1">
           {/* Live Lounge Map - Left Section */}
